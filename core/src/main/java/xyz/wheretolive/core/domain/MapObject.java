@@ -12,10 +12,13 @@ public class MapObject implements Localizable {
     private ObjectId id;
     
     @Embedded
-    private final Coordinates location;
+    private Coordinates location;
     
     public MapObject(Coordinates location) {
         this.location = location;
+    }
+
+    public MapObject() {
     }
 
     @Override

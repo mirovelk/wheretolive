@@ -7,4 +7,8 @@ public class FoodMarket extends NameableMapObject {
     public FoodMarket(Coordinates location, String name) {
         super(location, name);
     }
+    
+    public FoodMarket() {
+        
+    }
 }

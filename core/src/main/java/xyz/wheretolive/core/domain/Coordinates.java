@@ -2,13 +2,16 @@ package xyz.wheretolive.core.domain;
 
 public class Coordinates {
     
-    private final double latitude;
+    private double latitude;
     
-    private final double longitude;
+    private double longitude;
 
     public Coordinates(double latitude, double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public Coordinates() {
     }
 
     public double getLongitude() {

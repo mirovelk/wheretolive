@@ -6,13 +6,13 @@ import org.mongodb.morphia.Morphia;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MongoConnector {
+public class MongoDatastoreProvider implements DatastoreProvider {
 
     private final Morphia morphia;
     
     private final Datastore datastore;
 
-    public MongoConnector() {
+    public MongoDatastoreProvider() {
         MongoClient mongoClient = new MongoClient("localhost", 27017);
         morphia = new Morphia();
         morphia.mapPackage("xyz.wheretolive.core");
@@ -20,7 +20,7 @@ public class MongoConnector {
         datastore = morphia.createDatastore(mongoClient, "wheretolive");
     }
 
-    protected Datastore getDatastore() {
+    public Datastore getDatastore() {
         return datastore;
     }
     

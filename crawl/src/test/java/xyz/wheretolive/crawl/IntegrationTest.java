@@ -8,7 +8,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.core.domain.Line;
 import xyz.wheretolive.core.domain.TrafficStop;
-import xyz.wheretolive.mongo.MongoConnector;
+import xyz.wheretolive.mongo.MongoDatastoreProvider;
 import xyz.wheretolive.mongo.SpringConfig;
 
 import java.util.Arrays;
@@ -21,11 +21,11 @@ import static xyz.wheretolive.core.domain.LineType.TRAM;
 public class IntegrationTest {
 
     @Autowired
-    MongoConnector mongoConnector;
+    MongoDatastoreProvider mongoDatastoreProvider;
     
     @Test
     public void test() {
-        assert mongoConnector != null;
+        assert mongoDatastoreProvider != null;
     }
     
     @Test

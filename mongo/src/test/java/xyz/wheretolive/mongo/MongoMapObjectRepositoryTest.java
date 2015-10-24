@@ -5,9 +5,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import xyz.wheretolive.core.Coordinates;
-import xyz.wheretolive.core.FoodMarket;
-import xyz.wheretolive.core.MapObject;
+import xyz.wheretolive.core.domain.Coordinates;
+import xyz.wheretolive.core.domain.FoodMarket;
+import xyz.wheretolive.core.domain.MapObject;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {SpringConfig.class})

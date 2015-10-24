@@ -2,7 +2,7 @@ package xyz.wheretolive.mongo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import xyz.wheretolive.core.MapObject;
+import xyz.wheretolive.core.domain.MapObject;
 
 @Repository
 public class MongoMapObjectRepository implements MapObjectRepository {

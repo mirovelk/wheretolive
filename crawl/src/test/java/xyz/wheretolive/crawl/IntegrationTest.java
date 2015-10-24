@@ -5,16 +5,16 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import xyz.wheretolive.core.Coordinates;
-import xyz.wheretolive.core.Line;
-import xyz.wheretolive.core.TrafficStop;
+import xyz.wheretolive.core.domain.Coordinates;
+import xyz.wheretolive.core.domain.Line;
+import xyz.wheretolive.core.domain.TrafficStop;
 import xyz.wheretolive.mongo.MongoConnector;
 import xyz.wheretolive.mongo.SpringConfig;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static xyz.wheretolive.core.LineType.TRAM;
+import static xyz.wheretolive.core.domain.LineType.TRAM;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {SpringConfig.class})

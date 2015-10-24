@@ -1,6 +1,6 @@
 package xyz.wheretolive.mongo;
 
-import xyz.wheretolive.core.MapObject;
+import xyz.wheretolive.core.domain.MapObject;
 
 public interface MapObjectRepository {
     

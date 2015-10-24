@@ -1,4 +1,4 @@
-package xyz.wheretolive.core;
+package xyz.wheretolive.core.domain;
 
 import java.util.List;
 

@@ -1,20 +1,27 @@
 package xyz.wheretolive.mongo;
 
 import com.mongodb.MongoClient;
-import com.mongodb.client.MongoDatabase;
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Morphia;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MongoConnector {
 
-    private final MongoDatabase database;
+    private final Morphia morphia;
     
+    private final Datastore datastore;
+
     public MongoConnector() {
         MongoClient mongoClient = new MongoClient("localhost", 27017);
-        database = mongoClient.getDatabase("wheretolive");
+        morphia = new Morphia();
+        morphia.mapPackage("xyz.wheretolive.core");
+        
+        datastore = morphia.createDatastore(mongoClient, "wheretolive");
     }
 
-    public MongoDatabase getDatabase() {
-        return database;
+    protected Datastore getDatastore() {
+        return datastore;
     }
+    
 }

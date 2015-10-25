@@ -19,6 +19,12 @@ public class MapObjectResource {
     MapObjectResourceService service;
     
     @GET
+    @Path("/test")
+    public String test() {
+        return "test";
+    }
+    
+    @GET
     @Path("/all")
     public Collection<MapObject> getIn(MapView view) {
         return service.getIn(view);

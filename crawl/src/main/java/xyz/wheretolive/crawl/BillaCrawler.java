@@ -35,6 +35,8 @@ public class BillaCrawler implements Crawler {
             toReturn.add(new MapObject(geocoder.translate(currentShopAddress)));
         }
 
+        webDriver.close();
+
         return toReturn;
     }
 }

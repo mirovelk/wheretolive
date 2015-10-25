@@ -3,7 +3,7 @@ package xyz.wheretolive.crawl;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import xyz.wheretolive.core.domain.MapObject;
-import xyz.wheretolive.core.geocoding.GoogleGeocoder;
+import xyz.wheretolive.crawl.geocoding.GoogleGeocoder;
 import xyz.wheretolive.crawl.pageObject.BillaMap;
 
 import java.util.Collection;

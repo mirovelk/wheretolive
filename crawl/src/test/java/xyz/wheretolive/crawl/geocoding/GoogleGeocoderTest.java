@@ -1,4 +1,4 @@
-package xyz.wheretolive.core.geocoding;
+package xyz.wheretolive.crawl.geocoding;
 
 import org.junit.Test;
 import xyz.wheretolive.core.domain.Coordinates;

@@ -30,7 +30,18 @@ public class MongoMapObjectRepositoryTest extends MongoTest {
         FoodMarket foodMarket = new FoodMarket(new Coordinates(5.4, 6.54), "albert");
         repository.store(foodMarket);
 
-        Collection<MapObject> mapObjects = repository.getBetween(null, null);
+        Collection<MapObject> mapObjects = repository.getIn(null);
         assertEquals(2, mapObjects.size());
+    }
+    
+    @Test
+    public void test2() {
+        MapObject mapObject = new MapObject(new Coordinates(45.235, 12.365));
+        repository.store(mapObject);
+        FoodMarket foodMarket = new FoodMarket(new Coordinates(5.4, 6.54), "albert");
+        repository.store(foodMarket);
+
+        Collection<FoodMarket> mapObjects = repository.getIn(null, FoodMarket.class);
+        assertEquals(1, mapObjects.size());
     }
 }

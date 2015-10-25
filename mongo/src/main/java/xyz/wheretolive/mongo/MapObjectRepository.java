@@ -1,7 +1,7 @@
 package xyz.wheretolive.mongo;
 
-import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.core.domain.MapObject;
+import xyz.wheretolive.core.domain.MapView;
 
 import java.util.Collection;
 
@@ -9,5 +9,7 @@ public interface MapObjectRepository {
     
     void store(MapObject mapObject);
     
-    Collection<MapObject> getBetween(Coordinates topLeft, Coordinates bottomRight);
+    Collection<MapObject> getIn(MapView view);
+
+    <E extends MapObject> Collection<E> getIn(MapView view, Class<E> type);
 }

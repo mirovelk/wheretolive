@@ -16,6 +16,7 @@ public class BillaCrawler implements Crawler {
     public Collection<MapObject> crawl() {
 
         WebDriver webDriver = new ChromeDriver();
+        webDriver.get(BILLA_SHOPS_URL);
 
         BillaMap billaMap = new BillaMap(webDriver);
         List<String> billaRegion = billaMap.getBillaRegion();

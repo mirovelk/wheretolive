@@ -5,11 +5,12 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import xyz.wheretolive.core.SpringConfig;
 import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.core.domain.Line;
 import xyz.wheretolive.core.domain.TrafficStop;
+import xyz.wheretolive.mongo.GoogleGeocodeRepository;
 import xyz.wheretolive.mongo.MongoDatastoreProvider;
-import xyz.wheretolive.mongo.SpringConfig;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,9 +24,17 @@ public class IntegrationTest {
     @Autowired
     MongoDatastoreProvider mongoDatastoreProvider;
     
+    @Autowired
+    GoogleGeocodeRepository googleGeocodeRepository;
+    
+    @Autowired
+    BillaCrawler billaCrawler;
+    
     @Test
-    public void test() {
+    public void testDependencies() {
         assert mongoDatastoreProvider != null;
+        assert googleGeocodeRepository != null;
+        assert billaCrawler != null;
     }
     
     @Test

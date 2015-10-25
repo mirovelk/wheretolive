@@ -5,19 +5,14 @@ import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import xyz.wheretolive.crawl.IntegrationTest;
 import xyz.wheretolive.crawl.pageObject.BillaMap;
-import xyz.wheretolive.mongo.SpringConfig;
 
 import java.util.List;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {SpringConfig.class})
-public class BillaTest implements IBilla {
+public class BillaTest extends IntegrationTest implements IBilla{
 
     private Logger logger = LogManager.getLogger(BillaTest.class);
 

@@ -2,10 +2,11 @@ package xyz.wheretolive.crawl.geocoding;
 
 import org.junit.Test;
 import xyz.wheretolive.core.domain.Coordinates;
+import xyz.wheretolive.crawl.IntegrationTest;
 
 import static org.junit.Assert.*;
 
-public class GoogleGeocoderTest {
+public class GoogleGeocoderTest extends IntegrationTest {
     
     @Test
     public void test() {

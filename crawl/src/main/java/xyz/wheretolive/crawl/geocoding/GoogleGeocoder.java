@@ -8,7 +8,8 @@ import org.springframework.stereotype.Component;
 import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.core.geocoding.Geocoder;
 import xyz.wheretolive.core.geocoding.GoogleGeocodeResult;
-import xyz.wheretolive.mongo.MongoGoogleGeocodeRepository;
+import xyz.wheretolive.core.geocoding.GoogleGeocoderException;
+import xyz.wheretolive.mongo.GoogleGeocodeRepository;
 
 import java.net.URL;
 import java.net.URLEncoder;
@@ -23,7 +24,7 @@ public class GoogleGeocoder implements Geocoder {
     private static final String API_KEY = "AIzaSyCV8DEQzTGOuEp7DMd4cdUjvJaQlKpJCVE";
 
     @Autowired
-    MongoGoogleGeocodeRepository repository;
+    GoogleGeocodeRepository repository;
 
     @Override
     public Coordinates translate(String address) {
@@ -39,8 +40,9 @@ public class GoogleGeocoder implements Geocoder {
             }
             return extract(result);
         } catch (Exception e) {
-            logger.error("Error while translating address: '" + address + "'", e);
-            return null;
+            String message = "Error while translating address: '" + address + "'";
+            logger.error(message, e);
+            throw new GoogleGeocoderException(message, e);
         }
     }
 
@@ -70,7 +72,7 @@ public class GoogleGeocoder implements Geocoder {
         List results = (List) map.get("results");
         String status = (String) map.get("status");
         if (!"OK".equals(status)) {
-            throw new IllegalStateException("Google geocode didn't return OK result. Result was: " + status);
+            throw new GoogleGeocoderException("Google geocode didn't return OK result. Result was: " + status);
         }
         Map<String, Object> firstResult = (Map<String, Object>) results.get(0);
         Map<String, Object> geometry = (Map<String, Object>) firstResult.get("geometry");

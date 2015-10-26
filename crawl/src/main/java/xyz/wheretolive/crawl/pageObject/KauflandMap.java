@@ -82,14 +82,17 @@ public class KauflandMap extends WebDriverCrawler implements IKauflandMap {
             googleMarker = googleMarker.replaceAll("^\\s+|\\s+$|\\s*(\n)\\s*|(\\s)\\s*", "$1$2").replace("\t", "");
             googleMarker = googleMarker.trim();
 
-            Pattern pattern = Pattern.compile("^.*googlemap\\.addMarker\\(new Marker\\(([\\d]+\\.[\\d]*), ([\\d]+\\.[\\d]*).*$");
+            Pattern pattern = Pattern.compile("^googlemap\\.addMarker\\(new Marker\\(([\\d]+\\.[\\d]*), ([\\d]+\\.[\\d]*).*$");
             Matcher matcher = pattern.matcher(googleMarker);
-            String result = null;
-            while ( matcher.find() )
-                result = matcher.group(0);
-            logger.debug("Google coordinate : " + result);
-            String[] futureCoordinates = result.split(",");
-            toReturn = new Coordinates(Double.parseDouble(futureCoordinates[0].split("\\(")[2]), Double.parseDouble(futureCoordinates[1]));
+            String altitude = null;
+            String longitude = null;
+
+            while ( matcher.find() ) {
+                altitude = matcher.group(1);
+                longitude = matcher.group(2);
+            }
+            logger.debug("Google coordinate : " + altitude + ", " + longitude);
+            toReturn = new Coordinates(Double.parseDouble(altitude), Double.parseDouble(longitude));
         }
         catch( NoSuchElementException nsee ) {
         }

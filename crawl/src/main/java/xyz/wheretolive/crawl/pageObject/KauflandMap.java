@@ -3,12 +3,14 @@ package xyz.wheretolive.crawl.pageObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.crawl.selenium.WebDriverCrawler;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -65,6 +67,35 @@ public class KauflandMap extends WebDriverCrawler implements IKauflandMap {
         String[] futureCoordinates = result.split(",");
         toReturn = new Coordinates(Double.parseDouble(futureCoordinates[0]), Double.parseDouble(futureCoordinates[1]));
         return toReturn;
+    }
+
+    public Coordinates getGoogleCoordinatesFromScript(WebElement weCurrentItems) {
+        Coordinates toReturn = null;
+        WebElement weScript = null;
+
+        try {
+            weScript = weCurrentItems.findElement(By.xpath("./following-sibling::script"));
+
+            JavascriptExecutor jse = (JavascriptExecutor) webDriver;
+            WebElement element = weCurrentItems.findElement(By.xpath("./following-sibling::script"));
+            String googleMarker = (String) jse.executeScript("return arguments[0].text", element);
+            googleMarker = googleMarker.replaceAll("^\\s+|\\s+$|\\s*(\n)\\s*|(\\s)\\s*", "$1$2").replace("\t", "");
+            googleMarker = googleMarker.trim();
+
+            Pattern pattern = Pattern.compile("^.*googlemap\\.addMarker\\(new Marker\\(([\\d]+\\.[\\d]*), ([\\d]+\\.[\\d]*).*$");
+            Matcher matcher = pattern.matcher(googleMarker);
+            String result = null;
+            while ( matcher.find() )
+                result = matcher.group(0);
+            logger.debug("Google coordinate : " + result);
+            String[] futureCoordinates = result.split(",");
+            toReturn = new Coordinates(Double.parseDouble(futureCoordinates[0].split("\\(")[2]), Double.parseDouble(futureCoordinates[1]));
+        }
+        catch( NoSuchElementException nsee ) {
+        }
+        finally {
+            return toReturn;
+        }
     }
 
 }

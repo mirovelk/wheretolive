@@ -57,3 +57,19 @@ public class KauflandTest implements IKaufland {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

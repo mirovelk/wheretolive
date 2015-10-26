@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.core.domain.MapObject;
 import xyz.wheretolive.crawl.geocoding.GoogleGeocoder;
 import xyz.wheretolive.crawl.pageObject.BillaMap;
@@ -36,7 +37,9 @@ public class KauflandCrawler implements Crawler {
             List<MapObject> toReturn = new LinkedList<>();
 
             for ( int i = 0; i < kauflandItems.size(); i++) {
-                toReturn.add(new MapObject(kauflandMap.getGoogleUrlDetails(kauflandItems.get(i))));
+                Coordinates currentCoordinates = kauflandMap.getGoogleCoordinatesFromScript(kauflandItems.get(i));
+                if ( currentCoordinates != null)
+                    toReturn.add(new MapObject(currentCoordinates));
             }
             
             return toReturn;

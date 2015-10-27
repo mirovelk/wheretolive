@@ -1,8 +1,10 @@
 package xyz.wheretolive.crawl;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -37,12 +39,17 @@ public class KauflandCrawler implements Crawler {
                     .loadAllResults();
 
             List<WebElement> kauflandItems = kauflandMap.getResults();
-            List<MapObject> toReturn = new LinkedList<>();
+            Set<Coordinates> coordinates = new HashSet<>();
 
-            for ( int i = 0; i < kauflandItems.size(); i++) {
+            for (int i = 0; i < kauflandItems.size(); i++) {
                 Coordinates currentCoordinates = kauflandMap.getGoogleCoordinatesFromScript(kauflandItems.get(i));
-                if ( currentCoordinates != null)
-                    toReturn.add(new FoodMarket(currentCoordinates, KAUFLAND));
+                if (currentCoordinates != null)
+                    coordinates.add(currentCoordinates);
+            }
+            
+            List<MapObject> toReturn = new LinkedList<>();
+            for (Coordinates coord : coordinates) {
+                toReturn.add(new FoodMarket(coord, KAUFLAND));
             }
             
             return toReturn;

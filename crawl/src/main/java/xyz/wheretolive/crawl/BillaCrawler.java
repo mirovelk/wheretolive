@@ -1,8 +1,10 @@
 package xyz.wheretolive.crawl;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -31,8 +33,7 @@ public class BillaCrawler implements Crawler {
 
             BillaMap billaMap = new BillaMap(webDriver);
             List<String> billaRegion = billaMap.getBillaRegion();
-            List<String> globalBillaShops = new LinkedList<>();
-            List<MapObject> toReturn = new LinkedList<>();
+            Set<String> globalBillaShops = new HashSet<>();
 
             for (String currentRegion : billaRegion) {
                 billaMap.get(BILLA_SHOPS_URL);
@@ -41,6 +42,7 @@ public class BillaCrawler implements Crawler {
                 globalBillaShops.addAll(billaShop);
             }
 
+            List<MapObject> toReturn = new LinkedList<>();
             for (String currentShopAddress : globalBillaShops) {
                 toReturn.add(new FoodMarket(geocoder.translate(currentShopAddress), BILLA));
             }

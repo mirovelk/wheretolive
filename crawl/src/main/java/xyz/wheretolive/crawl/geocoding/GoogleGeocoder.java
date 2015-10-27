@@ -2,6 +2,7 @@ package xyz.wheretolive.crawl.geocoding;
 
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -20,12 +21,21 @@ import xyz.wheretolive.mongo.GoogleGeocodeRepository;
 @Component
 public class GoogleGeocoder implements Geocoder {
 
+    private static final int MAX_REQUESTS_PER_SECOND = 10;
+
     private Logger logger = LogManager.getLogger(GoogleGeocoder.class);
 
     private static final String API_KEY = "AIzaSyCV8DEQzTGOuEp7DMd4cdUjvJaQlKpJCVE";
 
     @Autowired
     GoogleGeocodeRepository repository;
+    
+    LimitedQueue<Date> queue;
+    
+    public GoogleGeocoder() {
+        queue = new LimitedQueue<>(MAX_REQUESTS_PER_SECOND);
+        queue.add(new Date());
+    }
 
     @Override
     public Coordinates translate(String address) {
@@ -59,7 +69,10 @@ public class GoogleGeocoder implements Geocoder {
         return cached;
     }
     
-    private GoogleGeocodeResult query(String address) throws Exception{
+    private GoogleGeocodeResult query(String address) throws Exception {
+        while (queue.getFirst().toInstant().plusSeconds(1).isAfter(new Date().toInstant())) {
+            Thread.sleep(100);
+        }
         ObjectMapper mapper = new ObjectMapper();
         String encoded = URLEncoder.encode(address, "UTF-8");
         URL url = new URL("https://maps.googleapis.com/maps/api/geocode/json?address=" + encoded + "&key=" + API_KEY);

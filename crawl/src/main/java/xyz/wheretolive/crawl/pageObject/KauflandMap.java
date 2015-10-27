@@ -72,11 +72,7 @@ public class KauflandMap extends WebDriverCrawler implements IKauflandMap {
 
     public Coordinates getGoogleCoordinatesFromScript(WebElement weCurrentItems) {
         Coordinates toReturn = null;
-        WebElement weScript = null;
-
         try {
-            weScript = weCurrentItems.findElement(By.xpath("./following-sibling::script"));
-
             JavascriptExecutor jse = (JavascriptExecutor) webDriver;
             WebElement element = weCurrentItems.findElement(By.xpath("./following-sibling::script"));
             String googleMarker = (String) jse.executeScript("return arguments[0].text", element);

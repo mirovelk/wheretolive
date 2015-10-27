@@ -1,18 +1,19 @@
 package xyz.wheretolive.crawl.pageObject;
 
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+
 import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.crawl.selenium.WebDriverCrawler;
-
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by anthonymottot on 25/10/2015.
@@ -84,15 +85,15 @@ public class KauflandMap extends WebDriverCrawler implements IKauflandMap {
 
             Pattern pattern = Pattern.compile("^googlemap\\.addMarker\\(new Marker\\(([\\d]+\\.[\\d]*), ([\\d]+\\.[\\d]*).*$");
             Matcher matcher = pattern.matcher(googleMarker);
-            String altitude = null;
+            String latitude = null;
             String longitude = null;
 
             while ( matcher.find() ) {
-                altitude = matcher.group(1);
+                latitude = matcher.group(1);
                 longitude = matcher.group(2);
             }
-            logger.debug("Google coordinate : " + altitude + ", " + longitude);
-            toReturn = new Coordinates(Double.parseDouble(altitude), Double.parseDouble(longitude));
+            logger.debug("Google coordinate : " + latitude + ", " + longitude);
+            toReturn = new Coordinates(Double.parseDouble(latitude), Double.parseDouble(longitude));
         }
         catch( NoSuchElementException nsee ) {
         }

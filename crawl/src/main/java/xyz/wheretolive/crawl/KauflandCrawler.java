@@ -1,23 +1,26 @@
 package xyz.wheretolive.crawl;
 
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import xyz.wheretolive.core.domain.Coordinates;
+import xyz.wheretolive.core.domain.FoodMarket;
 import xyz.wheretolive.core.domain.MapObject;
 import xyz.wheretolive.crawl.geocoding.GoogleGeocoder;
-import xyz.wheretolive.crawl.pageObject.BillaMap;
 import xyz.wheretolive.crawl.pageObject.KauflandMap;
-
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 
 @Component
 public class KauflandCrawler implements Crawler {
-    
+
+    private static final String KAUFLAND = "Kaufland";
+
     @Autowired
     GoogleGeocoder geocoder;
     
@@ -39,7 +42,7 @@ public class KauflandCrawler implements Crawler {
             for ( int i = 0; i < kauflandItems.size(); i++) {
                 Coordinates currentCoordinates = kauflandMap.getGoogleCoordinatesFromScript(kauflandItems.get(i));
                 if ( currentCoordinates != null)
-                    toReturn.add(new MapObject(currentCoordinates));
+                    toReturn.add(new FoodMarket(currentCoordinates, KAUFLAND));
             }
             
             return toReturn;

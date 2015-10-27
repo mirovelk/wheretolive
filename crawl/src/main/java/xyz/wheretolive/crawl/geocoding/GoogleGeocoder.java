@@ -1,20 +1,21 @@
 package xyz.wheretolive.crawl.geocoding;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.core.geocoding.Geocoder;
 import xyz.wheretolive.core.geocoding.GoogleGeocodeResult;
 import xyz.wheretolive.core.geocoding.GoogleGeocoderException;
 import xyz.wheretolive.mongo.GoogleGeocodeRepository;
-
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.List;
-import java.util.Map;
 
 @Component
 public class GoogleGeocoder implements Geocoder {
@@ -51,7 +52,11 @@ public class GoogleGeocoder implements Geocoder {
     }
 
     private GoogleGeocodeResult getFromCache(String address) {
-        return repository.find(address);
+        GoogleGeocodeResult cached = repository.find(address);
+        if (cached != null) {
+            logger.info("Google geocode loaded from cache for address: '" + address + "'");
+        }
+        return cached;
     }
     
     private GoogleGeocodeResult query(String address) throws Exception{

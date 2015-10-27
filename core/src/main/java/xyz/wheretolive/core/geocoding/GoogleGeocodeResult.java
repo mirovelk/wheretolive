@@ -1,10 +1,10 @@
 package xyz.wheretolive.core.geocoding;
 
+import java.util.Map;
+
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
-
-import java.util.Map;
 
 @Entity("googleGeocodeResults")
 public class GoogleGeocodeResult {
@@ -15,6 +15,10 @@ public class GoogleGeocodeResult {
     private String query;
     
     private Map<String, Object> result;
+    
+    public GoogleGeocodeResult() {
+        
+    }
 
     public GoogleGeocodeResult(String query, Map<String, Object> result) {
         this.query = query;

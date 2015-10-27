@@ -1,20 +1,24 @@
 package xyz.wheretolive.crawl;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import xyz.wheretolive.core.domain.MapObject;
-import xyz.wheretolive.crawl.geocoding.GoogleGeocoder;
-import xyz.wheretolive.crawl.pageObject.BillaMap;
-
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import xyz.wheretolive.core.domain.FoodMarket;
+import xyz.wheretolive.core.domain.MapObject;
+import xyz.wheretolive.crawl.geocoding.GoogleGeocoder;
+import xyz.wheretolive.crawl.pageObject.BillaMap;
+
 @Component
 public class BillaCrawler implements Crawler {
-    
+
+    private static final String BILLA = "Billa";
+
     @Autowired
     GoogleGeocoder geocoder;
     
@@ -38,7 +42,7 @@ public class BillaCrawler implements Crawler {
             }
 
             for (String currentShopAddress : globalBillaShops) {
-                toReturn.add(new MapObject(geocoder.translate(currentShopAddress)));
+                toReturn.add(new FoodMarket(geocoder.translate(currentShopAddress), BILLA));
             }
             
             return toReturn;

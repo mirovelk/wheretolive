@@ -80,8 +80,13 @@ public class AlbertMap extends WebDriverCrawler implements IAlbertMap {
             WebElement currentUrlShop = currentShop.findElement(By.xpath(".//a[@class='clickable-more']"));
             logger.debug("Name: " + currentUrlShop.getText());
 
-//            currentUrlShop.sendKeys(Keys.CONTROL +"t"); // for non Mac
-            currentUrlShop.sendKeys(Keys.chord(Keys.COMMAND, Keys.ENTER)); // for Mac
+            String operatingSystem = System.getProperty("os.name").toLowerCase();
+            if (operatingSystem.contains("win"))
+                currentUrlShop.sendKeys(Keys.CONTROL +"t"); // for non Mac
+            else if (operatingSystem.contains("mac"))
+                currentUrlShop.sendKeys(Keys.chord(Keys.COMMAND, Keys.ENTER)); // for Mac
+            else
+                logger.debug("Test can't be run on your current system.");
 
             await().until(new Tab(webDriver), equalTo(2));
             ArrayList<String> tabs = new ArrayList<>(webDriver.getWindowHandles());
@@ -97,11 +102,6 @@ public class AlbertMap extends WebDriverCrawler implements IAlbertMap {
         }
 
         return toReturn;
-    }
-
-    private int WindowHandles(WebDriver webDriver) {
-        ArrayList<String> tabs = new ArrayList<>(webDriver.getWindowHandles());
-        return tabs.size();
     }
 }
 

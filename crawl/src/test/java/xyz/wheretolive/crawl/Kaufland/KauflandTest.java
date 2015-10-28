@@ -1,5 +1,8 @@
 package xyz.wheretolive.crawl.Kaufland;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.After;
@@ -11,17 +14,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import xyz.wheretolive.core.SpringConfig;
 import xyz.wheretolive.core.domain.MapObject;
+import xyz.wheretolive.crawl.KauflandCrawler;
 import xyz.wheretolive.crawl.pageObject.KauflandMap;
 
-import java.util.LinkedList;
-import java.util.List;
-
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {SpringConfig.class})
-public class KauflandTest implements IKaufland {
+@ContextConfiguration(classes = { SpringConfig.class })
+public class KauflandTest {
 
     private Logger logger = LogManager.getLogger(KauflandTest.class);
 
@@ -30,7 +31,7 @@ public class KauflandTest implements IKaufland {
     @Before
     public void setup() {
         webDriver = new ChromeDriver();
-        webDriver.get(KAUFLAND_MOBILE);
+        webDriver.get(KauflandCrawler.KAUFLAND_MOBILE);
     }
 
     @After
@@ -49,8 +50,9 @@ public class KauflandTest implements IKaufland {
         List<WebElement> kauflandItems = kauflandMap.getResults();
         List<MapObject> geoKaufland = new LinkedList<>();
 
-        for ( int i = 0; i < kauflandItems.size(); i++) {
-//            logger.debug(kauflandItems.get(i).findElement(By.xpath("./span[@class='msf-storelist-item-text']/span")).getText().replaceAll("<br>", "").trim());
+        for (int i = 0; i < kauflandItems.size(); i++) {
+//            logger.debug(kauflandItems.get(i).findElement(By.xpath("./span[@class='msf-storelist-item-text']/span")
+// ).getText().replaceAll("<br>", "").trim());
             logger.debug(kauflandMap.getGoogleUrlDetails(kauflandItems.get(i)));
             geoKaufland.add(new MapObject(kauflandMap.getGoogleUrlDetails(kauflandItems.get(i))));
         }

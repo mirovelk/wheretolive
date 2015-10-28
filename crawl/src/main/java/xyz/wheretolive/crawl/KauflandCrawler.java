@@ -23,9 +23,11 @@ public class KauflandCrawler implements Crawler {
 
     private static final String KAUFLAND = "Kaufland";
 
+    public static final String KAUFLAND_MOBILE = "http://m.kaufland.cz/Home/index.jsp?checkdevice=false&et_cid=2&et_lid=4";
+
     @Autowired
     GoogleGeocoder geocoder;
-    
+
     @Override
     public Collection<MapObject> crawl() {
         WebDriver webDriver = null;
@@ -46,12 +48,12 @@ public class KauflandCrawler implements Crawler {
                 if (currentCoordinates != null)
                     coordinates.add(currentCoordinates);
             }
-            
+
             List<MapObject> toReturn = new LinkedList<>();
             for (Coordinates coord : coordinates) {
                 toReturn.add(new FoodMarket(coord, KAUFLAND));
             }
-            
+
             return toReturn;
         } finally {
             if (webDriver != null) {

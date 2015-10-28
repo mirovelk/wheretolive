@@ -21,9 +21,11 @@ public class BillaCrawler implements Crawler {
 
     private static final String BILLA = "Billa";
 
+    public static final String BILLA_SHOPS_URL = "https://www.billa.cz/billa.controls/filialfinder/maps/pinpointv3/pinpoint3.32.html?fx=&dataUrl=https://service.cz.rewe.co.at/filialservice/filialjson.asmx/getfilialenjson?shopcd=%22CZ%22&language=CZE&country=CZ";
+
     @Autowired
     GoogleGeocoder geocoder;
-    
+
     @Override
     public Collection<MapObject> crawl() {
         WebDriver webDriver = null;
@@ -46,7 +48,7 @@ public class BillaCrawler implements Crawler {
             for (String currentShopAddress : globalBillaShops) {
                 toReturn.add(new FoodMarket(geocoder.translate(currentShopAddress), BILLA));
             }
-            
+
             return toReturn;
         } finally {
             if (webDriver != null) {

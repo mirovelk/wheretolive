@@ -1,21 +1,7 @@
 package xyz.wheretolive.crawl.pageObject;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.hamcrest.core.Is;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
-import xyz.wheretolive.core.domain.Coordinates;
-import xyz.wheretolive.core.domain.FoodMarket;
-import xyz.wheretolive.crawl.selenium.WebDriverCrawler;
-
 import static com.jayway.awaitility.Awaitility.*;
-import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.*;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -23,20 +9,34 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
+
+import xyz.wheretolive.core.domain.Coordinates;
+import xyz.wheretolive.core.domain.FoodMarket;
+import xyz.wheretolive.crawl.selenium.WebDriverCrawler;
+
 public class AlbertMap extends WebDriverCrawler implements IAlbertMap {
 
     private Logger logger = LogManager.getLogger(AlbertMap.class);
 
-    @FindBy ( xpath = SELECT_REGION )
+    @FindBy(xpath = SELECT_REGION)
     WebElement weSelectRegion;
 
-    @FindBy ( xpath = SELECT_DISTRICT )
+    @FindBy(xpath = SELECT_DISTRICT)
     WebElement weSelectDistrict;
 
-    @FindBy ( xpath = BUTTON_SEARCH )
+    @FindBy(xpath = BUTTON_SEARCH)
     WebElement weSearch;
 
-    @FindBy ( xpath = UL_LIST_SHOP )
+    @FindBy(xpath = UL_LIST_SHOP)
     WebElement weShopsContainer;
 
     public AlbertMap(WebDriver webDriver) {
@@ -47,7 +47,7 @@ public class AlbertMap extends WebDriverCrawler implements IAlbertMap {
     public Set<String> getRegions() {
         Set<String> toReturn = new LinkedHashSet<>();
         Select select = new Select(weSelectRegion);
-        for ( WebElement currentOption : select.getOptions() ) {
+        for (WebElement currentOption : select.getOptions()) {
             toReturn.add(currentOption.getText());
         }
         toReturn.remove("-- všechny --");
@@ -75,7 +75,7 @@ public class AlbertMap extends WebDriverCrawler implements IAlbertMap {
     public Set<FoodMarket> extractAddress() {
         Set<FoodMarket> toReturn = new LinkedHashSet<>();
         List<WebElement> liList = weShopsContainer.findElements(By.xpath("./li"));
-        for ( WebElement currentShop : liList ) {
+        for (WebElement currentShop : liList) {
 
             WebElement currentUrlShop = currentShop.findElement(By.xpath(".//a[@class='clickable-more']"));
             logger.debug("Name: " + currentUrlShop.getText());

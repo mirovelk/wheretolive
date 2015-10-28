@@ -26,7 +26,7 @@ public class BillaMap extends WebDriverCrawler implements IBillaMap {
         List<WebElement> weBillaShopsRegionList = getWebElements(weBillaShopContainer, "./a");
         List<String> billaRegion = new LinkedList<>();
 
-        for ( WebElement weCurrent : weBillaShopsRegionList) {
+        for (WebElement weCurrent : weBillaShopsRegionList) {
             logger.debug("Region to be treated : " + weCurrent.getText());
             billaRegion.add(weCurrent.getText());
         }
@@ -45,13 +45,14 @@ public class BillaMap extends WebDriverCrawler implements IBillaMap {
         List<WebElement> weBillaShopsList = getWebElements(weBillaShopContainer, ALL_SHOPS);
         List<String> billaShop = new LinkedList<>();
 
-        for ( WebElement weCurrent : weBillaShopsList ) {
-            logger.debug("Shop to be treated : " + getWebElement(weCurrent, ADDRESS_LINE1).getText() + " " + getWebElement(weCurrent, ADDRESS_LINE3).getText());
+        for (WebElement weCurrent : weBillaShopsList) {
+            logger.debug(
+                    "Shop to be treated : " + getWebElement(weCurrent, ADDRESS_LINE1).getText() + " " + getWebElement(
+                            weCurrent, ADDRESS_LINE3).getText());
             billaShop.add(weCurrent.getText());
         }
 
         return billaShop;
     }
-
 
 }

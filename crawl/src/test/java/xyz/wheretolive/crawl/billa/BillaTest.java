@@ -2,27 +2,24 @@ package xyz.wheretolive.crawl.billa;
 
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import xyz.wheretolive.crawl.BillaCrawler;
 import xyz.wheretolive.crawl.IntegrationTest;
 import xyz.wheretolive.crawl.pageObject.BillaMap;
 
-public class BillaTest extends IntegrationTest implements IBilla{
-
-    private Logger logger = LogManager.getLogger(BillaTest.class);
+public class BillaTest extends IntegrationTest {
 
     WebDriver webDriver;
 
     @Before
     public void setup() {
         webDriver = new ChromeDriver();
-        webDriver.get(BILLA_SHOPS_URL);
+        webDriver.get(BillaCrawler.BILLA_SHOPS_URL);
     }
 
     @After
@@ -35,8 +32,8 @@ public class BillaTest extends IntegrationTest implements IBilla{
         BillaMap billaMap = new BillaMap(webDriver);
         List<String> billaRegion = billaMap.getBillaRegion();
 
-        for ( String currentRegion : billaRegion ) {
-            billaMap.get(BILLA_SHOPS_URL);
+        for (String currentRegion : billaRegion) {
+            billaMap.get(BillaCrawler.BILLA_SHOPS_URL);
             billaMap.clickRegion(currentRegion);
             List<String> billaShop = billaMap.getAddresses();
         }

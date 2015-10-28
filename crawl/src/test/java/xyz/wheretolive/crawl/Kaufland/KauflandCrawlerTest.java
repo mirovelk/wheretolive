@@ -1,8 +1,10 @@
-package xyz.wheretolive.crawl;
+package xyz.wheretolive.crawl.Kaufland;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import xyz.wheretolive.core.domain.MapObject;
+import xyz.wheretolive.crawl.IntegrationTest;
+import xyz.wheretolive.crawl.KauflandCrawler;
 
 import java.util.Collection;
 

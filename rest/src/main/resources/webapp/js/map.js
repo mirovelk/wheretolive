@@ -7,20 +7,23 @@ function center() {
     });
 }
 
-$.getJSON = function(url, data, headers, callback) {
+$.postJSON = function(url, data, callback) {
     return $.ajax({
-        'type': 'GET',
+        'type': 'POST',
         'url': url,
         'contentType': 'application/json',
         'data': data,
         'dataType': 'json',
         'success': callback,
-        'headers': headers
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
     });
 };
 
 function loadMapObjects() {
-    getJSON("ws/mapObject/all", {}, {}, function (data, status) {
-        
+    $.postJSON("ws/mapObject/all", {}, {}, function (data, status) {
+        alert(status);
     });
 }

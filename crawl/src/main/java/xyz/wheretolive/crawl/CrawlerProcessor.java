@@ -11,10 +11,10 @@ import xyz.wheretolive.mongo.MapObjectRepository;
 
 @Component
 public class CrawlerProcessor {
-    
+
     @Autowired
     private List<Crawler> crawlers;
-    
+
     @Autowired
     private MapObjectRepository repository;
 

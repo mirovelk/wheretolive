@@ -1,7 +1,9 @@
 package xyz.wheretolive.rest;
 
 import java.util.Collection;
+import javax.annotation.PostConstruct;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -21,10 +23,19 @@ import xyz.wheretolive.core.domain.TrafficStop;
 @Produces(MediaType.APPLICATION_JSON)
 public class MapObjectResource {
     
+    public MapObjectResource() {
+        String a = "a";
+    }
+    
     @Autowired
     MapObjectResourceService service;
     
-    @POST
+    @PostConstruct
+    public void asdf() {
+        String b = "b";
+    }
+    
+    @GET
     @Path("/test")
     public String test() {
         return "test";

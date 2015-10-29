@@ -15,7 +15,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import xyz.wheretolive.core.SpringConfig;
+import xyz.wheretolive.core.config.SpringConfig;
 import xyz.wheretolive.core.domain.MapObject;
 import xyz.wheretolive.crawl.KauflandCrawler;
 import xyz.wheretolive.crawl.pageObject.KauflandMap;

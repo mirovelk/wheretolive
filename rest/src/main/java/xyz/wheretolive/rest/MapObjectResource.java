@@ -1,61 +1,46 @@
 package xyz.wheretolive.rest;
 
 import java.util.Collection;
-import javax.annotation.PostConstruct;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import xyz.wheretolive.core.domain.FoodMarket;
-import xyz.wheretolive.core.domain.MapObject;
 import xyz.wheretolive.core.domain.MapView;
 import xyz.wheretolive.core.domain.TrafficStop;
 
-@Path("/mapObject")
-@Component
+@RequestMapping("/mapObject")
+@Controller
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class MapObjectResource {
     
-    public MapObjectResource() {
-        String a = "a";
-    }
-    
     @Autowired
     MapObjectResourceService service;
     
-    @PostConstruct
-    public void asdf() {
-        String b = "b";
-    }
-    
-    @GET
-    @Path("/test")
-    public String test() {
+    @RequestMapping("/test")
+    public @ResponseBody String test() {
         return "test";
     }
 
-    @POST
-    @Path("/all")
-    public Collection<MapObject> getIn(MapView view) {
+    @RequestMapping(value = "/all", method = RequestMethod.POST)
+    public @ResponseBody Object getIn(MapView view) {
         return service.getIn(view);
     }
 
-    @POST
-    @Path("/trafficStops")
-    public Collection<TrafficStop> getTrafficStopsIn(MapView view) {
+    @RequestMapping(value = "/trafficStops", method = RequestMethod.POST)
+    public @ResponseBody Collection<TrafficStop> getTrafficStopsIn(MapView view) {
         return service.getIn(view, TrafficStop.class);
     }
 
-    @POST
-    @Path("/foodMarkets")
-    public Collection<FoodMarket> getFoodMarketsIn(MapView view) {
+    @RequestMapping(value = "/foodMarkets", method = RequestMethod.POST)
+    public @ResponseBody Collection<FoodMarket> getFoodMarketsIn(MapView view) {
         return service.getIn(view, FoodMarket.class);
     }
 }

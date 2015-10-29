@@ -2,9 +2,13 @@ package xyz.wheretolive.core.domain;
 
 public class MapView {
     
-    private final Coordinates topLeft;
+    private Coordinates topLeft;
 
-    private final Coordinates bottomRight;
+    private Coordinates bottomRight;
+    
+    public MapView() {
+        
+    }
 
     public MapView(Coordinates topLeft, Coordinates bottomRight) {
         this.topLeft = topLeft;
@@ -18,8 +22,19 @@ public class MapView {
     public Coordinates getTopLeft() {
         return topLeft;
     }
+
+    public void setBottomRight(Coordinates bottomRight) {
+        this.bottomRight = bottomRight;
+    }
+
+    public void setTopLeft(Coordinates topLeft) {
+        this.topLeft = topLeft;
+    }
     
     public double getMaxDimension() {
+        if (topLeft == null || bottomRight == null) {
+            return 0;
+        }
         return Math.max(Math.abs(topLeft.getLatitude() - bottomRight.getLatitude()),
                 Math.abs(topLeft.getLongitude() - bottomRight.getLongitude()));
     }

@@ -23,7 +23,7 @@ $.postJSON = function(url, data, callback) {
 };
 
 function loadMapObjects() {
-    $.postJSON("ws/mapObject/all", {}, {}, function (data, status) {
+    $.postJSON("mapObject/all", {}, {}, function (data, status) {
         alert(status);
     });
 }

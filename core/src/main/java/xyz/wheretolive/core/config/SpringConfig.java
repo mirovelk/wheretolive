@@ -1,4 +1,4 @@
-package xyz.wheretolive.core;
+package xyz.wheretolive.core.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

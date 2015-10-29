@@ -5,7 +5,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import xyz.wheretolive.core.SpringConfig;
+import xyz.wheretolive.core.config.SpringConfig;
 import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.core.domain.Line;
 import xyz.wheretolive.core.domain.TrafficStop;

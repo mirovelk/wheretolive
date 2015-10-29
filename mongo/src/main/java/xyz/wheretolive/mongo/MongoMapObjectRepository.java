@@ -1,12 +1,13 @@
 package xyz.wheretolive.mongo;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import xyz.wheretolive.core.domain.MapObject;
-import xyz.wheretolive.core.domain.MapView;
-
 import java.util.ArrayList;
 import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import xyz.wheretolive.core.domain.MapObject;
+import xyz.wheretolive.core.domain.MapView;
 
 @Repository
 public class MongoMapObjectRepository implements MapObjectRepository {
@@ -33,7 +34,7 @@ public class MongoMapObjectRepository implements MapObjectRepository {
         Collection<MapObject> mapObjects = getIn(view);
         Collection<E> result = new ArrayList<>();
         for (MapObject mo : mapObjects) {
-            if (mo.getClass() == type) {
+            if (type.isAssignableFrom(mo.getClass())) {
                 result.add((E) mo);
             }
         }

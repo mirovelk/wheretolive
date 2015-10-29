@@ -1,6 +1,7 @@
 package xyz.wheretolive.crawl.pageObject;
 
 import xyz.wheretolive.core.domain.FoodMarket;
+import xyz.wheretolive.core.domain.MapObject;
 
 import java.util.Set;
 

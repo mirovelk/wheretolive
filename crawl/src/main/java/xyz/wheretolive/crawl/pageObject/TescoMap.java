@@ -1,6 +1,13 @@
 package xyz.wheretolive.crawl.pageObject;
 
-import org.apache.commons.collections.map.LinkedMap;
+import static com.jayway.awaitility.Awaitility.*;
+import static org.hamcrest.CoreMatchers.*;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -9,14 +16,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import xyz.wheretolive.core.domain.Coordinates;
+
 import xyz.wheretolive.core.domain.FoodMarket;
 import xyz.wheretolive.crawl.selenium.WebDriverCrawler;
-
-import java.util.*;
-
-import static com.jayway.awaitility.Awaitility.await;
-import static org.hamcrest.CoreMatchers.equalTo;
 
 /**
  * Created by anthonymottot on 29/10/2015.

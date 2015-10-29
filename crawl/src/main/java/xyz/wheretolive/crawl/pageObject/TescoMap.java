@@ -23,9 +23,14 @@ import xyz.wheretolive.crawl.selenium.WebDriverCrawler;
 /**
  * Created by anthonymottot on 29/10/2015.
  */
-public class TescoMap extends WebDriverCrawler implements ITescoMap {
+public class TescoMap extends WebDriverCrawler {
 
     private Logger logger = LogManager.getLogger(BillaMap.class);
+
+    private static final String SHOPS_CONTAINER = "//div[@id='store-list']";
+    private static final String SHOPS_ITEMS = ".//div[@class='store-item']";
+    private static final String SHOP_NAME = "./h3/a";
+    private static final String SHOP_ADDRESS = "./span[@class='address']";
 
     @FindBy ( xpath = SHOPS_CONTAINER )
     WebElement weShopsContainer;
@@ -35,7 +40,6 @@ public class TescoMap extends WebDriverCrawler implements ITescoMap {
         PageFactory.initElements(webDriver, this);
     }
 
-    @Override
     public Set<FoodMarket> getShopsList() {
         Set<FoodMarket> toReturn = new HashSet<>();
         List<WebElement> shopItems = weShopsContainer.findElements(By.xpath(SHOPS_ITEMS));

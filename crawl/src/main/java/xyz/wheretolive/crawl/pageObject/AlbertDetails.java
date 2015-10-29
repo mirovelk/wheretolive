@@ -1,24 +1,27 @@
 package xyz.wheretolive.crawl.pageObject;
 
+import java.net.URLDecoder;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
 import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.crawl.selenium.WebDriverCrawler;
-
-import java.net.URLDecoder;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by anthonymottot on 28/10/2015.
  */
-public class AlbertDetails extends WebDriverCrawler implements IAlbertDetails {
+public class AlbertDetails extends WebDriverCrawler {
 
     private Logger logger = LogManager.getLogger(AlbertMap.class);
+
+    private static final String GOOGLE_MAP_LINK = "//a[contains(., 'Zobrazit velkou mapu')]";
 
     @FindBy ( xpath = GOOGLE_MAP_LINK )
     WebElement weGoogleMap;

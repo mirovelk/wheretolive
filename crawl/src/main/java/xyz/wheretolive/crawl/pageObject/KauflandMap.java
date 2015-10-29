@@ -18,9 +18,15 @@ import xyz.wheretolive.crawl.selenium.WebDriverCrawler;
 /**
  * Created by anthonymottot on 25/10/2015.
  */
-public class KauflandMap extends WebDriverCrawler implements IKauflandMap {
+public class KauflandMap extends WebDriverCrawler {
 
     private Logger logger = LogManager.getLogger(KauflandMap.class);
+
+    private static final String SEARCH = "//input[@name='searchstore']";
+    private static final String DO_SEARCH = "//button[contains(., 'Vyhledat')]";
+    private static final String RESULT_CONTAINER = "//div[@class='msf-search']";
+    private static final String STORE_ITEM = ".//a[@class='msf-storelist-item']";
+    private static final String NEXT_PAGE = "//a[@class='navibar-btn-right']";
 
     public KauflandMap(WebDriver webDriver) {
         super(webDriver);

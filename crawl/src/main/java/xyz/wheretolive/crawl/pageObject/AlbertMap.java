@@ -20,9 +20,15 @@ import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.core.domain.FoodMarket;
 import xyz.wheretolive.crawl.selenium.WebDriverCrawler;
 
-public class AlbertMap extends WebDriverCrawler implements IAlbertMap {
+public class AlbertMap extends WebDriverCrawler {
 
     private Logger logger = LogManager.getLogger(AlbertMap.class);
+
+    private static final String SELECT_REGION = "//select[@id = 'select-region']";
+    private static final String SELECT_DISTRICT = "//select[@id = 'select-district']";
+    private static final String BUTTON_SEARCH = "//button[contains(., 'Vyhledat')]";
+    private static final String UL_LIST_SHOP = "//ul[@class='tabular-list']";
+    private static final String LINK_SHOPS = "//a[@class='clickable-more']";
 
     @FindBy(xpath = SELECT_REGION)
     WebElement weSelectRegion;

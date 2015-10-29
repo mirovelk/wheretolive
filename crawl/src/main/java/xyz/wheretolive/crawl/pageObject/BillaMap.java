@@ -13,9 +13,15 @@ import xyz.wheretolive.crawl.selenium.WebDriverCrawler;
 /**
  * Created by anthonymottot on 25/10/2015.
  */
-public class BillaMap extends WebDriverCrawler implements IBillaMap {
+public class BillaMap extends WebDriverCrawler {
 
     private Logger logger = LogManager.getLogger(BillaMap.class);
+
+    private static final String BILLA_SHOPS_CONTAINTER = "//div[@id='WW_myList_control_content']";
+    //    private static final String ALL_SHOPS = "./div[contains(@class, 'ww_abstract_location_list CZ_')]//table//td[@class='ww_abstract_location_list_table_row_column2']/a[@class='ww_abstract_location_list_table_row_column_address']";
+    private static final String ALL_SHOPS = ".//a[@class='ww_abstract_location_list_table_row_column_address']";
+    private static final String ADDRESS_LINE1 = ".//div[contains(@class, 'ww_address_line0')]";
+    private static final String ADDRESS_LINE3 = ".//div[contains(@class, 'ww_address_line3')]";
 
     public BillaMap(WebDriver webDriver) {
         super(webDriver);

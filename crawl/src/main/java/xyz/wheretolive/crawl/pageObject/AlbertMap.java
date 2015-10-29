@@ -11,10 +11,7 @@ import java.util.concurrent.Callable;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
@@ -78,19 +75,16 @@ public class AlbertMap extends WebDriverCrawler implements IAlbertMap {
         for (WebElement currentShop : liList) {
 
             WebElement currentUrlShop = currentShop.findElement(By.xpath(".//a[@class='clickable-more']"));
+            String urlShop = currentUrlShop.getAttribute("href");
             logger.debug("Name: " + currentUrlShop.getText());
 
-            String operatingSystem = System.getProperty("os.name").toLowerCase();
-            if (operatingSystem.contains("win"))
-                currentUrlShop.sendKeys(Keys.CONTROL +"t"); // for non Mac
-            else if (operatingSystem.contains("mac"))
-                currentUrlShop.sendKeys(Keys.chord(Keys.COMMAND, Keys.ENTER)); // for Mac
-            else
-                logger.debug("Test can't be run on your current system.");
+            JavascriptExecutor jse = (JavascriptExecutor) webDriver;
+            jse.executeScript("window.open()");
 
             await().until(new Tab(webDriver), equalTo(2));
             ArrayList<String> tabs = new ArrayList<>(webDriver.getWindowHandles());
             webDriver.switchTo().window(tabs.get(1));
+            webDriver.get(urlShop);
             Coordinates coordinates = (new AlbertDetails(webDriver)).getCoordinates();
             webDriver.close();
             await().until(new Tab(webDriver), equalTo(1));

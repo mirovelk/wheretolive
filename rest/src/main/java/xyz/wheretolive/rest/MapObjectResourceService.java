@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import xyz.wheretolive.core.domain.MapObject;
 import xyz.wheretolive.core.domain.MapView;
-import xyz.wheretolive.core.domain.NameableMapObject;
 import xyz.wheretolive.mongo.MapObjectRepository;
 
 @Component
@@ -26,7 +25,7 @@ public class MapObjectResourceService {
         return repository.getIn(view, type);
     }
 
-    public Collection<NameableMapObject> getIn(MapView view) {
-        return getIn(view, NameableMapObject.class);
+    public Collection<MapObject> getIn(MapView view) {
+        return getIn(view, MapObject.class);
     }
 }

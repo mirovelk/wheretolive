@@ -23,7 +23,19 @@ $.postJSON = function(url, data, callback) {
 };
 
 function loadMapObjects() {
-    $.postJSON("mapObject/all", {}, {}, function (data, status) {
-        alert(status);
+    $.postJSON("mapObject/all", {}, function (data, status) {
+        data.map(function(item) {
+            var image;
+            if (item.name == "Billa") {
+                image = 'img/billa.png';
+            } else if (item.name == "Kaufland") {
+                image = 'img/kaufland.png';
+            }
+            var marker = new google.maps.Marker({
+                position: {lat: item.location.latitude, lng: item.location.longitude},
+                map: map,
+                icon: image
+            });
+        });
     });
 }

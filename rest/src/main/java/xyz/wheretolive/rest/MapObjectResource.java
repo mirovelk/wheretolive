@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import xyz.wheretolive.core.domain.FoodMarket;
+import xyz.wheretolive.core.domain.MapObject;
 import xyz.wheretolive.core.domain.MapView;
 import xyz.wheretolive.core.domain.TrafficStop;
 
@@ -30,7 +31,7 @@ public class MapObjectResource {
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.POST)
-    public @ResponseBody Object getIn(MapView view) {
+    public @ResponseBody Collection<MapObject> getIn(MapView view) {
         return service.getIn(view);
     }
 

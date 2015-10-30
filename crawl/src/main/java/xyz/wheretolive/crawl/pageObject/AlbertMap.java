@@ -1,21 +1,12 @@
 package xyz.wheretolive.crawl.pageObject;
 
-import static com.jayway.awaitility.Awaitility.*;
-import static org.hamcrest.CoreMatchers.*;
-
 import java.util.*;
-import java.util.concurrent.Callable;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
-
 import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.core.domain.FoodMarket;
 import xyz.wheretolive.core.domain.MapObject;

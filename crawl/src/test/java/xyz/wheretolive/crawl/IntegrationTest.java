@@ -1,21 +1,22 @@
 package xyz.wheretolive.crawl;
 
+import static xyz.wheretolive.core.domain.LineType.*;
+
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import xyz.wheretolive.core.config.SpringConfig;
 import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.core.domain.Line;
 import xyz.wheretolive.core.domain.TrafficStop;
 import xyz.wheretolive.mongo.GoogleGeocodeRepository;
 import xyz.wheretolive.mongo.MongoDatastoreProvider;
-
-import java.util.Arrays;
-import java.util.List;
-
-import static xyz.wheretolive.core.domain.LineType.TRAM;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {SpringConfig.class})
@@ -27,14 +28,10 @@ public class IntegrationTest {
     @Autowired
     GoogleGeocodeRepository googleGeocodeRepository;
     
-    @Autowired
-    BillaCrawler billaCrawler;
-    
     @Test
     public void testDependencies() {
         assert mongoDatastoreProvider != null;
         assert googleGeocodeRepository != null;
-        assert billaCrawler != null;
     }
     
     @Test

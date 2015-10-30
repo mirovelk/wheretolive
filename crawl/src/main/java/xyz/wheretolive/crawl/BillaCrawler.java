@@ -46,7 +46,7 @@ public class BillaCrawler implements Crawler {
 
             List<MapObject> toReturn = new LinkedList<>();
             for (String currentShopAddress : globalBillaShops) {
-                toReturn.add(new FoodMarket(geocoder.translate(currentShopAddress), BILLA));
+                toReturn.add(new FoodMarket(geocoder.translate(currentShopAddress), BILLA, null));
             }
 
             return toReturn;

@@ -51,7 +51,7 @@ public class KauflandCrawler implements Crawler {
 
             List<MapObject> toReturn = new LinkedList<>();
             for (Coordinates coord : coordinates) {
-                toReturn.add(new FoodMarket(coord, KAUFLAND));
+                toReturn.add(new FoodMarket(coord, KAUFLAND, null));
             }
 
             return toReturn;

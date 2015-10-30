@@ -1,7 +1,10 @@
 package xyz.wheretolive.crawl.http;
 
-import com.google.gson.*;
-import com.google.gson.internal.LinkedTreeMap;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -10,11 +13,12 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.internal.LinkedTreeMap;
 import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.core.domain.FoodMarket;
-
-import java.io.IOException;
-import java.util.*;
 
 /**
  * Created by anthonymottot on 30/10/2015.
@@ -71,7 +75,7 @@ public class HttpTesco {
         for ( LinkedTreeMap<String, Object> currentTesco : (ArrayList<LinkedTreeMap<String, Object>>) tescoObjectList.getResult().get("shops") ) {
             logger.debug("geo localization for "+ currentTesco.get("name") + " : " + currentTesco.get("gps_lat") + ", " + currentTesco.get("gps_lon"));
             Coordinates coordinates = new Coordinates(Double.parseDouble((String)currentTesco.get("gps_lat")), Double.parseDouble((String)currentTesco.get("gps_lon")));
-            toReturn.add(new FoodMarket(coordinates, (String)currentTesco.get("name")));
+            toReturn.add(new FoodMarket(coordinates, (String)currentTesco.get("name"), null));
         }
 
         return toReturn;

@@ -1,16 +1,18 @@
 package xyz.wheretolive.mongo;
 
+import static org.junit.Assert.*;
+
+import java.util.Collection;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.core.domain.FoodMarket;
 import xyz.wheretolive.core.domain.MapObject;
-import java.util.Collection;
-
-import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class MongoMapObjectRepositoryTest extends MongoTest {
@@ -27,7 +29,7 @@ public class MongoMapObjectRepositoryTest extends MongoTest {
     public void test() {
         MapObject mapObject = new MapObject(new Coordinates(45.235, 12.365));
         repository.store(mapObject);
-        FoodMarket foodMarket = new FoodMarket(new Coordinates(5.4, 6.54), "albert");
+        FoodMarket foodMarket = new FoodMarket(new Coordinates(5.4, 6.54), "albert", null);
         repository.store(foodMarket);
 
         Collection<MapObject> mapObjects = repository.getIn(null);
@@ -38,7 +40,7 @@ public class MongoMapObjectRepositoryTest extends MongoTest {
     public void test2() {
         MapObject mapObject = new MapObject(new Coordinates(45.235, 12.365));
         repository.store(mapObject);
-        FoodMarket foodMarket = new FoodMarket(new Coordinates(5.4, 6.54), "albert");
+        FoodMarket foodMarket = new FoodMarket(new Coordinates(5.4, 6.54), "albert", null);
         repository.store(foodMarket);
 
         Collection<FoodMarket> mapObjects = repository.getIn(null, FoodMarket.class);

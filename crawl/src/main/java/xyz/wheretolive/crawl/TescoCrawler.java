@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import xyz.wheretolive.core.domain.FoodMarket;
 import xyz.wheretolive.core.domain.MapObject;
 import xyz.wheretolive.crawl.geocoding.GoogleGeocoder;
@@ -17,6 +18,7 @@ import xyz.wheretolive.crawl.http.HttpTesco;
 public class TescoCrawler implements Crawler {
 
     private Logger logger = LogManager.getLogger(TescoCrawler.class);
+    
     private final String TESCO = "Tesco";
 
     @Autowired

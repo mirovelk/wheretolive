@@ -10,7 +10,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.core.domain.FoodMarket;
@@ -18,7 +17,7 @@ import xyz.wheretolive.core.domain.MapObject;
 import xyz.wheretolive.crawl.geocoding.GoogleGeocoder;
 import xyz.wheretolive.crawl.pageObject.KauflandMap;
 
-@Component
+//@Component
 public class KauflandCrawler implements Crawler {
 
     private static final String KAUFLAND = "Kaufland";

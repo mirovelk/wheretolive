@@ -37,13 +37,17 @@ $.postJSON = function(url, requestData, callback) {
 var foodMarketMarkers = [];
 function loadFoodMarkets() {
     $.postJSON("mapObject/foodMarkets", {}, function (data, status) {
-        removeMarkers(foodMarketMarkers);
         data.map(function(item) {
+            if (contains(foodMarketMarkers, item)) {
+                return;
+            }
             var image;
             if (item.name == "Billa") {
                 image = 'img/billa.png';
             } else if (item.name == "Kaufland") {
                 image = 'img/kaufland.png';
+            } else if (item.name == "Tesco") {
+                image = 'img/tesco.png';
             }
             var marker = new google.maps.Marker({
                 position: {lat: item.location.latitude, lng: item.location.longitude},
@@ -55,16 +59,17 @@ function loadFoodMarkets() {
     });
 }
 
-var housingMarkers = [];
+var housingMarkers = []
 function loadHousing() {
     $.postJSON("mapObject/housing", {}, function (data, status) {
         var maxPricePerSquareMeter = 300;
         var minPricePerSquareMeter = 100;
         var difference = maxPricePerSquareMeter - minPricePerSquareMeter;
         
-        var newHousingMarkers = [];
-        
         data.map(function(item) {
+            if (contains(housingMarkers, item)) {
+                return;
+            }
             var pricePerSquareMeter = item.price / item.area;
             var percent = (pricePerSquareMeter - minPricePerSquareMeter) / difference;
             var color = getColor(Math.max(0, Math.min(percent * 100, 100)));
@@ -79,7 +84,7 @@ function loadHousing() {
                     fillOpacity: 1
                 }
             });
-            newHousingMarkers.push(marker);
+            housingMarkers.push(marker);
             if (typeof item.bezRealitkyId != 'undefined') {
                 var link = "<div><a href='http://www.bezrealitky.cz/nemovitosti-byty-domy/" + item.bezRealitkyId + "'><h2>Bez realitky</h2></a>";
             } else if (typeof item.sRealityId != 'undefined') {
@@ -96,8 +101,6 @@ function loadHousing() {
                 infoWindow.open(map, marker);
             });
         });
-        removeMarkers(housingMarkers);
-        housingMarkers = newHousingMarkers;
     });
 }
 
@@ -108,8 +111,12 @@ function getColor(percent) {
     return "rgb(" + r + "," + g + "," + b + ")";
 }
 
-function removeMarkers(markers) {
+function contains(markers, item) {
     for (var i = 0; i < markers.length; i++) {
-        markers[i].setMap(null);
+        if (Math.abs(markers[i].position.lat() - item.location.latitude) < 0.000001
+        && Math.abs(markers[i].position.lng() - item.location.longitude) < 0.000001) {
+            return true;
+        }
     }
+    return false;
 }

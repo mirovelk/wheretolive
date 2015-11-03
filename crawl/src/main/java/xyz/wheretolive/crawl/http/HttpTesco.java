@@ -27,6 +27,7 @@ public class HttpTesco {
 
     private Logger logger = LogManager.getLogger(HttpTesco.class);
     private final String TESCO_URL = "http://www.itesco.cz/com/app/shopLayer:getShops";
+    private final String TESCO = "Tesco";
 
     public String getTescoJson() {
         String toReturn = null;
@@ -75,7 +76,8 @@ public class HttpTesco {
         for ( LinkedTreeMap<String, Object> currentTesco : (ArrayList<LinkedTreeMap<String, Object>>) tescoObjectList.getResult().get("shops") ) {
             logger.debug("geo localization for "+ currentTesco.get("name") + " : " + currentTesco.get("gps_lat") + ", " + currentTesco.get("gps_lon"));
             Coordinates coordinates = new Coordinates(Double.parseDouble((String)currentTesco.get("gps_lat")), Double.parseDouble((String)currentTesco.get("gps_lon")));
-            toReturn.add(new FoodMarket(coordinates, (String)currentTesco.get("name"), null));
+            toReturn.add(new FoodMarket(coordinates, TESCO, null));
+            //(String)currentTesco.get("name")
         }
 
         return toReturn;

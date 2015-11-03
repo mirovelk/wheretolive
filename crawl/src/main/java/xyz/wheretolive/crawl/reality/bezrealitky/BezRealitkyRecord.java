@@ -1,7 +1,5 @@
 package xyz.wheretolive.crawl.reality.bezrealitky;
 
-import java.math.BigDecimal;
-
 public class BezRealitkyRecord {
     
     private String id;
@@ -10,7 +8,7 @@ public class BezRealitkyRecord {
     private boolean highlight;
     private String title;
     private boolean ideveloper;
-    private BigDecimal price;
+    private double price;
     private double surface;
     private long time_order;
     private String image;
@@ -73,11 +71,11 @@ public class BezRealitkyRecord {
         this.ideveloper = ideveloper;
     }
 
-    public BigDecimal getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

@@ -37,7 +37,7 @@
                 <version>0.1.0</version>
                 <executions>
                     <execution>
-                        <id>execution</id>
+                        <sRealityId>execution</sRealityId>
                         <phase>verify</phase>
                         <goals>
                             <goal>generate</goal>

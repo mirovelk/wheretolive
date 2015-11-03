@@ -26,7 +26,13 @@ public class MongoMapObjectRepository implements MapObjectRepository {
 
     @Override
     public Collection<MapObject> getIn(MapView view) {
-        return datastoreProvider.getDatastore().createQuery(MapObject.class).asList();
+        return datastoreProvider.getDatastore()
+                .createQuery(MapObject.class)
+                .filter("location.latitude >", view.getSouthWest().getLatitude())
+                .filter("location.longitude >", view.getSouthWest().getLongitude())
+                .filter("location.latitude <", view.getNorthEast().getLatitude())
+                .filter("location.longitude <", view.getNorthEast().getLongitude())
+                .asList();
     }
 
     @Override

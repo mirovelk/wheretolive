@@ -7,11 +7,13 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import xyz.wheretolive.core.domain.FoodMarket;
+import xyz.wheretolive.core.domain.Housing;
 import xyz.wheretolive.core.domain.MapObject;
 import xyz.wheretolive.core.domain.MapView;
 import xyz.wheretolive.core.domain.TrafficStop;
@@ -41,7 +43,12 @@ public class MapObjectResource {
     }
 
     @RequestMapping(value = "/foodMarkets", method = RequestMethod.POST)
-    public @ResponseBody Collection<FoodMarket> getFoodMarketsIn(MapView view) {
+    public @ResponseBody Collection<FoodMarket> getFoodMarketsIn(@RequestBody MapView view) {
         return service.getIn(view, FoodMarket.class);
+    }
+
+    @RequestMapping(value = "/housing", method = RequestMethod.POST)
+    public @ResponseBody Collection<Housing> getHousingIn(@RequestBody MapView view) {
+        return service.getIn(view, Housing.class);
     }
 }

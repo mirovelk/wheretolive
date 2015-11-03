@@ -2,40 +2,40 @@ package xyz.wheretolive.core.domain;
 
 public class MapView {
     
-    private Coordinates topLeft;
+    private Coordinates northEast;
 
-    private Coordinates bottomRight;
+    private Coordinates southWest;
     
     public MapView() {
         
     }
 
-    public MapView(Coordinates topLeft, Coordinates bottomRight) {
-        this.topLeft = topLeft;
-        this.bottomRight = bottomRight;
+    public MapView(Coordinates northEast, Coordinates southWest) {
+        this.northEast = northEast;
+        this.southWest = southWest;
     }
 
-    public Coordinates getBottomRight() {
-        return bottomRight;
+    public Coordinates getSouthWest() {
+        return southWest;
     }
 
-    public Coordinates getTopLeft() {
-        return topLeft;
+    public Coordinates getNorthEast() {
+        return northEast;
     }
 
-    public void setBottomRight(Coordinates bottomRight) {
-        this.bottomRight = bottomRight;
+    public void setSouthWest(Coordinates southWest) {
+        this.southWest = southWest;
     }
 
-    public void setTopLeft(Coordinates topLeft) {
-        this.topLeft = topLeft;
+    public void setNorthEast(Coordinates northEast) {
+        this.northEast = northEast;
     }
     
     public double getMaxDimension() {
-        if (topLeft == null || bottomRight == null) {
+        if (northEast == null || southWest == null) {
             return 0;
         }
-        return Math.max(Math.abs(topLeft.getLatitude() - bottomRight.getLatitude()),
-                Math.abs(topLeft.getLongitude() - bottomRight.getLongitude()));
+        return Math.max(Math.abs(northEast.getLatitude() - southWest.getLatitude()),
+                Math.abs(northEast.getLongitude() - southWest.getLongitude()));
     }
 }

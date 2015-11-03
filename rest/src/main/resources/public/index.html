@@ -13,13 +13,32 @@
 
 <script>
     var map;
+    var dragging = false;
+    
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: -34.397, lng: 150.644},
             zoom: 14
         });
         center();
-        loadMapObjects();
+        //loadMapObjects();
+        //loadHousing();
+
+        map.addListener('bounds_changed', function() {
+            if (!dragging) {
+                loadHousing();
+                loadFoodMarkets();
+            }
+        });
+
+        map.addListener('dragstart', function() {
+            dragging = true;
+        });
+
+        map.addListener('dragend', function() {
+            dragging = false;
+            loadHousing();
+            loadFoodMarkets();
+        });
     }
 </script>
 

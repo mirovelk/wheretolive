@@ -7,12 +7,24 @@ function center() {
     });
 }
 
-$.postJSON = function(url, data, callback) {
+$.postJSON = function(url, requestData, callback) {
+    var bounds = map.getBounds();
+    var mapView = {
+        "northEast": {
+            "latitude": bounds.getNorthEast().lat(),
+            "longitude": bounds.getNorthEast().lng()
+        },
+        "southWest": {
+            "latitude": bounds.getSouthWest().lat(),
+            "longitude": bounds.getSouthWest().lng()
+        }
+    };
+    var data = mapView;
     return $.ajax({
         'type': 'POST',
         'url': url,
         'contentType': 'application/json',
-        'data': data,
+        'data': JSON.stringify(data),
         'dataType': 'json',
         'success': callback,
         headers: {
@@ -22,8 +34,10 @@ $.postJSON = function(url, data, callback) {
     });
 };
 
-function loadMapObjects() {
-    $.postJSON("mapObject/all", {}, function (data, status) {
+var foodMarketMarkers = [];
+function loadFoodMarkets() {
+    $.postJSON("mapObject/foodMarkets", {}, function (data, status) {
+        removeMarkers(foodMarketMarkers);
         data.map(function(item) {
             var image;
             if (item.name == "Billa") {
@@ -36,6 +50,66 @@ function loadMapObjects() {
                 map: map,
                 icon: image
             });
+            foodMarketMarkers.push(marker);
         });
     });
+}
+
+var housingMarkers = [];
+function loadHousing() {
+    $.postJSON("mapObject/housing", {}, function (data, status) {
+        var maxPricePerSquareMeter = 300;
+        var minPricePerSquareMeter = 100;
+        var difference = maxPricePerSquareMeter - minPricePerSquareMeter;
+        
+        var newHousingMarkers = [];
+        
+        data.map(function(item) {
+            var pricePerSquareMeter = item.price / item.area;
+            var percent = (pricePerSquareMeter - minPricePerSquareMeter) / difference;
+            var color = getColor(Math.max(0, Math.min(percent * 100, 100)));
+            var marker = new google.maps.Marker({
+                position: {lat: item.location.latitude, lng: item.location.longitude},
+                map: map,
+                icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 3,
+                    fillColor: color,
+                    strokeColor: color,
+                    fillOpacity: 1
+                }
+            });
+            newHousingMarkers.push(marker);
+            if (typeof item.bezRealitkyId != 'undefined') {
+                var link = "<div><a href='http://www.bezrealitky.cz/nemovitosti-byty-domy/" + item.bezRealitkyId + "'><h2>Bez realitky</h2></a>";
+            } else if (typeof item.sRealityId != 'undefined') {
+                var link = "<div><a href='http://www.sreality.cz/detail/pronajem/byt/2+kk/praha/" + item.sRealityId + "'><h2>SReality</h2></a>";
+            }
+            var contentString = link +
+                    "<h3>" + item.price + "</h3>" +
+                    "<h3>" + item.area + "m<sup>2</sup></h3>" +
+                    "</div>";
+            var infoWindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+            marker.addListener('click', function() {
+                infoWindow.open(map, marker);
+            });
+        });
+        removeMarkers(housingMarkers);
+        housingMarkers = newHousingMarkers;
+    });
+}
+
+function getColor(percent) {
+    var r = Math.floor((255 * percent) / 100);
+    var g = Math.floor((255 * (100 - percent)) / 100);
+    var b = 0;
+    return "rgb(" + r + "," + g + "," + b + ")";
+}
+
+function removeMarkers(markers) {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
+    }
 }

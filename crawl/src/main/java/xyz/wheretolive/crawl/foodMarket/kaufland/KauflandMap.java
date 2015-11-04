@@ -1,4 +1,4 @@
-package xyz.wheretolive.crawl.pageObject;
+package xyz.wheretolive.crawl.foodMarket.kaufland;
 
 import java.util.List;
 import java.util.NoSuchElementException;

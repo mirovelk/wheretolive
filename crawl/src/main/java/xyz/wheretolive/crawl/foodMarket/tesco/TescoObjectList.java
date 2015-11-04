@@ -1,4 +1,4 @@
-package xyz.wheretolive.crawl.http;
+package xyz.wheretolive.crawl.foodMarket.tesco;
 
 import com.google.gson.internal.LinkedTreeMap;
 

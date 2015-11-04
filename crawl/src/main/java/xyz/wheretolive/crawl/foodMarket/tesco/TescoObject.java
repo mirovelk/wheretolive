@@ -1,4 +1,4 @@
-package xyz.wheretolive.crawl.http;
+package xyz.wheretolive.crawl.foodMarket.tesco;
 
 /**
  * Created by anthonymottot on 30/10/2015.

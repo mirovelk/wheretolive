@@ -1,4 +1,4 @@
-package xyz.wheretolive.crawl.billa;
+package xyz.wheretolive.crawl.foodMarket.billa;
 
 import java.util.List;
 
@@ -8,9 +8,9 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import xyz.wheretolive.crawl.BillaCrawler;
 import xyz.wheretolive.crawl.IntegrationTest;
-import xyz.wheretolive.crawl.pageObject.BillaMap;
+import xyz.wheretolive.crawl.foodMarket.billa.BillaCrawler;
+import xyz.wheretolive.crawl.foodMarket.billa.BillaMap;
 
 public class BillaTest extends IntegrationTest {
 

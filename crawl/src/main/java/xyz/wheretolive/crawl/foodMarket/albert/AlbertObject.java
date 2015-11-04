@@ -1,4 +1,4 @@
-package xyz.wheretolive.crawl.pageObject;
+package xyz.wheretolive.crawl.foodMarket.albert;
 
 import com.google.gson.annotations.Expose;
 

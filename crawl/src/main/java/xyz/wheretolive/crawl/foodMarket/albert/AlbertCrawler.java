@@ -1,24 +1,21 @@
-package xyz.wheretolive.crawl;
+package xyz.wheretolive.crawl.foodMarket.albert;
 
 import java.util.Collection;
 import java.util.HashSet;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import xyz.wheretolive.core.domain.FoodMarket;
 import xyz.wheretolive.core.domain.MapObject;
+import xyz.wheretolive.crawl.foodMarket.FoodMarketCrawler;
 import xyz.wheretolive.crawl.geocoding.GoogleGeocoder;
-import xyz.wheretolive.crawl.pageObject.AlbertMap;
 
-//@Component
-public class AlbertCrawler implements Crawler {
+@Component
+public class AlbertCrawler extends FoodMarketCrawler {
 
-    private static Logger logger = LogManager.getLogger(AlbertCrawler.class);
-    
     private static final String ALBERT = "Albert";
     public static final String ALBERT_SHOPS_URL = "http://www.albert.cz/nase-prodejny/mapa-prodejen?region=a&district=&shop_search_tab=shop-search-advanced";
 
@@ -45,5 +42,15 @@ public class AlbertCrawler implements Crawler {
                 webDriver.close();
             }
         }
+    }
+
+    @Override
+    public void execute() {
+        super.execute();
+    }
+
+    @Override
+    protected String getName() {
+        return ALBERT;
     }
 }

@@ -1,4 +1,4 @@
-package xyz.wheretolive.crawl.http;
+package xyz.wheretolive.crawl.foodMarket.tesco;
 
 import java.util.ArrayList;
 import java.util.List;

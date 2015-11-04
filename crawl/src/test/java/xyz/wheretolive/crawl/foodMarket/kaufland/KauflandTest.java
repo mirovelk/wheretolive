@@ -1,4 +1,4 @@
-package xyz.wheretolive.crawl.Kaufland;
+package xyz.wheretolive.crawl.foodMarket.kaufland;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -17,8 +17,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import xyz.wheretolive.core.config.SpringConfig;
 import xyz.wheretolive.core.domain.MapObject;
-import xyz.wheretolive.crawl.KauflandCrawler;
-import xyz.wheretolive.crawl.pageObject.KauflandMap;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { SpringConfig.class })

@@ -1,6 +1,6 @@
 package xyz.wheretolive.core.domain;
 
-public class Housing extends MapObject {
+public class Housing extends NameableMapObject {
     
     private double price;
     
@@ -14,8 +14,8 @@ public class Housing extends MapObject {
         this.area = area;
     }
 
-    public Housing(double price, double area, Coordinates location) {
-        super(location);
+    public Housing(double price, double area, String name, Coordinates location) {
+        super(location, name);
         this.price = price;
         this.area = area;
     }

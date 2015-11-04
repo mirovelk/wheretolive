@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import xyz.wheretolive.core.domain.MapObject;
 import xyz.wheretolive.core.domain.MapView;
+import xyz.wheretolive.core.domain.NameableMapObject;
 
 @Repository
 public class MongoMapObjectRepository implements MapObjectRepository {
@@ -45,5 +46,10 @@ public class MongoMapObjectRepository implements MapObjectRepository {
             }
         }
         return result;
+    }
+
+    @Override
+    public <E extends NameableMapObject> void delete(Class<E> type, String name) {
+        datastoreProvider.getDatastore().delete(datastoreProvider.getDatastore().createQuery(type).filter("name", name));
     }
 }

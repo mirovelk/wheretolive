@@ -1,4 +1,4 @@
-package xyz.wheretolive.crawl.pageObject;
+package xyz.wheretolive.crawl.foodMarket.billa;
 
 import java.util.LinkedList;
 import java.util.List;

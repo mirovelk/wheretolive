@@ -1,4 +1,4 @@
-package xyz.wheretolive.crawl.pageObject;
+package xyz.wheretolive.crawl.foodMarket.albert;
 
 import java.util.Collection;
 import java.util.LinkedHashSet;

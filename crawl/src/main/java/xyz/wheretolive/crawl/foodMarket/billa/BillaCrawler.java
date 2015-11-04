@@ -1,4 +1,4 @@
-package xyz.wheretolive.crawl;
+package xyz.wheretolive.crawl.foodMarket.billa;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -9,14 +9,15 @@ import java.util.Set;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import xyz.wheretolive.core.domain.FoodMarket;
 import xyz.wheretolive.core.domain.MapObject;
+import xyz.wheretolive.crawl.foodMarket.FoodMarketCrawler;
 import xyz.wheretolive.crawl.geocoding.GoogleGeocoder;
-import xyz.wheretolive.crawl.pageObject.BillaMap;
 
-//@Component
-public class BillaCrawler implements Crawler {
+@Component
+public class BillaCrawler extends FoodMarketCrawler {
 
     private static final String BILLA = "Billa";
 
@@ -54,5 +55,15 @@ public class BillaCrawler implements Crawler {
                 webDriver.close();
             }
         }
+    }
+
+    @Override
+    public void execute() {
+        super.execute();
+    }
+
+    @Override
+    protected String getName() {
+        return BILLA;
     }
 }

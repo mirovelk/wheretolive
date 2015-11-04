@@ -1,4 +1,4 @@
-package xyz.wheretolive.crawl;
+package xyz.wheretolive.crawl.foodMarket.kaufland;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -10,15 +10,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.core.domain.FoodMarket;
 import xyz.wheretolive.core.domain.MapObject;
+import xyz.wheretolive.crawl.foodMarket.FoodMarketCrawler;
 import xyz.wheretolive.crawl.geocoding.GoogleGeocoder;
-import xyz.wheretolive.crawl.pageObject.KauflandMap;
 
-//@Component
-public class KauflandCrawler implements Crawler {
+@Component
+public class KauflandCrawler extends FoodMarketCrawler {
 
     private static final String KAUFLAND = "Kaufland";
 
@@ -59,5 +60,15 @@ public class KauflandCrawler implements Crawler {
                 webDriver.close();
             }
         }
+    }
+
+    @Override
+    public void execute() {
+        super.execute();
+    }
+
+    @Override
+    protected String getName() {
+        return KAUFLAND;
     }
 }

@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
@@ -61,6 +62,7 @@ public class BezRealitkyCrawler extends RealityCrawler {
     }
 
     @Override
+    @Scheduled(cron = "30 13 * * * *")
     public void execute() {
         super.execute();
     }

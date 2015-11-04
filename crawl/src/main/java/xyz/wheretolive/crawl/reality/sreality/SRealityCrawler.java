@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
@@ -57,6 +58,7 @@ public class SRealityCrawler extends RealityCrawler {
     }
 
     @Override
+    @Scheduled(cron = "30 14 * * * *")
     public void execute() {
         super.execute();
     }

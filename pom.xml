@@ -47,6 +47,18 @@
                 <artifactId>mongo</artifactId>
                 <version>${application.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>wheretolive</groupId>
+                <artifactId>crawl</artifactId>
+                <version>${application.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>wheretolive</groupId>
+                <artifactId>app</artifactId>
+                <version>${application.version}</version>
+            </dependency>
             
             <dependency>
                 <groupId>org.mongodb</groupId>
@@ -129,6 +141,12 @@
             <dependency>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-webapp</artifactId>
+                <version>9.3.5.v20151012</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-runner</artifactId>
                 <version>9.3.5.v20151012</version>
             </dependency>
 

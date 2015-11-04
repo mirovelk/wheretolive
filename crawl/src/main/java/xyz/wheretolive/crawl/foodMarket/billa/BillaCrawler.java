@@ -9,6 +9,7 @@ import java.util.Set;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import xyz.wheretolive.core.domain.FoodMarket;
@@ -58,6 +59,7 @@ public class BillaCrawler extends FoodMarketCrawler {
     }
 
     @Override
+    @Scheduled(cron = "30 10 1 * * *")
     public void execute() {
         super.execute();
     }

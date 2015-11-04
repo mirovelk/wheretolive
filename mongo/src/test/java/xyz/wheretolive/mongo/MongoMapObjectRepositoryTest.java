@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.core.domain.FoodMarket;
 import xyz.wheretolive.core.domain.MapObject;
+import xyz.wheretolive.core.domain.MapView;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class MongoMapObjectRepositoryTest extends MongoTest {
@@ -27,23 +28,23 @@ public class MongoMapObjectRepositoryTest extends MongoTest {
     
     @Test
     public void test() {
-        MapObject mapObject = new MapObject(new Coordinates(45.235, 12.365));
+        MapObject mapObject = new MapObject(new Coordinates(5.45, 6.55));
         repository.store(mapObject);
-        FoodMarket foodMarket = new FoodMarket(new Coordinates(5.4, 6.54), "albert", null);
+        FoodMarket foodMarket = new FoodMarket(new Coordinates(5.44, 6.54), "albert", null);
         repository.store(foodMarket);
 
-        Collection<MapObject> mapObjects = repository.getIn(null);
+        Collection<MapObject> mapObjects = repository.getIn(new MapView(new Coordinates(5.5, 6.6), new Coordinates(5.4, 6.5)));
         assertEquals(2, mapObjects.size());
     }
     
     @Test
     public void test2() {
-        MapObject mapObject = new MapObject(new Coordinates(45.235, 12.365));
+        MapObject mapObject = new MapObject(new Coordinates(5.45, 6.55));
         repository.store(mapObject);
-        FoodMarket foodMarket = new FoodMarket(new Coordinates(5.4, 6.54), "albert", null);
+        FoodMarket foodMarket = new FoodMarket(new Coordinates(5.44, 6.54), "albert", null);
         repository.store(foodMarket);
 
-        Collection<FoodMarket> mapObjects = repository.getIn(null, FoodMarket.class);
+        Collection<FoodMarket> mapObjects = repository.getIn(new MapView(new Coordinates(5.5, 6.6), new Coordinates(5.4, 6.5)), FoodMarket.class);
         assertEquals(1, mapObjects.size());
     }
 }

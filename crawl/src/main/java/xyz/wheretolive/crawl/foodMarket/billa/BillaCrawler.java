@@ -38,7 +38,7 @@ public class BillaCrawler extends FoodMarketCrawler {
         for (Map.Entry<String, BillaWrapper.BillaResult> entry : billaWrapper.getD().entrySet()) {
             BillaWrapper.BillaResult billaResult = entry.getValue();
             FoodMarket foodMarket = new FoodMarket(
-                    new Coordinates(billaResult.getLatitude(), billaResult.getLongitude()), BILLA, null);
+                    new Coordinates(billaResult.getLatitude(), billaResult.getLongitude()), BILLA);
             toReturn.add(foodMarket);
         }
         return toReturn;

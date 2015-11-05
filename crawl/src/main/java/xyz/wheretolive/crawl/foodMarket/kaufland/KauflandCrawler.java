@@ -38,7 +38,7 @@ public class KauflandCrawler extends FoodMarketCrawler {
         
         List<MapObject> toReturn = new LinkedList<>();
         for (KauflandObject kauflandObject : kauflandObjects) {
-            toReturn.add(new FoodMarket(kauflandObject.getLocation(), KAUFLAND, null));
+            toReturn.add(new FoodMarket(kauflandObject.getLocation(), KAUFLAND));
         }
 
         return toReturn;

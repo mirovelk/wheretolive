@@ -1,57 +1,28 @@
 package xyz.wheretolive.crawl.foodMarket.tesco;
 
-/**
- * Created by anthonymottot on 30/10/2015.
- */
 public class TescoObject {
 
-    /*
-    {
-        "id": 190,
-            "active": true,
-            "code": "14096",
-            "type_id": 1,
-            "name": "Expres Třinec Dukelská",
-            "address_street": "Dukelská",
-            "address_number": "1017",
-            "address_city": "Třinec",
-            "address_zipcode": "739 61",
-            "opening_time": "po - pá: 6:00 - 20:00, so - ne: 6:00 - 19:00",
-            "phone": "+420-725 908 447",
-            "gps_lat": "49.6636",
-            "gps_lon": "18.6806",
-            "nonstop": 0,
-            "fs": 0,
-            "gas": 0,
-            "pharmacy": 0,
-            "optics": 0,
-            "phones": 0,
-            "photo": 0,
-            "url": "/cs/obchody-tesco/expres-trinec-dukelska/"
-    }
-    */
-
-    int id;
-    boolean active;
-    long code;
-    int type_id;
-    String name;
-    String address_street;
-    String address_number;
-    String address_city;
-    String address_zipcode;
-    String opening_time;
-    String phone;
-    Double gps_lat;
-    Double gps_long;
-    int nonstop;
-    int fs;
-    int gas;
-    int pharmacy;
-    int optics;
-    int phones;
-    int photo;
-    int url;
+    private int id;
+    private boolean active;
+    private String code;
+    private int type_id;
+    private String name;
+    private String address_street;
+    private String address_number;
+    private String address_city;
+    private String address_zipcode;
+    private String opening_time;
+    private String phone;
+    private double gps_lat;
+    private double gps_long;
+    private int nonstop;
+    private int fs;
+    private int gas;
+    private int pharmacy;
+    private int optics;
+    private int phones;
+    private int photo;
+    private String url;
 
     public int getId() {
         return id;
@@ -69,11 +40,11 @@ public class TescoObject {
         this.active = active;
     }
 
-    public long getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(long code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -213,11 +184,11 @@ public class TescoObject {
         this.photo = photo;
     }
 
-    public int getUrl() {
+    public String getUrl() {
         return url;
     }
 
-    public void setUrl(int url) {
+    public void setUrl(String url) {
         this.url = url;
     }
 }

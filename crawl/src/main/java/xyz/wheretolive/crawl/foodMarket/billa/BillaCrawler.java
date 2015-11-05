@@ -1,19 +1,19 @@
 package xyz.wheretolive.crawl.foodMarket.billa;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.google.gson.Gson;
+import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.core.domain.FoodMarket;
 import xyz.wheretolive.core.domain.MapObject;
+import xyz.wheretolive.crawl.HttpUtils;
 import xyz.wheretolive.crawl.foodMarket.FoodMarketCrawler;
 import xyz.wheretolive.crawl.geocoding.GoogleGeocoder;
 
@@ -22,40 +22,26 @@ public class BillaCrawler extends FoodMarketCrawler {
 
     private static final String BILLA = "Billa";
 
-    public static final String BILLA_SHOPS_URL = "https://www.billa.cz/billa.controls/filialfinder/maps/pinpointv3/pinpoint3.32.html?fx=&dataUrl=https://service.cz.rewe.co.at/filialservice/filialjson.asmx/getfilialenjson?shopcd=%22CZ%22&language=CZE&country=CZ";
+    public static final String BILLA_SHOPS_URL = "https://service.cz.rewe.co.at/filialservice/filialjson.asmx/getfilialenjson?shopcd=%22CZ%22";
 
     @Autowired
     GoogleGeocoder geocoder;
 
     @Override
     public Collection<MapObject> crawl() {
-        WebDriver webDriver = null;
-        try {
-            webDriver = new ChromeDriver();
-            webDriver.get(BILLA_SHOPS_URL);
+        Gson gson = new Gson();
+        String json = HttpUtils.getJson(BILLA_SHOPS_URL);
+        json = json.substring(1, json.length() - 2);//remove initial '(' and trailing ');' characters
+        BillaWrapper billaWrapper = gson.fromJson(json, BillaWrapper.class);
 
-            BillaMap billaMap = new BillaMap(webDriver);
-            List<String> billaRegion = billaMap.getBillaRegion();
-            Set<String> globalBillaShops = new HashSet<>();
-
-            for (String currentRegion : billaRegion) {
-                billaMap.get(BILLA_SHOPS_URL);
-                billaMap.clickRegion(currentRegion);
-                List<String> billaShop = billaMap.getAddresses();
-                globalBillaShops.addAll(billaShop);
-            }
-
-            List<MapObject> toReturn = new LinkedList<>();
-            for (String currentShopAddress : globalBillaShops) {
-                toReturn.add(new FoodMarket(geocoder.translate(currentShopAddress), BILLA, null));
-            }
-
-            return toReturn;
-        } finally {
-            if (webDriver != null) {
-                webDriver.close();
-            }
+        List<MapObject> toReturn = new LinkedList<>();
+        for (Map.Entry<String, BillaWrapper.BillaResult> entry : billaWrapper.getD().entrySet()) {
+            BillaWrapper.BillaResult billaResult = entry.getValue();
+            FoodMarket foodMarket = new FoodMarket(
+                    new Coordinates(billaResult.getLatitude(), billaResult.getLongitude()), BILLA, null);
+            toReturn.add(foodMarket);
         }
+        return toReturn;
     }
 
     @Override

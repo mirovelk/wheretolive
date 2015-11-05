@@ -44,7 +44,7 @@ public class BezRealitkyCrawler extends RealityCrawler {
 
     private Collection<? extends Reality> crawl(String url) {
         Gson gson = new Gson();
-        String json = HttpUtils.getJson(url);
+        String json = HttpUtils.get(url);
         BezRealitkyResult bezRealitkyResult = gson.fromJson(json, BezRealitkyResult.class);
 
         List<Reality> result = new ArrayList<>();

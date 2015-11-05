@@ -1,12 +1,17 @@
 package xyz.wheretolive.crawl;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.http.HttpEntity;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,13 +20,39 @@ public class HttpUtils {
 
     private static Logger logger = LogManager.getLogger(HttpUtils.class);
 
-    public static String getJson(String url) {
+    public static String get(String url) {
+        String toReturn = null;
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        CloseableHttpResponse response = null;
+        try {
+            HttpGet httpGet = new HttpGet(url);
+            response = httpClient.execute(httpGet);
+            HttpEntity entity = response.getEntity();
+            if (entity != null) {
+                toReturn = EntityUtils.toString(entity);
+            }
+        } catch (Exception e) {
+            logger.error("error", e);
+        } finally {
+            try {
+                response.close();
+                httpClient.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return toReturn;
+    }
+
+    public static String post(String url, List<? extends NameValuePair> data) {
         String toReturn = null;
         CloseableHttpClient httpclient = HttpClients.createDefault();
         CloseableHttpResponse response = null;
         try {
-            HttpGet httpget = new HttpGet(url);
-            response = httpclient.execute(httpget);
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.setEntity(new UrlEncodedFormEntity(data, HTTP.UTF_8));
+            response = httpclient.execute(httpPost);
             HttpEntity entity = response.getEntity();
             if (entity != null) {
                 toReturn = EntityUtils.toString(entity);

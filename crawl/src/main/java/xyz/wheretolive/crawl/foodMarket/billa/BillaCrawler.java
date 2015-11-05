@@ -30,7 +30,7 @@ public class BillaCrawler extends FoodMarketCrawler {
     @Override
     public Collection<MapObject> crawl() {
         Gson gson = new Gson();
-        String json = HttpUtils.getJson(BILLA_SHOPS_URL);
+        String json = HttpUtils.get(BILLA_SHOPS_URL);
         json = json.substring(1, json.length() - 2);//remove initial '(' and trailing ');' characters
         BillaWrapper billaWrapper = gson.fromJson(json, BillaWrapper.class);
 

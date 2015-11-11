@@ -40,7 +40,7 @@ public class SRealityCrawler extends RealityCrawler {
         List<Reality> result = new ArrayList<>();
         for (SRealityEstate estate : estates) {
             Reality reality = new Reality(estate.getHash_id()+ "", estate.getPrice(),
-                    extractArea(estate.getName()), SREALITY, new Coordinates((double)estate.getGps().get("lat"), (double)estate.getGps().get("lon")));
+                    extractArea(estate.getName()), getName(), new Coordinates((double)estate.getGps().get("lat"), (double)estate.getGps().get("lon")));
             result.add(reality);
         }
         return new HashSet<>(result);

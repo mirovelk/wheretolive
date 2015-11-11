@@ -31,14 +31,14 @@ public class KauflandCrawler extends FoodMarketCrawler {
         data.add(new BasicNameValuePair("filtersettings", FILTER_SETTINGS));
         data.add(new BasicNameValuePair("loadStores", "true"));
         data.add(new BasicNameValuePair("locale", "CZ"));
-        String json = HttpUtils.post(KAUFLAND_URL, data);
+        String json = HttpUtils.postUrlEncodedData(KAUFLAND_URL, data);
 
         Gson gson = new Gson();
         KauflandObject[] kauflandObjects = gson.fromJson(json, new KauflandObject[]{ }.getClass());
         
         List<MapObject> toReturn = new LinkedList<>();
         for (KauflandObject kauflandObject : kauflandObjects) {
-            toReturn.add(new FoodMarket(kauflandObject.getLocation(), KAUFLAND));
+            toReturn.add(new FoodMarket(kauflandObject.getLocation(), getName()));
         }
 
         return toReturn;

@@ -38,6 +38,6 @@ public class IntegrationTest {
     public void creatingCoreObjects() {
         List<Line> lines = Arrays.asList(new Line("12", TRAM), new Line("24", TRAM), new Line("1", TRAM));
         Coordinates location = new Coordinates(50.12315, 14.1253);
-        TrafficStop stop = new TrafficStop(location, "Strossmayerovo namesti", lines);
+        TrafficStop stop = new TrafficStop(location, "PID", lines, "Strossmayerovo namesti");
     }
 }

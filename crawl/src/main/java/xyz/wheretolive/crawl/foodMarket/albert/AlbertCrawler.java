@@ -33,7 +33,7 @@ public class AlbertCrawler extends FoodMarketCrawler {
             AlbertObject[] albertObjects = gson.fromJson(json, new AlbertObject[]{}.getClass());
             for (AlbertObject albertObject : albertObjects) {
                 FoodMarket foodMarket = new FoodMarket(new Coordinates(Double.parseDouble(albertObject.getLatitude()),
-                        Double.parseDouble(albertObject.getLongitude())), ALBERT);
+                        Double.parseDouble(albertObject.getLongitude())), getName());
                 toReturn.add(foodMarket);
             }
         }

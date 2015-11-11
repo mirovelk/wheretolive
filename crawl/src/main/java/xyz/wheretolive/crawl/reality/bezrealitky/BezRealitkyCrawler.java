@@ -54,7 +54,7 @@ public class BezRealitkyCrawler extends RealityCrawler {
             }
             for (BezRealitkyRecord record : square.getRecords()) {
                 Reality reality = new Reality(record.getId(), record.getPrice(), record.getSurface(),
-                        BEZ_REALITKY, new Coordinates(record.getLat(), record.getLng()));
+                        getName(), new Coordinates(record.getLat(), record.getLng()));
                 result.add(reality);
             }
         }

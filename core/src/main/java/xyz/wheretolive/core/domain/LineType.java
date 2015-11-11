@@ -4,6 +4,10 @@ public enum LineType {
     
     METRO,
     TRAM,
+    NIGHT_TRAM,
     BUS,
-    FERRY
+    NIGHT_BUS,
+    REGIONAL_BUS,
+    FERRY,
+    TRAIN;
 }

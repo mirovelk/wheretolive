@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>wheretolive</groupId>
+    <groupId>xyz.wheretolive</groupId>
     <artifactId>root</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
@@ -60,25 +60,25 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>wheretolive</groupId>
+                <groupId>xyz.wheretolive</groupId>
                 <artifactId>core</artifactId>
                 <version>${application.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>wheretolive</groupId>
+                <groupId>xyz.wheretolive</groupId>
                 <artifactId>mongo</artifactId>
                 <version>${application.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>wheretolive</groupId>
+                <groupId>xyz.wheretolive</groupId>
                 <artifactId>crawl</artifactId>
                 <version>${application.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>wheretolive</groupId>
+                <groupId>xyz.wheretolive</groupId>
                 <artifactId>app</artifactId>
                 <version>${application.version}</version>
             </dependency>

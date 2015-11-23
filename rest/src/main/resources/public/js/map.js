@@ -86,9 +86,9 @@ function loadHousing() {
             });
             housingMarkers.push(marker);
             if (item.name == "BezRealitky") {
-                var link = "<div><a href='http://www.bezrealitky.cz/nemovitosti-byty-domy/" + item.bezRealitkyId + "'><h2>Bez realitky</h2></a>";
+                var link = "<div><a href='http://www.bezrealitky.cz/nemovitosti-byty-domy/" + item.realityId + "'><h2>Bez realitky</h2></a>";
             } else if (item.name == "SReality") {
-                var link = "<div><a href='http://www.sreality.cz/detail/pronajem/byt/2+kk/praha/" + item.sRealityId + "'><h2>SReality</h2></a>";
+                var link = "<div><a href='http://www.sreality.cz/detail/pronajem/byt/2+kk/praha/" + item.realityId + "'><h2>SReality</h2></a>";
             }
             var contentString = link +
                     "<h3>" + item.price + "</h3>" +

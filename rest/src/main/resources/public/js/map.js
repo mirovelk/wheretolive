@@ -48,6 +48,8 @@ function loadFoodMarkets() {
                 image = 'img/kaufland.png';
             } else if (item.name == "Tesco") {
                 image = 'img/tesco.png';
+            } else if (item.name == "Albert") {
+                image = 'img/albert.png';
             }
             var marker = new google.maps.Marker({
                 position: {lat: item.location.latitude, lng: item.location.longitude},

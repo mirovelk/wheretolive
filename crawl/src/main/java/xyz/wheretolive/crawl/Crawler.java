@@ -10,4 +10,6 @@ public interface Crawler {
     
     void execute();
 
+    String getName();
+
 }

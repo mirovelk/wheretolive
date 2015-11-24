@@ -64,7 +64,7 @@ public class SRealityCrawler extends RealityCrawler {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return SREALITY;
     }
 }

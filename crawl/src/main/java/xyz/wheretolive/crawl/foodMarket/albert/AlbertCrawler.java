@@ -48,7 +48,7 @@ public class AlbertCrawler extends FoodMarketCrawler {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return ALBERT;
     }
 }

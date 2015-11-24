@@ -107,7 +107,7 @@ public class PIDCrawler extends TrafficStopCrawler {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return PID;
     }
     

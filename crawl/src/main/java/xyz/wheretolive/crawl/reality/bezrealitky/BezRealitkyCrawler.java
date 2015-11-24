@@ -68,7 +68,7 @@ public class BezRealitkyCrawler extends RealityCrawler {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return BEZ_REALITKY;
     }
 

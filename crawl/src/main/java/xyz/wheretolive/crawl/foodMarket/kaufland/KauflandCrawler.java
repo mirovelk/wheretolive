@@ -51,7 +51,7 @@ public class KauflandCrawler extends FoodMarketCrawler {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return KAUFLAND;
     }
 }

@@ -38,7 +38,5 @@ public abstract class PersistingCrawler implements Crawler {
         repository.delete(getType(), getName());
     }
     
-    abstract protected String getName();
-
     abstract protected Class<? extends NameableMapObject> getType();
 }

@@ -51,7 +51,7 @@ public class BillaCrawler extends FoodMarketCrawler {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return BILLA;
     }
 }

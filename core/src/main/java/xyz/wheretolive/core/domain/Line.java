@@ -1,11 +1,14 @@
 package xyz.wheretolive.core.domain;
 
 public class Line {
-    
-    private final String number;
-    
-    private final LineType lineType;
 
+    private String number;
+
+    private LineType lineType;
+
+    public Line() {
+    }
+    
     public Line(String number, LineType lineType) {
         this.number = number;
         this.lineType = lineType;
@@ -15,7 +18,15 @@ public class Line {
         return number;
     }
 
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
     public LineType getLineType() {
         return lineType;
+    }
+
+    public void setLineType(LineType lineType) {
+        this.lineType = lineType;
     }
 }

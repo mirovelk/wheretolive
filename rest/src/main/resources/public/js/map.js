@@ -34,6 +34,22 @@ $.postJSON = function(url, requestData, callback) {
     });
 };
 
+var trafficStopsMarkers = [];
+function loadTrafficStops() {
+    $.postJSON("mapObject/trafficStops", {}, function (data, status) {
+        data.map(function(item) {
+            if (contains(trafficStopsMarkers, item)) {
+                return;
+            }
+            var marker = new google.maps.Marker({
+                position: {lat: item.location.latitude, lng: item.location.longitude},
+                map: map
+            });
+            trafficStopsMarkers.push(marker);
+        });
+    });
+}
+
 var foodMarketMarkers = [];
 function loadFoodMarkets() {
     $.postJSON("mapObject/foodMarkets", {}, function (data, status) {

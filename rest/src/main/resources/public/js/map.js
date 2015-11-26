@@ -41,9 +41,31 @@ function loadTrafficStops() {
             if (contains(trafficStopsMarkers, item)) {
                 return;
             }
+            var image;
+            var firstLine = item.lines[0];
+            if (firstLine.lineType == "TRAM" || firstLine.lineType == "NIGHT_TRAM") {
+                image = 'img/tram.gif';
+            } else if (firstLine.lineType == "TRAIN") {
+                image = 'img/train.gif';
+            } else if (firstLine.lineType == "BUS" || firstLine.lineType == "NIGHT_BUS") {
+                image = 'img/bus.gif';
+            } else if (firstLine.lineType == "METRO") {
+                if (firstLine.number == "A") {
+                    image = 'img/metro_a.gif';
+                } else if (firstLine.number == "B") {
+                    image = 'img/metro_b.gif';
+                } else if (firstLine.number == "C") {
+                    image = 'img/metro_c.gif';
+                } else {
+                    alert("Metro line not recognized: " + firstLine.number);
+                }
+            } else {
+                alert("Line type not recognized: " + firstLine.lineType);
+            }
             var marker = new google.maps.Marker({
                 position: {lat: item.location.latitude, lng: item.location.longitude},
-                map: map
+                map: map,
+                icon: image
             });
             trafficStopsMarkers.push(marker);
         });

@@ -73,6 +73,11 @@ public class PIDCrawler extends TrafficStopCrawler {
                         || pidObject.getIco().equals("20_bus_m.gif")) {
                 lines = new ArrayList<>();
                 lines.add(new Line(null, LineType.TRAIN));
+            } else if (pidObject.getIco().equals("20_tram_m.gif")) {
+                lines = new ArrayList<>();
+                lines.add(new Line(null, LineType.TRAM));
+            } else {
+                throw new IllegalStateException("no lines found");
             }
             if (lines != null) {
                 TrafficStop trafficStop = new TrafficStop(new Coordinates(pidObject.getX(), pidObject.getY()),

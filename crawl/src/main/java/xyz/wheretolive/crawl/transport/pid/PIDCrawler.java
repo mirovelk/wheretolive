@@ -66,7 +66,7 @@ public class PIDCrawler extends TrafficStopCrawler {
         }
         List<TrafficStop> toReturn = new ArrayList<>();
         for (PIDObject pidObject : pidResult.getD()) {
-            List<Line> lines = null;
+            List<Line> lines;
             if (pidObject.getInfo() != null) {
                 lines = pidLinesExtractor.extractLines(pidObject.getInfo());
             } else if (pidObject.getIco().equals("20_train_m.gif")

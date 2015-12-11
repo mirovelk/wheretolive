@@ -47,7 +47,7 @@ function loadTrafficStops() {
                 image = 'img/tram.gif';
             } else if (firstLine.lineType == "TRAIN") {
                 image = 'img/train.gif';
-            } else if (firstLine.lineType == "BUS" || firstLine.lineType == "NIGHT_BUS") {
+            } else if (firstLine.lineType == "BUS" || firstLine.lineType == "NIGHT_BUS" || firstLine.lineType == "REGIONAL_BUS") {
                 image = 'img/bus.gif';
             } else if (firstLine.lineType == "METRO") {
                 if (firstLine.number == "A") {

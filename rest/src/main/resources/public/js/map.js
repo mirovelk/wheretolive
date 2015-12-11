@@ -9,7 +9,7 @@ function center() {
 
 $.postJSON = function(url, requestData, callback) {
     var bounds = map.getBounds();
-    var mapView = {
+    var data = {
         "northEast": {
             "latitude": bounds.getNorthEast().lat(),
             "longitude": bounds.getNorthEast().lng()
@@ -19,7 +19,6 @@ $.postJSON = function(url, requestData, callback) {
             "longitude": bounds.getSouthWest().lng()
         }
     };
-    var data = mapView;
     return $.ajax({
         'type': 'POST',
         'url': url,
@@ -99,7 +98,8 @@ function loadFoodMarkets() {
     });
 }
 
-var housingMarkers = []
+var housingMarkers = [];
+var infoWindow;
 function loadHousing() {
     $.postJSON("mapObject/housing", {}, function (data, status) {
         var maxPricePerSquareMeter = 300;
@@ -125,22 +125,31 @@ function loadHousing() {
                 }
             });
             housingMarkers.push(marker);
+            var link;
             if (item.name == "BezRealitky") {
-                var link = "<div><a href='http://www.bezrealitky.cz/nemovitosti-byty-domy/" + item.realityId + "'><h2>Bez realitky</h2></a>";
+                link = "<div><a href='http://www.bezrealitky.cz/nemovitosti-byty-domy/" + item.realityId + "'><h2>Bez realitky</h2></a>";
             } else if (item.name == "SReality") {
-                var link = "<div><a href='http://www.sreality.cz/detail/pronajem/byt/2+kk/praha/" + item.realityId + "'><h2>SReality</h2></a>";
+                link = "<div><a href='http://www.sreality.cz/detail/pronajem/byt/2+kk/praha/" + item.realityId + "'><h2>SReality</h2></a>";
             }
             var contentString = link +
                     "<h3>" + item.price + "</h3>" +
                     "<h3>" + item.area + "m<sup>2</sup></h3>" +
                     "</div>";
-            var infoWindow = new google.maps.InfoWindow({
-                content: contentString
-            });
             marker.addListener('click', function() {
+                if (infoWindow) {
+                    infoWindow.close();
+                }
+                infoWindow = new google.maps.InfoWindow({
+                    content: contentString
+                });
                 infoWindow.open(map, marker);
             });
         });
+    });
+    google.maps.event.addListener(map, 'click', function() {
+        if (infoWindow) {
+            infoWindow.close();
+        }
     });
 }
 

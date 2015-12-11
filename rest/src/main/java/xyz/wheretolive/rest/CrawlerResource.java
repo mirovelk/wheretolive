@@ -10,10 +10,12 @@ import javax.ws.rs.core.MediaType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import xyz.wheretolive.crawl.Crawler;
 
@@ -38,6 +40,7 @@ public class CrawlerResource {
         
     }
 
+    @ResponseStatus(HttpStatus.ACCEPTED)
     @RequestMapping(value = "/{simpleName}", method = RequestMethod.PUT)
     public void crawl(@PathVariable String simpleName) {
         crawlerMap.get(simpleName.toLowerCase()).execute();

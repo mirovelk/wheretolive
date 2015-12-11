@@ -29,8 +29,7 @@ public class TescoCrawler extends FoodMarketCrawler {
 
         List<FoodMarket> toReturn = new ArrayList<>();
         for (TescoObject tescoObject : tescoResult.getResult().getShops()) {
-            FoodMarket foodMarket = new FoodMarket(new Coordinates(tescoObject.getGps_lat(), tescoObject.getGps_long()),
-                    getName());
+            FoodMarket foodMarket = new FoodMarket(new Coordinates(tescoObject.getGps_lat(), tescoObject.getGps_lon()), getName());
             toReturn.add(foodMarket);
         }
         

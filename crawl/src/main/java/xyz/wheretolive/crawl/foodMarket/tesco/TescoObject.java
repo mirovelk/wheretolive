@@ -14,7 +14,7 @@ public class TescoObject {
     private String opening_time;
     private String phone;
     private double gps_lat;
-    private double gps_long;
+    private double gps_lon;
     private int nonstop;
     private int fs;
     private int gas;
@@ -120,12 +120,12 @@ public class TescoObject {
         this.gps_lat = gps_lat;
     }
 
-    public Double getGps_long() {
-        return gps_long;
+    public Double getGps_lon() {
+        return gps_lon;
     }
 
-    public void setGps_long(Double gps_long) {
-        this.gps_long = gps_long;
+    public void setGps_lon(Double gps_lon) {
+        this.gps_lon = gps_lon;
     }
 
     public int getNonstop() {

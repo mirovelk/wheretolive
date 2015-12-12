@@ -87,6 +87,8 @@ function loadFoodMarkets() {
                 image = 'img/tesco.png';
             } else if (item.name == "Albert") {
                 image = 'img/albert.png';
+            } else if (item.name == "Penny") {
+                image = 'img/penny.png';
             }
             var marker = new google.maps.Marker({
                 position: {lat: item.location.latitude, lng: item.location.longitude},

@@ -27,10 +27,9 @@ public class AlbertCrawler extends FoodMarketCrawler {
         for (String region : REGIONS) {
             Gson gson = new Gson();
             String json = HttpUtils.get(ALBERT_SHOPS_URL.replace("REGION", region));
-            json = json.substring(json.indexOf("new AHPage.ShopMap(") + 19,
-                    json.indexOf(", {"));
+            json = json.substring(json.indexOf("new AHPage.ShopMap(") + 19, json.indexOf(", {"));
             json = json.replace("\u200E", "");
-            AlbertObject[] albertObjects = gson.fromJson(json, new AlbertObject[]{}.getClass());
+            AlbertObject[] albertObjects = gson.fromJson(json, AlbertObject[].class);
             for (AlbertObject albertObject : albertObjects) {
                 FoodMarket foodMarket = new FoodMarket(new Coordinates(Double.parseDouble(albertObject.getLatitude()),
                         Double.parseDouble(albertObject.getLongitude())), getName());

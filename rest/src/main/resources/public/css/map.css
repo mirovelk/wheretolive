@@ -6,3 +6,12 @@ html, body {
 #map {
     height: 100%;
 }
+#sliders {
+    position: relative;
+    top: -95%;
+    left: 5%;
+    width: 20%;
+}
+.slider {
+    margin-top: 50px;
+}

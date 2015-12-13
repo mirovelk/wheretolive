@@ -101,6 +101,7 @@ function loadFoodMarkets() {
 }
 
 var housingMarkers = [];
+var housings = [];
 var infoWindow;
 function loadHousing() {
     $.postJSON("mapObject/housing", {}, function (data, status) {
@@ -112,7 +113,7 @@ function loadHousing() {
             if (contains(housingMarkers, item)) {
                 return;
             }
-            var pricePerSquareMeter = item.price / item.area;
+            var pricePerSquareMeter = item.pricePerSquaredMeter;
             var percent = (pricePerSquareMeter - minPricePerSquareMeter) / difference;
             var color = getColor(Math.max(0, Math.min(percent * 100, 100)));
             var marker = new google.maps.Marker({
@@ -127,6 +128,7 @@ function loadHousing() {
                 }
             });
             housingMarkers.push(marker);
+            housings.push(item);
             var link;
             if (item.name == "BezRealitky") {
                 link = "<div><a href='http://www.bezrealitky.cz/nemovitosti-byty-domy/" + item.realityId + "'><h2>Bez realitky</h2></a>";
@@ -170,4 +172,75 @@ function contains(markers, item) {
         }
     }
     return false;
+}
+
+function updateSizeSlider() {
+    $.postJSON("mapObject/housingMeta", {}, function (data, status) {
+        if (data.minArea == data.maxArea) {
+            return;
+        }
+        sizeSlider.noUiSlider.updateOptions({
+            range: {
+                'min': [ data.minArea ],
+                '0%': [ 0, 10 ],
+                '10%': [ 50, 5 ],
+                '50%': [ 100, 10 ],
+                'max': [ data.maxArea ]
+            }
+        });
+    });
+}
+
+function updatePriceSlider() {
+    $.postJSON("mapObject/housingMeta", {}, function (data, status) {
+        if (data.minPrice == data.maxPrice) {
+            return;
+        }
+        var max = Math.min(data.maxPrice, 200000);
+        priceSlider.noUiSlider.updateOptions({
+            range: {
+                'min': [ data.minPrice ],
+                '10%': [ 10000, 1000 ],
+                '30%': [ 20000, 5000 ],
+                '80%': [ 50000, 50000 ],
+                'max': [ max ]
+            }
+        });
+    });
+}
+
+function updatePricePerSquaredMeterSlider() {
+    $.postJSON("mapObject/housingMeta", {}, function (data, status) {
+        if (data.minPricePerSquaredMeter == data.maxPricePerSquaredMeter) {
+            return;
+        }
+        var max = Math.min(data.maxPricePerSquaredMeter, 1000);
+        pricePerSquaredMeterSlider.noUiSlider.updateOptions({
+            range: {
+                'min': [ data.minPricePerSquaredMeter ],
+                'max': [ max ]
+            }
+        });
+    });
+}
+
+function filter() {
+    var minSize = sizeSlider.noUiSlider.get()[0];
+    var maxSize = sizeSlider.noUiSlider.get()[1];
+    var minPrice = priceSlider.noUiSlider.get()[0];
+    var maxPrice = priceSlider.noUiSlider.get()[1];
+    var minPricePerSquaredMeter = pricePerSquaredMeterSlider.noUiSlider.get()[0];
+    var maxPricePerSquaredMeter = pricePerSquaredMeterSlider.noUiSlider.get()[1];
+    for (var i = 0; i < housings.length; i++) {
+        var area = housings[i].area;
+        var price = housings[i].price;
+        var pricePerSquaredMeter = housings[i].pricePerSquaredMeter;
+        if (area < minSize || area > maxSize
+            || price < minPrice || price > maxPrice
+            || pricePerSquaredMeter < minPricePerSquaredMeter || pricePerSquaredMeter > maxPricePerSquaredMeter) {
+            housingMarkers[i].setMap(null);
+        } else if (housingMarkers[i].getMap() == null){
+            housingMarkers[i].setMap(map);
+        }
+    }
 }

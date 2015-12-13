@@ -4,7 +4,10 @@
     <title>Where to live</title>
     <script src="js/jquery-2.1.4.min.js"></script>
     <script src="js/map.js"></script>
+    <script src="js/wNumb.js"></script>
+    <script src="js/nouislider.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/map.css">
+    <link rel="stylesheet" type="text/css" href="css/nouislider.min.css">
     <meta name="viewport" content="width=device-width">
 </head>
 
@@ -12,8 +15,17 @@
 
 <div id="map"></div>
 
+<div id="sliders">
+    <div id="sizeSlider" class="slider"></div>
+    <div id="priceSlider" class="slider"></div>
+    <div id="pricePerSquaredMeterSlider" class="slider"></div>
+</div>
+
 <script>
     var map;
+    var sizeSlider;
+    var priceSlider;
+    var pricePerSquaredMeterSlider;
     var dragging = false;
     
     function initMap() {
@@ -21,12 +33,26 @@
             zoom: 14
         });
         center();
-        //loadMapObjects();
-        //loadHousing();
+
+        initSizeSlider();
+        initPriceSlider();
+        initPricePerSquaredMeterSlider();
+        sizeSlider.noUiSlider.on('update', function(){
+            filter();
+        });
+        priceSlider.noUiSlider.on('update', function(){
+            filter();
+        });
+        pricePerSquaredMeterSlider.noUiSlider.on('update', function(){
+            filter();
+        });
 
         map.addListener('bounds_changed', function() {
             if (!dragging) {
                 loadHousing();
+                updateSizeSlider();
+                updatePriceSlider();
+                updatePricePerSquaredMeterSlider();
                 loadFoodMarkets();
                 loadTrafficStops();
             }
@@ -39,8 +65,57 @@
         map.addListener('dragend', function() {
             dragging = false;
             loadHousing();
+            updateSizeSlider();
+            updatePriceSlider();
+            updatePricePerSquaredMeterSlider();
             loadFoodMarkets();
             loadTrafficStops();
+        });
+    }
+    
+    function initSizeSlider() {
+        sizeSlider = document.getElementById("sizeSlider");
+        noUiSlider.create(sizeSlider, {
+            connect: true,
+            behaviour: 'tap',
+            tooltips: [ wNumb({ decimals: 0 }), wNumb({ decimals: 0 }) ],
+            start: [ 50, 100 ],
+            range: {
+                'min': [ 30 ],
+                '10%': [ 50, 5 ],
+                '50%': [ 100, 10 ],
+                'max': [ 120 ]
+            }
+        });
+    }
+
+    function initPriceSlider() {
+        priceSlider = document.getElementById("priceSlider");
+        noUiSlider.create(priceSlider, {
+            connect: true,
+            behaviour: 'tap',
+            tooltips: [ wNumb({ decimals: 0 }), wNumb({ decimals: 0 }) ],
+            start: [ 10000, 20000 ],
+            range: {
+                'min': [ 9000 ],
+                '10%': [ 10000, 500 ],
+                '50%': [ 20000, 1000 ],
+                'max': [ 30000 ]
+            }
+        });
+    }
+
+    function initPricePerSquaredMeterSlider() {
+        pricePerSquaredMeterSlider = document.getElementById("pricePerSquaredMeterSlider");
+        noUiSlider.create(pricePerSquaredMeterSlider, {
+            connect: true,
+            behaviour: 'tap',
+            tooltips: [ wNumb({ decimals: 0 }), wNumb({ decimals: 0 }) ],
+            start: [ 0, 200 ],
+            range: {
+                'min': [ 0 ],
+                'max': [ 300 ]
+            }
         });
     }
 </script>
@@ -48,6 +123,7 @@
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1Z6lrl0vLeeihVFwWZekBGb4_7VPUUEY&callback=initMap">
 </script>
+
 </body>
 
 </html>

@@ -51,4 +51,9 @@ public class MapObjectResource {
     public @ResponseBody Collection<Housing> getHousingIn(@RequestBody MapView view) {
         return service.getIn(view, Housing.class);
     }
+
+    @RequestMapping(value = "/housingMeta", method = RequestMethod.POST)
+    public @ResponseBody HousingMetaData getHousingMetaIn(@RequestBody MapView view) {
+        return service.getHousingMetaDataIn(view);
+    }
 }

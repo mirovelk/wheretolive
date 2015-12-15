@@ -24,6 +24,7 @@ import xyz.wheretolive.core.domain.TrafficStop;
 import xyz.wheretolive.crawl.HttpUtils;
 
 @Component
+@Deprecated
 public class PIDCrawler extends TrafficStopCrawler {
 
     private static final String PID = "PID";

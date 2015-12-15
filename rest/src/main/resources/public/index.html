@@ -65,7 +65,6 @@
                 updatePriceSlider();
                 updatePricePerSquaredMeterSlider();
                 loadFoodMarkets();
-                loadTrafficStops();
             }
         });
 
@@ -80,30 +79,8 @@
             updatePriceSlider();
             updatePricePerSquaredMeterSlider();
             loadFoodMarkets();
-            loadTrafficStops();
         });
 
-
-
-        var origin = new google.maps.LatLng(50.087692, 14.421150);
-        var destination1 = new google.maps.LatLng(50.087692, 14.421150);
-        var destination2 = new google.maps.LatLng(50.088692, 14.425150);
-        var destination3 = new google.maps.LatLng(50.083692, 14.421950);
-
-        var service = new google.maps.DistanceMatrixService();
-        service.getDistanceMatrix(
-                {
-                    origins: [origin],
-                    destinations: [destination1, destination2, destination3],
-                    travelMode: google.maps.TravelMode.TRANSIT,
-                    unitSystem: google.maps.UnitSystem.METRIC,
-                    avoidHighways: false,
-                    avoidTolls: false
-                }, callback);
-
-        function callback(response, status) {
-            var a = "a";
-        }
     }
     
     function initSizeSlider() {

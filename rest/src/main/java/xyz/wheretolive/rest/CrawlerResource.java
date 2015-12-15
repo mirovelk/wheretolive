@@ -31,7 +31,6 @@ public class CrawlerResource {
     
     private final Map<String, Crawler> crawlerMap = new HashMap<>();
     
-
     @PostConstruct
     private void fillCrawlerMap() {
         for (Crawler crawler : crawlers) {

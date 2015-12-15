@@ -43,7 +43,7 @@ function loadTrafficStops() {
             var image;
             var firstLine = item.lines[0];
             if (firstLine.lineType == "TRAM" || firstLine.lineType == "NIGHT_TRAM") {
-                image = 'img/tram.gif';
+                image = 'img/tram.png';
             } else if (firstLine.lineType == "TRAIN") {
                 image = 'img/train.gif';
             } else if (firstLine.lineType == "BUS" || firstLine.lineType == "NIGHT_BUS" || firstLine.lineType == "REGIONAL_BUS") {

@@ -37,9 +37,7 @@ public class PIDLinesExtractor {
 
     public List<Line> extractLines(String info) {
         String[] splitted = prepare(info);
-
         Map<String, List<String>> transportTypes = mapLinesToTransportTypes(splitted);
-
         return getLines(transportTypes);
         
     }

@@ -43,9 +43,7 @@ public class PIDCrawler extends TrafficStopCrawler {
     @Override
     public Collection<MapObject> crawl() {
         String idosKey = getIdosKey();
-        
         Set<TrafficStop> toReturn = new HashSet<>();
-        
         for (double x = minX; x < maxX; x += STEP) {
             for (double y = minY; y < maxY; y += STEP) {
                 String preparedJSON = JSON.replace("{minX}", Double.toString(x)).replace("{minY}", Double.toString(y))
@@ -55,8 +53,6 @@ public class PIDCrawler extends TrafficStopCrawler {
                 toReturn.addAll(getTrafficStops(pidResult));
             }
         }
-        
-
         return new HashSet<>(toReturn);
     }
 
@@ -80,8 +76,8 @@ public class PIDCrawler extends TrafficStopCrawler {
                 throw new IllegalStateException("no lines found");
             }
             if (lines != null) {
-                TrafficStop trafficStop = new TrafficStop(new Coordinates(pidObject.getX(), pidObject.getY()),
-                        getName(), lines, pidObject.getName());
+                Coordinates coords = new Coordinates(pidObject.getX(), pidObject.getY());
+                TrafficStop trafficStop = new TrafficStop(coords, getName(), lines, pidObject.getName());
                 toReturn.add(trafficStop);
             }
         }

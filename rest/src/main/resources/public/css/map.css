@@ -27,6 +27,7 @@ html, body {
     top: 0;
     left: 0;
     height: 20px;
+    background-color: #116ca8;
 }
 #content {
     position: relative;
@@ -35,4 +36,9 @@ html, body {
 }
 #settings {
     padding: 5%;
+    z-index: 100;
+    position: absolute;
+    top: 20px;
+    left: 0;
+    width: 100%;
 }

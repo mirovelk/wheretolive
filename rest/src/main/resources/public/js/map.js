@@ -144,6 +144,7 @@ function updateSizeSlider() {
         sizeSlider.noUiSlider.updateOptions({
             range: {
                 'min': [ data.minArea ],
+                '0%': [ data.minArea, 5 ],
                 'max': [ data.maxArea ]
             }
         });
@@ -155,10 +156,11 @@ function updatePriceSlider() {
         if (data.minPrice == data.maxPrice) {
             return;
         }
-        var max = Math.min(data.maxPrice, 200000);
+        var max = Math.min(data.maxPrice, 50000);
         priceSlider.noUiSlider.updateOptions({
             range: {
                 'min': [ data.minPrice ],
+                '0%': [ data.minPrice, 5000 ],
                 'max': [ max ]
             }
         });
@@ -174,6 +176,7 @@ function updatePricePerSquaredMeterSlider() {
         pricePerSquaredMeterSlider.noUiSlider.updateOptions({
             range: {
                 'min': [ data.minPricePerSquaredMeter ],
+                '0%': [ data.minPricePerSquaredMeter, 10 ],
                 'max': [ max ]
             }
         });
@@ -202,6 +205,11 @@ function filter() {
 }
 
 function openSettings() {
-    $('#map').toggle();
+    var mapOpacity = $('#map').css("opacity");
+    if (mapOpacity == "1") {
+        $('#map').css({"opacity" : 0.5});
+    } else {
+        $('#map').css({"opacity" : 1});
+    }
     $('#settings').toggle();
 }

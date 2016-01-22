@@ -144,9 +144,6 @@ function updateSizeSlider() {
         sizeSlider.noUiSlider.updateOptions({
             range: {
                 'min': [ data.minArea ],
-                '0%': [ 0, 10 ],
-                '10%': [ 50, 5 ],
-                '50%': [ 100, 10 ],
                 'max': [ data.maxArea ]
             }
         });
@@ -162,9 +159,6 @@ function updatePriceSlider() {
         priceSlider.noUiSlider.updateOptions({
             range: {
                 'min': [ data.minPrice ],
-                '10%': [ 10000, 1000 ],
-                '30%': [ 20000, 5000 ],
-                '80%': [ 50000, 50000 ],
                 'max': [ max ]
             }
         });
@@ -205,4 +199,9 @@ function filter() {
             housingMarkers[i].setMap(map);
         }
     }
+}
+
+function openSettings() {
+    $('#map').toggle();
+    $('#settings').toggle();
 }

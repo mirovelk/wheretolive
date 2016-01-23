@@ -65,6 +65,47 @@ function loadFoodMarkets() {
 var housingMarkers = [];
 var housings = [];
 var infoWindow;
+
+function createMarker(item, color) {
+    var marker = new google.maps.Marker({
+        position: {lat: item.location.latitude, lng: item.location.longitude},
+        map: map,
+        icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 3,
+            fillColor: color,
+            strokeColor: color,
+            fillOpacity: 1
+        }
+    });
+    housingMarkers.push(marker);
+    housings.push(item);
+    var link;
+    if (item.name == "BezRealitky") {
+        link = "<a target='_blank' href='http://www.bezrealitky.cz/nemovitosti-byty-domy/" + item.realityId + "'><h2>Bez realitky</h2></a>";
+    } else if (item.name == "SReality") {
+        link = "<a target='_blank' href='http://www.sreality.cz/detail/pronajem/byt/2+kk/praha/" + item.realityId + "'><h2>SReality</h2></a>";
+    }
+    var contentString = "<div>" + link +
+        "<h3>" + item.price + "</h3>" +
+        "<h3>" + item.area + "m<sup>2</sup></h3>" +
+        "</div>";
+    marker.addListener('click', function() {
+        if (infoWindow) {
+            infoWindow.close();
+        }
+        infoWindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+        infoWindow.open(map, marker);
+    });
+    //marker.addListener('mouseout', function() {
+    //    if (infoWindow) {
+    //        infoWindow.close();
+    //    }
+    //});
+}
+
 function loadHousing() {
     $.postJSON("mapObject/housing", {}, function (data, status) {
         var maxPricePerSquareMeter = 300;
@@ -78,39 +119,9 @@ function loadHousing() {
             var pricePerSquareMeter = item.pricePerSquaredMeter;
             var percent = (pricePerSquareMeter - minPricePerSquareMeter) / difference;
             var color = getColor(Math.max(0, Math.min(percent * 100, 100)));
-            var marker = new google.maps.Marker({
-                position: {lat: item.location.latitude, lng: item.location.longitude},
-                map: map,
-                icon: {
-                    path: google.maps.SymbolPath.CIRCLE,
-                    scale: 3,
-                    fillColor: color,
-                    strokeColor: color,
-                    fillOpacity: 1
-                }
-            });
-            housingMarkers.push(marker);
-            housings.push(item);
-            var link;
-            if (item.name == "BezRealitky") {
-                link = "<div><a href='http://www.bezrealitky.cz/nemovitosti-byty-domy/" + item.realityId + "'><h2>Bez realitky</h2></a>";
-            } else if (item.name == "SReality") {
-                link = "<div><a href='http://www.sreality.cz/detail/pronajem/byt/2+kk/praha/" + item.realityId + "'><h2>SReality</h2></a>";
-            }
-            var contentString = link +
-                    "<h3>" + item.price + "</h3>" +
-                    "<h3>" + item.area + "m<sup>2</sup></h3>" +
-                    "</div>";
-            marker.addListener('click', function() {
-                if (infoWindow) {
-                    infoWindow.close();
-                }
-                infoWindow = new google.maps.InfoWindow({
-                    content: contentString
-                });
-                infoWindow.open(map, marker);
-            });
+            createMarker(item, color);
         });
+        filter();
     });
     google.maps.event.addListener(map, 'click', function() {
         if (infoWindow) {

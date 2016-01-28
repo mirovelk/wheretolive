@@ -10,7 +10,7 @@ public class MapObject implements Localizable {
     
     @Id
     private ObjectId id;
-    
+
     @Embedded
     private Coordinates location;
     
@@ -24,5 +24,9 @@ public class MapObject implements Localizable {
     @Override
     public Coordinates getLocation() {
         return location;
+    }
+
+    public void setLocation(Coordinates location) {
+        this.location = location;
     }
 }

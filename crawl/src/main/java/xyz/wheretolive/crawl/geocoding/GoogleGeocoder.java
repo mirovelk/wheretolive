@@ -28,7 +28,7 @@ public class GoogleGeocoder implements Geocoder {
     private static final String API_KEY = "AIzaSyCV8DEQzTGOuEp7DMd4cdUjvJaQlKpJCVE";
 
     @Autowired
-    GoogleGeocodeRepository repository;
+    private GoogleGeocodeRepository repository;
     
     LimitedQueue<Date> queue;
     
@@ -99,5 +99,10 @@ public class GoogleGeocoder implements Geocoder {
         Double lng = (Double) location.get("lng");
         return new Coordinates(lat, lng);
     }
-    
+
+    public void setRepository(GoogleGeocodeRepository repository) {
+        this.repository = repository;
+    }
+
+
 }

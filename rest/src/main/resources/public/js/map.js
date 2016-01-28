@@ -85,6 +85,8 @@ function createMarker(item, color) {
         link = "<a target='_blank' href='http://www.bezrealitky.cz/nemovitosti-byty-domy/" + item.realityId + "'><h2>Bez realitky</h2></a>";
     } else if (item.name == "SReality") {
         link = "<a target='_blank' href='http://www.sreality.cz/detail/pronajem/byt/2+kk/praha/" + item.realityId + "'><h2>SReality</h2></a>";
+    } else if (item.name == "RealityMat") {
+        link = "<a target='_blank' href='http://www.realitymat.cz/estate/" + item.realityId + "'><h2>RealityMat</h2></a>";
     }
     var contentString = "<div>" + link +
         "<h3>" + item.price + "</h3>" +

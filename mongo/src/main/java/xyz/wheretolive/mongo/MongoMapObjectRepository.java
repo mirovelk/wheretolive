@@ -2,7 +2,9 @@ package xyz.wheretolive.mongo;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
+import org.mongodb.morphia.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +25,12 @@ public class MongoMapObjectRepository implements MapObjectRepository {
     @Override
     public void store(MapObject mapObject) {
         datastoreProvider.getDatastore().save(mapObject);
+    }
+
+    @Override
+    public <E extends NameableMapObject> List<E> load(Class<E> type, String name) {
+        Query<E> query = datastoreProvider.getDatastore().find(type, "name", name);
+        return query.asList();
     }
 
     @Override

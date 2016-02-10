@@ -41,4 +41,9 @@ public class Coordinates {
         Coordinates c = (Coordinates) obj;
         return c.latitude == latitude && c.longitude == longitude;
     }
+
+    @Override
+    public int hashCode() {
+        return (int) (Math.round(latitude) * 31 + Math.round(longitude));
+    }
 }

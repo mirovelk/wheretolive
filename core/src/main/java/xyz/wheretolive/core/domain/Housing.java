@@ -51,4 +51,26 @@ public class Housing extends NameableMapObject {
     public double getPricePerSquaredMeter() {
         return pricePerSquaredMeter;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = (int) Math.round(price);
+        hash = hash * 31 + (int) Math.round(area);
+        return hash * 31 + super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof Housing)) {
+            return false;
+        }
+        Housing other = (Housing) obj;
+        return super.equals(obj) && price == other.price && area == other.area;
+    }
 }

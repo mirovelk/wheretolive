@@ -1,6 +1,7 @@
 package xyz.wheretolive.crawl;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,12 +27,27 @@ public abstract class PersistingCrawler implements Crawler {
     @Override
     public void execute() {
         try {
+            logger.info("Starting execution of " + getName() + " Crawler.");
             Collection<MapObject> result = crawl();
+            logger.info("Execution of " + getName() + " Crawler finished.");
+            updateWithOldTimestamps(result);
             removeOld();
             store(result);
         } catch (Exception e) {
             logger.error("Error while executing crawler", e);
         }
+    }
+
+    private void updateWithOldTimestamps(Collection<MapObject> result) {
+        List<? extends NameableMapObject> nameableMapObjects = repository.load(getType(), getName());
+        int existingObjectsCount = 0;
+        for (MapObject mapObject : result) {
+            if (nameableMapObjects.contains(mapObject)) {
+                mapObject.setUpdateTime(mapObject.getUpdateTime());
+                existingObjectsCount++;
+            }
+        }
+        logger.info("Updating " + existingObjectsCount + " objects out of " + result.size() + ". " + (result.size() - existingObjectsCount) + " objects are new.");
     }
 
     private void removeOld() {

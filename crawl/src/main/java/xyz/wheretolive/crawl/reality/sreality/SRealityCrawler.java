@@ -30,12 +30,14 @@ public class SRealityCrawler extends RealityCrawler {
         List<SRealityEstate> estates = new ArrayList<>();
         int i = 0;
         String json = HttpUtils.get(RENT_FLATS + i);
+        List<SRealityEstate> estatesOnPage;
         do {
             SRealityResult sRealityResult = gson.fromJson(json, SRealityResult.class);
-            estates.addAll(sRealityResult.get_embedded().getEstates());
+            estatesOnPage = sRealityResult.get_embedded().getEstates();
+            estates.addAll(estatesOnPage);
             json = HttpUtils.get(RENT_FLATS + i);
             i++;
-        } while (!json.contains("Not found."));
+        } while (!estatesOnPage.isEmpty());
         
         List<Reality> result = new ArrayList<>();
         for (SRealityEstate estate : estates) {

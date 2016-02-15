@@ -108,19 +108,43 @@ function createMarker(item, color) {
     //});
 }
 
+function getPercentage(item) {
+    switch (coloringScheme) {
+        case "ppm2":
+            var maxPricePerSquareMeter = 350;
+            var minPricePerSquareMeter = 100;
+            var difference = maxPricePerSquareMeter - minPricePerSquareMeter;
+            var percent = (item.pricePerSquaredMeter - minPricePerSquareMeter) / difference;
+            break;
+        case "price":
+            var maxPrice = 30000;
+            var minPrice = 10000;
+            var difference = maxPrice - minPrice;
+            var percent = (item.price - minPrice) / difference;
+            break;
+        case "size":
+            var maxSize = 150;
+            var minSize = 40;
+            var difference = maxSize - minSize;
+            var percent = (item.area - minSize) / difference;
+            break;
+        case "time":
+            var maxAgeInHours = 340;
+            var minAgeInHours = 0;
+            var difference = maxAgeInHours - minAgeInHours;
+            var percent = (new Date().getTime() - item.updateTime) / 1000 / 60 / 60 / difference;
+    }
+    return Math.max(0, Math.min(percent * 100, 100));
+}
 function loadHousing() {
     $.postJSON("mapObject/housing", {}, function (data, status) {
-        var maxPricePerSquareMeter = 300;
-        var minPricePerSquareMeter = 100;
-        var difference = maxPricePerSquareMeter - minPricePerSquareMeter;
         
         data.map(function(item) {
             if (contains(housingMarkers, item)) {
                 return;
             }
-            var pricePerSquareMeter = item.pricePerSquaredMeter;
-            var percent = (pricePerSquareMeter - minPricePerSquareMeter) / difference;
-            var color = getColor(Math.max(0, Math.min(percent * 100, 100)));
+            var percentage = getPercentage(item);
+            var color = getColor(percentage);
             createMarker(item, color);
         });
         filter();
@@ -137,6 +161,17 @@ function getColor(percent) {
     var g = Math.floor((255 * (100 - percent)) / 100);
     var b = 0;
     return "rgb(" + r + "," + g + "," + b + ")";
+}
+
+var coloringScheme = "time";
+function setColoringScheme(scheme) {
+    coloringScheme = scheme;
+    for (var i = 0; i < housingMarkers.length; i++) {
+        housingMarkers[i].
+    }
+    housingMarkers = [];
+    housings = [];
+    loadHousing();
 }
 
 function contains(markers, item) {

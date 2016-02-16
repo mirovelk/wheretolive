@@ -167,7 +167,7 @@ var coloringScheme = "time";
 function setColoringScheme(scheme) {
     coloringScheme = scheme;
     for (var i = 0; i < housingMarkers.length; i++) {
-        housingMarkers[i].
+        housingMarkers[i].setMap(null);
     }
     housingMarkers = [];
     housings = [];

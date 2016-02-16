@@ -33,7 +33,7 @@ public class HttpUtils {
             response = httpClient.execute(httpGet);
             HttpEntity entity = response.getEntity();
             if (entity != null) {
-                toReturn = EntityUtils.toString(entity);
+                toReturn = EntityUtils.toString(entity, "UTF8");
             }
         } catch (Exception e) {
             logger.error("error", e);

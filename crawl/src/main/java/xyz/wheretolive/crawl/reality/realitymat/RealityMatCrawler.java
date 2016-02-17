@@ -25,11 +25,13 @@ import xyz.wheretolive.mongo.MongoGoogleGeocodeRepository;
 
 @Component
 public class RealityMatCrawler extends RealityCrawler {
-    
+
     private static final String REALITY_MAT_URL = "http://www.realitymat.cz";
     private static final String REALITY_MAT_FLATS_URL = REALITY_MAT_URL + "/search/?vp-page={PAGE}&filter%5BestateFunction%5D=2&filter%5BestateType%5D=1";
     private static final String REALITY_MAT_FLATS_INITIAL_URL = REALITY_MAT_URL + "/search/?filter%5BestateFunction%5D=2&filter%5BestateType%5D=1";
     private static final String PAGES_COUNT_PREFIX = "next-last\" href=\"/search/?vp-page=";
+
+    public static final String REALITY_MAT = "RealityMat";
 
     @Autowired
     private GoogleGeocoder googleGeocoder;
@@ -139,7 +141,7 @@ public class RealityMatCrawler extends RealityCrawler {
 
     @Override
     public String getName() {
-        return "RealityMat";
+        return REALITY_MAT;
     }
     
     public static void main(String[] args) {

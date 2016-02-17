@@ -30,6 +30,8 @@ public class MMCrawler extends RealityCrawler {
     private static final String MM_FLATS_URL = "https://www.mmreality.cz/nemovitosti/pronajem/byty/";
     private static final int REALITIES_PER_PAGE = 12;
 
+    public static final String M_M = "M&M";
+
     @Autowired
     private GoogleGeocoder googleGeocoder;
 
@@ -135,7 +137,7 @@ public class MMCrawler extends RealityCrawler {
     
     @Override
     public String getName() {
-        return "M&M";
+        return M_M;
     }
 
     public static void main(String[] args) {

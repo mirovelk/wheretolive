@@ -43,7 +43,8 @@ public abstract class PersistingCrawler implements Crawler {
         int existingObjectsCount = 0;
         for (MapObject mapObject : result) {
             if (nameableMapObjects.contains(mapObject)) {
-                mapObject.setUpdateTime(mapObject.getUpdateTime());
+                int i = nameableMapObjects.indexOf(mapObject);
+                mapObject.setUpdateTime(nameableMapObjects.get(i).getUpdateTime());
                 existingObjectsCount++;
             }
         }

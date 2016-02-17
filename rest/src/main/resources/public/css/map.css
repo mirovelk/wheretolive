@@ -42,3 +42,7 @@ html, body {
     left: 0;
     width: 100%;
 }
+
+h6 {
+    font-size: xx-small !important;
+}

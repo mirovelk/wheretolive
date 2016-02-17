@@ -93,6 +93,7 @@ function createMarker(item, color) {
     var contentString = "<div>" + link +
         "<h3>" + item.price + "</h3>" +
         "<h3>" + item.area + "m<sup>2</sup></h3>" +
+        "<h6>" + formatDate(item.updateTime) + "</h6>" +
         "</div>";
     marker.addListener('click', function() {
         if (infoWindow) {
@@ -108,6 +109,19 @@ function createMarker(item, color) {
     //        infoWindow.close();
     //    }
     //});
+}
+
+function formatDate(timestamp) {
+    var date = new Date(timestamp);
+    return date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear() + " " + twoDigits(date.getHours()) + ":" + twoDigits(date.getMinutes());
+}
+
+function twoDigits(number) {
+    if (number < 10) {
+        return "0" + number;
+    } else {
+        return number;
+    }
 }
 
 function getPercentage(item) {

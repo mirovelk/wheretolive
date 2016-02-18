@@ -134,7 +134,7 @@ public class RealityMatCrawler extends RealityCrawler {
     }
 
     @Override
-    @Scheduled(cron = "0 30 14 * * *")
+    @Scheduled(cron = REALITY_MAT_CRON)
     public void execute() {
         super.execute();
     }

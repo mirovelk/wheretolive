@@ -4,6 +4,8 @@
     <title>Where to live</title>
     <script src="js/jquery-2.1.4.min.js"></script>
     <script src="js/map.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/rest.js"></script>
     <script src="js/wNumb.js"></script>
     <script src="js/nouislider.min.js"></script>
     <script src="js/foundation.min.js"></script>
@@ -18,7 +20,7 @@
 <div id="content">
     <div id="map"></div>
     
-    <button onclick="openSettings();" class="menuButton">=</button>
+    <div onclick="toggleSettings();" class="menuButton"></div>
     
     <div id="settings" style="display: none">
         <div class="row fullWidth">
@@ -133,7 +135,7 @@
             connect: true,
             behaviour: 'tap',
             tooltips: [ wNumb({ decimals: 0 }), wNumb({ decimals: 0 }) ],
-            start: [ 0, 400 ],
+            start: [ 0, 800 ],
             range: {
                 'min': [ 0 ],
                 'max': [ 800 ]

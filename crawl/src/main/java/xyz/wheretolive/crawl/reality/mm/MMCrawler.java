@@ -130,7 +130,7 @@ public class MMCrawler extends RealityCrawler {
     }
 
     @Override
-    @Scheduled(cron = "0 30 17 * * *")
+    @Scheduled(cron = MM_CRON)
     public void execute() {
         super.execute();
     }

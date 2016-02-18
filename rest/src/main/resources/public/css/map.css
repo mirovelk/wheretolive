@@ -22,12 +22,19 @@ html, body {
     max-width: initial !important;
 }
 .menuButton {
-    width: 100%;
     position: absolute;
-    top: 0;
-    left: 0;
-    height: 20px;
-    background-color: #116ca8;
+    top: 20px;
+    right: 20px;
+    height: 64px;
+    width: 64px;
+    background-image: url("../img/settings.png");
+    border: #000000;
+    z-index: 1000;
+    cursor: pointer;
+}
+.menuButton:hover {
+    -webkit-filter: invert(50%); /* Chrome, Safari, Opera */
+    filter: invert(50%);
 }
 #content {
     position: relative;

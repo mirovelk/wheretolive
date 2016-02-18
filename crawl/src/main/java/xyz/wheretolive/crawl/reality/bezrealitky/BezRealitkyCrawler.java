@@ -62,7 +62,7 @@ public class BezRealitkyCrawler extends RealityCrawler {
     }
 
     @Override
-    @Scheduled(cron = "0 30 13 * * *")
+    @Scheduled(cron = BEZ_REALITKY_CRON)
     public void execute() {
         super.execute();
     }

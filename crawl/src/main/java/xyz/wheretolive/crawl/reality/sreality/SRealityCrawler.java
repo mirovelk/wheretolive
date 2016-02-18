@@ -60,7 +60,7 @@ public class SRealityCrawler extends RealityCrawler {
     }
 
     @Override
-    @Scheduled(cron = "0 30 14 * * *")
+    @Scheduled(cron = SREALITY_CRON)
     public void execute() {
         super.execute();
     }

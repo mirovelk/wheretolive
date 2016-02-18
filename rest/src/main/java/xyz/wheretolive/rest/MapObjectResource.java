@@ -25,7 +25,7 @@ import xyz.wheretolive.core.domain.TrafficStop;
 public class MapObjectResource {
     
     @Autowired
-    MapObjectResourceService service;
+    private MapObjectResourceService service;
     
     @RequestMapping("/test")
     public @ResponseBody String test() {

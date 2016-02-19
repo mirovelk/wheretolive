@@ -6,6 +6,7 @@
     <script src="js/map.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/rest.js"></script>
+    <script src="js/facebook.js"></script>
     <script src="js/wNumb.js"></script>
     <script src="js/nouislider.min.js"></script>
     <script src="js/foundation.min.js"></script>
@@ -16,6 +17,57 @@
 </head>
 
 <body>
+
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId : '1648440438752990',
+            cookie : true, // enable cookies to allow the server to access 
+            // the session
+            xfbml : true, // parse social plugins on this page
+            version : 'v2.5' // use version 2.2
+        });
+
+        // Now that we've initialized the JavaScript SDK, we call 
+        // FB.getLoginStatus().  This function gets the state of the
+        // person visiting this page and can return one of three states to
+        // the callback you provide.  They can be:
+        //
+        // 1. Logged into your app ('connected')
+        // 2. Logged into Facebook, but not your app ('not_authorized')
+        // 3. Not logged into Facebook and can't tell if they are logged into
+        //    your app or not.
+        //
+        // These three cases are handled in the callback function.
+
+        FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+        });
+
+    };
+
+    // Load the SDK asynchronously
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id))
+            return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+</script>
+
+<!--
+Below we include the Login Button social plugin. This button uses
+the JavaScript SDK to present a graphical Login button that triggers
+the FB.login() function when clicked.
+-->
+
+<div id="facebookLoginButton">
+    <fb:login-button  scope="public_profile,email" onlogin="checkLoginState();" auto_logout_link="true"></fb:login-button>
+</div>
 
 <div id="content">
     <div id="map"></div>
@@ -78,11 +130,13 @@
 
         map.addListener('bounds_changed', function() {
             if (!dragging) {
-                loadHousing();
-                updateSizeSlider();
-                updatePriceSlider();
-                updatePricePerSquaredMeterSlider();
-                loadFoodMarkets();
+                loadHousingMetaData(function() {
+                    loadHousing();
+                    updateSizeSlider();
+                    updatePriceSlider();
+                    updatePricePerSquaredMeterSlider();
+                    loadFoodMarkets();
+                });
             }
         });
 
@@ -92,11 +146,13 @@
 
         map.addListener('dragend', function() {
             dragging = false;
-            loadHousing();
-            updateSizeSlider();
-            updatePriceSlider();
-            updatePricePerSquaredMeterSlider();
-            loadFoodMarkets();
+            loadHousingMetaData(function() {
+                loadHousing();
+                updateSizeSlider();
+                updatePriceSlider();
+                updatePricePerSquaredMeterSlider();
+                loadFoodMarkets();
+            });
         });
 
     }

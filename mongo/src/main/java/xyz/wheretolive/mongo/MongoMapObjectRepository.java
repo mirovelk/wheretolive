@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import xyz.wheretolive.core.domain.MapObject;
 import xyz.wheretolive.core.domain.MapView;
 import xyz.wheretolive.core.domain.NameableMapObject;
+import xyz.wheretolive.core.domain.Reality;
 
 @Repository
 public class MongoMapObjectRepository implements MapObjectRepository {
@@ -31,6 +32,14 @@ public class MongoMapObjectRepository implements MapObjectRepository {
     public <E extends NameableMapObject> List<E> load(Class<E> type, String name) {
         Query<E> query = datastoreProvider.getDatastore().find(type, "name", name);
         return query.asList();
+    }
+
+    @Override
+    public Reality loadReality(String realityId, String name) {
+        Query<Reality> query = datastoreProvider.getDatastore().createQuery(Reality.class);
+        query.field("realityId").equal(realityId);
+        query.field("name").equal(name);
+        return query.get();
     }
 
     @Override

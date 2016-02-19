@@ -2,21 +2,25 @@ package xyz.wheretolive.rest.facebook;
 
 import java.util.logging.Logger;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.User;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
+import org.springframework.stereotype.Component;
 
+@Component
+@Scope("prototype")
 public class FacebookService {
 
     final static Logger logger = Logger.getLogger(FacebookService.class.getName());
 
-    private final Facebook facebook;
+    private Facebook facebook;
 
-    public FacebookService(String accessToken) {
+    public void init(String accessToken) {
         facebook = new FacebookTemplate(accessToken);
     }
 
-    public User downloadUserProfile() {
+    public User getUserProfile() {
         return facebook.userOperations().getUserProfile();
     }
 }

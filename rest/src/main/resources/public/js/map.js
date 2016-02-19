@@ -7,6 +7,12 @@ function center() {
     });
 }
 
+function visitReality(name, realityId) {
+    $.getJSON("mapObject/visitHousing", {name: name, realityId: realityId}, function (data, status) {
+        
+    });
+}
+
 function createHousingMarker(item, color) {
     var marker = new google.maps.Marker({
         position: {lat: item.location.latitude, lng: item.location.longitude},
@@ -35,6 +41,14 @@ function createHousingMarker(item, color) {
             content: contentString
         });
         infoWindow.open(map, marker);
+        visitReality(item.name, item.realityId);
+        marker.setIcon({
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 3,
+            fillColor: "rgb(0,0,255)",
+            strokeColor: "rgb(0,0,255)",
+            fillOpacity: 1
+        });
     });
 }
 

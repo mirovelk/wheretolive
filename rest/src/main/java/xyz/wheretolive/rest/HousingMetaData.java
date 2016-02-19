@@ -1,5 +1,8 @@
 package xyz.wheretolive.rest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HousingMetaData {
 
     private double minPrice;
@@ -13,6 +16,8 @@ public class HousingMetaData {
     private double minPricePerSquaredMeter;
 
     private double maxPricePerSquaredMeter;
+    
+    private List<String> visitedHousingIds = new ArrayList<>();
 
     public double getMaxArea() {
         return maxArea;
@@ -60,5 +65,13 @@ public class HousingMetaData {
 
     public void setMinPricePerSquaredMeter(double minPricePerSquaredMeter) {
         this.minPricePerSquaredMeter = minPricePerSquaredMeter;
+    }
+
+    public List<String> getVisitedHousingIds() {
+        return visitedHousingIds;
+    }
+
+    public void setVisitedHousingIds(List<String> visitedHousingIds) {
+        this.visitedHousingIds = visitedHousingIds;
     }
 }

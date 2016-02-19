@@ -24,6 +24,21 @@ $.postJSON = function(url, requestData, callback) {
     });
 };
 
+$.getJSON = function(url, requestData, callback) {
+    return $.ajax({
+        'type': 'GET',
+        'url': url,
+        'contentType': 'application/json',
+        'data': requestData,
+        'dataType': 'json',
+        'success': callback,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    });
+};
+
 var foodMarketMarkers = [];
 function loadFoodMarkets() {
     $.postJSON("mapObject/foodMarkets", {}, function (data, status) {
@@ -64,8 +79,13 @@ function loadHousing() {
             if (contains(housingMarkers, item)) {
                 return;
             }
-            var percentage = getPercentage(item);
-            var color = getColor(percentage);
+            var realityId = item.name + "_" + item.realityId;
+            if ($.inArray(realityId, housingMeta.visitedHousingIds) != -1) {
+                var color = "rgb(0,0,255)";
+            } else {
+                var percentage = getPercentage(item);
+                var color = getColor(percentage);
+            }
             createHousingMarker(item, color);
         });
         filter();

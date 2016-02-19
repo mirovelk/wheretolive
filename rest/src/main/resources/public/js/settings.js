@@ -1,47 +1,49 @@
-function updateSizeSlider() {
+var housingMeta;
+function loadHousingMetaData(callback) {
     $.postJSON("mapObject/housingMeta", {}, function (data, status) {
-        if (data.minArea == data.maxArea) {
-            return;
+        housingMeta = data;
+        callback();
+    });
+}
+
+function updateSizeSlider() {
+    if (housingMeta.minArea == housingMeta.maxArea) {
+        return;
+    }
+    sizeSlider.noUiSlider.updateOptions({
+        range: {
+            'min': [ housingMeta.minArea ],
+            '0%': [ housingMeta.minArea, 5 ],
+            'max': [ housingMeta.maxArea ]
         }
-        sizeSlider.noUiSlider.updateOptions({
-            range: {
-                'min': [ data.minArea ],
-                '0%': [ data.minArea, 5 ],
-                'max': [ data.maxArea ]
-            }
-        });
     });
 }
 
 function updatePriceSlider() {
-    $.postJSON("mapObject/housingMeta", {}, function (data, status) {
-        if (data.minPrice == data.maxPrice) {
-            return;
+    if (housingMeta.minPrice == housingMeta.maxPrice) {
+        return;
+    }
+    var max = Math.min(housingMeta.maxPrice, 50000);
+    priceSlider.noUiSlider.updateOptions({
+        range: {
+            'min': [ housingMeta.minPrice ],
+            '0%': [ housingMeta.minPrice, 5000 ],
+            'max': [ max ]
         }
-        var max = Math.min(data.maxPrice, 50000);
-        priceSlider.noUiSlider.updateOptions({
-            range: {
-                'min': [ data.minPrice ],
-                '0%': [ data.minPrice, 5000 ],
-                'max': [ max ]
-            }
-        });
     });
 }
 
 function updatePricePerSquaredMeterSlider() {
-    $.postJSON("mapObject/housingMeta", {}, function (data, status) {
-        if (data.minPricePerSquaredMeter == data.maxPricePerSquaredMeter) {
-            return;
+    if (housingMeta.minPricePerSquaredMeter == housingMeta.maxPricePerSquaredMeter) {
+        return;
+    }
+    var max = Math.min(housingMeta.maxPricePerSquaredMeter, 1000);
+    pricePerSquaredMeterSlider.noUiSlider.updateOptions({
+        range: {
+            'min': [ housingMeta.minPricePerSquaredMeter ],
+            '0%': [ housingMeta.minPricePerSquaredMeter, 10 ],
+            'max': [ max ]
         }
-        var max = Math.min(data.maxPricePerSquaredMeter, 1000);
-        pricePerSquaredMeterSlider.noUiSlider.updateOptions({
-            range: {
-                'min': [ data.minPricePerSquaredMeter ],
-                '0%': [ data.minPricePerSquaredMeter, 10 ],
-                'max': [ max ]
-            }
-        });
     });
 }
 

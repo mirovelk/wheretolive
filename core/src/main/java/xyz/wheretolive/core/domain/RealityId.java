@@ -1,15 +1,19 @@
 package xyz.wheretolive.core.domain;
 
-import java.util.Date;
-import java.util.List;
-
-public class RealityVisit {
+public class RealityId {
 
     private String name;
-    
+
     private String id;
     
-    private List<Date> visitTimes;
+    public RealityId(String name, String id) {
+        this.name = name;
+        this.id = id;
+    }
+    
+    public RealityId() {
+        
+    }
 
     public String getName() {
         return name;
@@ -27,11 +31,8 @@ public class RealityVisit {
         this.id = id;
     }
 
-    public List<Date> getVisitTimes() {
-        return visitTimes;
-    }
-
-    public void setVisitTimes(List<Date> visitTimes) {
-        this.visitTimes = visitTimes;
+    @Override
+    public String toString() {
+        return name + "_" + id;
     }
 }

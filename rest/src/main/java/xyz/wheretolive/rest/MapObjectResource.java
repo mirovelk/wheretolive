@@ -6,11 +6,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import xyz.wheretolive.core.domain.FoodMarket;
 import xyz.wheretolive.core.domain.Housing;
@@ -55,5 +58,11 @@ public class MapObjectResource {
     @RequestMapping(value = "/housingMeta", method = RequestMethod.POST)
     public @ResponseBody HousingMetaData getHousingMetaIn(@RequestBody MapView view) {
         return service.getHousingMetaDataIn(view);
+    }
+    
+    @RequestMapping(value = "/visitHousing", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
+    public void visitHousing(@RequestParam(value = "realityId") String realityId, @RequestParam(value = "name") String name) {
+        service.visitHousing(realityId, name);
     }
 }

@@ -6,12 +6,15 @@ import java.util.List;
 import xyz.wheretolive.core.domain.MapObject;
 import xyz.wheretolive.core.domain.MapView;
 import xyz.wheretolive.core.domain.NameableMapObject;
+import xyz.wheretolive.core.domain.Reality;
 
 public interface MapObjectRepository {
     
     void store(MapObject mapObject);
     
     <E extends NameableMapObject> List<E> load(Class<E> type, String name);
+
+    Reality loadReality(String realityId, String name);
     
     Collection<MapObject> getIn(MapView view);
 

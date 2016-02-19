@@ -1,24 +1,27 @@
 package xyz.wheretolive.core.domain;
 
-import java.util.Set;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import org.bson.types.ObjectId;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
+
+@Entity("persons")
 public class Person {
 
-    private String facebookAuthToken;
-    
+    @Id
+    private ObjectId id;
+
     private String facebookId;
     
-    private Set<RealityVisit> visitedRealities;
+    private FacebookLongTermToken longTermToken;
+    
+    private Map<String, List<Date>> visitedRealities = new HashMap<>();
     
     private FilterSettings filterSettings;
-
-    public String getFacebookAuthToken() {
-        return facebookAuthToken;
-    }
-
-    public void setFacebookAuthToken(String facebookAuthToken) {
-        this.facebookAuthToken = facebookAuthToken;
-    }
 
     public String getFacebookId() {
         return facebookId;
@@ -28,11 +31,11 @@ public class Person {
         this.facebookId = facebookId;
     }
 
-    public Set<RealityVisit> getVisitedRealities() {
+    public Map<String, List<Date>> getVisitedRealities() {
         return visitedRealities;
     }
 
-    public void setVisitedRealities(Set<RealityVisit> visitedRealities) {
+    public void setVisitedRealities(Map<String, List<Date>> visitedRealities) {
         this.visitedRealities = visitedRealities;
     }
 
@@ -42,5 +45,17 @@ public class Person {
 
     public void setFilterSettings(FilterSettings filterSettings) {
         this.filterSettings = filterSettings;
+    }
+
+    public FacebookLongTermToken getLongTermToken() {
+        return longTermToken;
+    }
+
+    public void setLongTermToken(FacebookLongTermToken longTermToken) {
+        this.longTermToken = longTermToken;
+    }
+
+    public ObjectId getId() {
+        return id;
     }
 }

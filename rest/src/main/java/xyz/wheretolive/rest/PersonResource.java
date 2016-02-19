@@ -5,11 +5,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import xyz.wheretolive.core.domain.Person;
 
@@ -23,7 +25,13 @@ public class PersonResource {
     private PersonResourceService service;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public @ResponseBody Person getIn(@RequestParam(value = "facebookId") String facebookId, @RequestParam(value = "facebookAuthToken") String facebookAuthToken) {
+    public @ResponseBody Person login(@RequestParam(value = "facebookId") String facebookId, @RequestParam(value = "facebookAuthToken") String facebookAuthToken) {
         return service.login(facebookId, facebookAuthToken);
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
+    public void logout() {
+        service.logout();
     }
 }

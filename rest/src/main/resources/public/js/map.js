@@ -27,7 +27,7 @@ function createHousingMarker(item, color) {
     });
     housingMarkers.push(marker);
     housings.push(item);
-    var link = "<a target='_blank' href='" + getRealEstateBaseUrl(item.name) + item.realityId + "'><h2>" + getRealEstateName(item.name) + "</h2></a>";
+    var link = "<a target='_blank' onclick='setVisited(" + (housingMarkers.length - 1) + ");' href='" + getRealEstateBaseUrl(item.name) + item.realityId + "'><h2>" + getRealEstateName(item.name) + "</h2></a>";
     var contentString = "<div>" + link +
         "<h3>" + item.price + "</h3>" +
         "<h3>" + item.area + "m<sup>2</sup></h3>" +
@@ -41,15 +41,20 @@ function createHousingMarker(item, color) {
             content: contentString
         });
         infoWindow.open(map, marker);
-        visitReality(item.name, item.realityId);
-        marker.setIcon({
-            path: google.maps.SymbolPath.CIRCLE,
-            scale: 3,
-            fillColor: "rgb(0,0,255)",
-            strokeColor: "rgb(0,0,255)",
-            fillOpacity: 1
-        });
     });
+}
+
+function setVisited(index) {
+    var marker = housingMarkers[index];
+    marker.setIcon({
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 3,
+        fillColor: "rgb(0,0,255)",
+        strokeColor: "rgb(0,0,255)",
+        fillOpacity: 1
+    });
+    var item = housings[index];
+    visitReality(item.name, item.realityId);
 }
 
 function getRealEstateName(name) {

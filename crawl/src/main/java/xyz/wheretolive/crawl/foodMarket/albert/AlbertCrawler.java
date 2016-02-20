@@ -36,7 +36,7 @@ public class AlbertCrawler extends FoodMarketCrawler {
                 toReturn.add(foodMarket);
             }
         }
-        
+
         return new HashSet<>(toReturn);
     }
 

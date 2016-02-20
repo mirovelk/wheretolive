@@ -39,6 +39,6 @@ public class NameableMapObject extends MapObject implements Nameable {
             return false;
         }
         NameableMapObject other = (NameableMapObject) obj;
-        return super.equals(obj) && name == null ? other.name == null : name.equals(other.name);
+        return super.equals(obj) && (name == null ? other.name == null : name.equals(other.name));
     }
 }

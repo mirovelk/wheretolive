@@ -37,6 +37,6 @@ public class Reality extends Housing {
             return false;
         }
         Reality other = (Reality) obj;
-        return super.equals(obj) && realityId == null ? other.realityId == null : realityId.equals(other.realityId);
+        return super.equals(obj) && (realityId == null ? other.realityId == null : realityId.equals(other.realityId));
     }
 }

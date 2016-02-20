@@ -71,6 +71,6 @@ public class Housing extends NameableMapObject {
             return false;
         }
         Housing other = (Housing) obj;
-        return super.equals(obj) && price == other.price && area == other.area;
+        return super.equals(obj) && (price == other.price && area == other.area);
     }
 }

@@ -147,9 +147,12 @@ function setColoringScheme(scheme) {
     for (var i = 0; i < housingMarkers.length; i++) {
         housingMarkers[i].setMap(null);
     }
+    loadHousing();
+}
+
+function clearRealties() {
     housingMarkers = [];
     housings = [];
-    loadHousing();
 }
 
 function contains(markers, item) {
@@ -162,3 +165,17 @@ function contains(markers, item) {
     return false;
 }
 
+function clearAndRefresh() {
+    clearRealties();
+    refresh();
+}
+
+function refresh() {
+    loadHousingMetaData(function() {
+        loadHousing();
+        updateSizeSlider();
+        updatePriceSlider();
+        updatePricePerSquaredMeterSlider();
+        loadFoodMarkets();
+    });
+}

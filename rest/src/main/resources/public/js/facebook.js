@@ -13,6 +13,7 @@ function statusChangeCallback(response) {
         // The person is logged into Facebook, but not your app.
         console.log("user not authorized for the app");
     } else {
+        logoutOnServer();
         // The person is not logged into Facebook, so we're not sure if
         // they are logged into this app or not.
         console.log("user not logged in to facebook");
@@ -37,12 +38,12 @@ function loginOnServer(response) {
         facebookId: facebookId
     };
     $.getJSON("person/login", data, function (data, status) {
-        
+        clearAndRefresh();
     });
 }
 
-function logoutOnServer(response) {
+function logoutOnServer() {
     $.getJSON("person/logout", {}, function (data, status) {
-        
+        clearAndRefresh();
     });
 }

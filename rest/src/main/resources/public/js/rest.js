@@ -30,7 +30,6 @@ $.getJSON = function(url, requestData, callback) {
         'url': url,
         'contentType': 'application/json',
         'data': requestData,
-        'dataType': 'json',
         'success': callback
     });
 };

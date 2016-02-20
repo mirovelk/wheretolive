@@ -130,13 +130,7 @@ the FB.login() function when clicked.
 
         map.addListener('bounds_changed', function() {
             if (!dragging) {
-                loadHousingMetaData(function() {
-                    loadHousing();
-                    updateSizeSlider();
-                    updatePriceSlider();
-                    updatePricePerSquaredMeterSlider();
-                    loadFoodMarkets();
-                });
+                refresh();
             }
         });
 
@@ -146,13 +140,7 @@ the FB.login() function when clicked.
 
         map.addListener('dragend', function() {
             dragging = false;
-            loadHousingMetaData(function() {
-                loadHousing();
-                updateSizeSlider();
-                updatePriceSlider();
-                updatePricePerSquaredMeterSlider();
-                loadFoodMarkets();
-            });
+            refresh();
         });
 
     }

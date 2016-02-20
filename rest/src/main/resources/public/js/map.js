@@ -27,10 +27,11 @@ function createHousingMarker(item, color) {
     });
     housingMarkers.push(marker);
     housings.push(item);
-    var link = "<a target='_blank' onclick='setVisited(" + (housingMarkers.length - 1) + ");' href='" + getRealEstateBaseUrl(item.name) + item.realityId + "'><h2>" + getRealEstateName(item.name) + "</h2></a>";
+    var link = "<a target='_blank' onclick='setVisited(" + (housings.length - 1) + ");' href='" + getRealEstateBaseUrl(item.name) + item.realityId + "'><h2>" + getRealEstateName(item.name) + "</h2></a>";
     var contentString = "<div>" + link +
         "<h3>" + item.price + "</h3>" +
         "<h3>" + item.area + "m<sup>2</sup></h3>" +
+        "<h6><a href='#' onclick='dontShow(" + (housings.length - 1) + ");'><img src='../img/delete.gif'>Don't show again</a></h6>" +
         "<h6>" + formatDate(item.updateTime) + "</h6>" +
         "</div>";
     marker.addListener('click', function() {
@@ -41,6 +42,14 @@ function createHousingMarker(item, color) {
             content: contentString
         });
         infoWindow.open(map, marker);
+    });
+}
+
+function dontShow(index) {
+    var item = housings[index];
+    $.getJSON("mapObject/hide", {name: item.name, realityId: item.realityId}, function (data, status) {
+        housingMarkers[index].setMap(null);
+        item.hide = true;
     });
 }
 

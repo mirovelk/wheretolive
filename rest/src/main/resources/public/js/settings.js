@@ -62,7 +62,7 @@ function filter() {
             || price < minPrice || price > maxPrice
             || pricePerSquaredMeter < minPricePerSquaredMeter || pricePerSquaredMeter > maxPricePerSquaredMeter) {
             housingMarkers[i].setMap(null);
-        } else if (housingMarkers[i].getMap() == null){
+        } else if (housingMarkers[i].getMap() == null && !housings[i].hasOwnProperty('hide') && housings[i].hide != true){
             housingMarkers[i].setMap(map);
         }
     }

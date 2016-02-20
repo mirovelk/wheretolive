@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import xyz.wheretolive.core.domain.FoodMarket;
-import xyz.wheretolive.core.domain.Housing;
 import xyz.wheretolive.core.domain.MapObject;
 import xyz.wheretolive.core.domain.MapView;
+import xyz.wheretolive.core.domain.Reality;
 import xyz.wheretolive.core.domain.TrafficStop;
 
 @RequestMapping("/mapObject")
@@ -51,8 +51,8 @@ public class MapObjectResource {
     }
 
     @RequestMapping(value = "/housing", method = RequestMethod.POST)
-    public @ResponseBody Collection<Housing> getHousingIn(@RequestBody MapView view) {
-        return service.getIn(view, Housing.class);
+    public @ResponseBody Collection<Reality> getHousingIn(@RequestBody MapView view) {
+        return service.getFilteredHousingsIn(view);
     }
 
     @RequestMapping(value = "/housingMeta", method = RequestMethod.POST)
@@ -64,5 +64,11 @@ public class MapObjectResource {
     @ResponseStatus(value = HttpStatus.OK)
     public void visitHousing(@RequestParam(value = "realityId") String realityId, @RequestParam(value = "name") String name) {
         service.visitHousing(realityId, name);
+    }
+
+    @RequestMapping(value = "/hide", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
+    public void hide(@RequestParam(value = "realityId") String realityId, @RequestParam(value = "name") String name) {
+        service.hide(realityId, name);
     }
 }

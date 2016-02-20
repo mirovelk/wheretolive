@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +46,33 @@ public class MapObjectResourceService {
         return getIn(view, MapObject.class);
     }
     
+    public Collection<Reality> getFilteredHousingsIn(MapView view) {
+        if (view.getMaxDimension() >= MAX_MAPVIEW_SIZE) {
+            return Collections.emptyList();
+        }
+        Set<String> hiddenRealities = Collections.emptySet();
+        Person person = (Person) httpSession.getAttribute("person");
+        if (person != null) {
+            hiddenRealities = person.getHiddenRealities();
+        }
+        Collection<Reality> realties = repository.getIn(view, Reality.class);
+        List<Reality> toReturn = filterHidden(hiddenRealities, realties);
+        return toReturn;
+    }
+
+    private List<Reality> filterHidden(Set<String> hiddenRealities, Collection<Reality> realties) {
+        List<Reality> toReturn = new ArrayList<>(realties.size());
+        for (Reality r : realties) {
+            RealityId realityIdObject = new RealityId(r.getName(), r.getRealityId());
+            if (!hiddenRealities.contains(realityIdObject.toString())) {
+                toReturn.add(r);
+            }
+        }
+        return toReturn;
+    }
+
     public HousingMetaData getHousingMetaDataIn(MapView view) {
-        Collection<Housing> housings = getIn(view, Housing.class);
+        Collection<Reality> housings = getFilteredHousingsIn(view);
         HousingMetaData metaData = new HousingMetaData();
         Person person = (Person) httpSession.getAttribute("person");
         if (person != null) {
@@ -98,6 +124,22 @@ public class MapObjectResourceService {
             visitedRealities.put(realityIdObject.toString(), visits);
         }
         personRepository.updateVisitedRealities(person);
+        httpSession.setAttribute("person", person);
+    }
+
+    public void hide(String realityId, String name) {
+        Reality reality = repository.loadReality(realityId, name);
+        if (reality == null) {
+            return;
+        }
+        Person person = (Person) httpSession.getAttribute("person");
+        if (person == null) {
+            return;
+        }
+        RealityId realityIdObject = new RealityId(name, realityId);
+        Set<String> hiddenRealities = person.getHiddenRealities();
+        hiddenRealities.add(realityIdObject.toString());
+        personRepository.updateHiddenRealities(person);
         httpSession.setAttribute("person", person);
     }
 }

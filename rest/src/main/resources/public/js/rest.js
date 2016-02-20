@@ -31,11 +31,7 @@ $.getJSON = function(url, requestData, callback) {
         'contentType': 'application/json',
         'data': requestData,
         'dataType': 'json',
-        'success': callback,
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
+        'success': callback
     });
 };
 

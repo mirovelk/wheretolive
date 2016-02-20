@@ -2,8 +2,10 @@ package xyz.wheretolive.core.domain;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
@@ -22,6 +24,8 @@ public class Person {
     private Map<String, List<Date>> visitedRealities = new HashMap<>();
     
     private FilterSettings filterSettings;
+
+    private Set<String> hiddenRealities = new HashSet<>();
 
     public String getFacebookId() {
         return facebookId;
@@ -57,5 +61,13 @@ public class Person {
 
     public ObjectId getId() {
         return id;
+    }
+
+    public Set<String> getHiddenRealities() {
+        return hiddenRealities;
+    }
+
+    public void setHiddenRealities(Set<String> hiddenRealities) {
+        this.hiddenRealities = hiddenRealities;
     }
 }

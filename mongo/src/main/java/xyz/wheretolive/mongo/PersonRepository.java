@@ -9,4 +9,6 @@ public interface PersonRepository {
     Person load(String facebookId, String facebookAuthToken);
 
     void updateVisitedRealities(Person person);
+    
+    void updateHiddenRealities(Person person);
 }

@@ -75,24 +75,24 @@ the FB.login() function when clicked.
     <div onclick="toggleSettings();" class="menuButton"></div>
     
     <div id="settings" style="display: none">
-        <div class="row fullWidth">
+        <div class="row">
             <div class="small-3 medium-2 large-1 columns"><span>m<sup>2</sup></span></div>
-            <div id="sizeSlider" class="small-9 medium-6 large-4 columns slider"></div>
+            <div id="sizeSlider" class="small-9 medium-6 large-4 columns slidingFilter"></div>
             <div class="medium-4 large-7 columns"></div>
         </div>
-        <div class="row fullWidth">
+        <div class="row">
             <div class="small-3 medium-2 large-1 columns"><span>Kč</span></div>
-            <div id="priceSlider" class="small-9 medium-6 large-4 columns slider"></div>
+            <div id="priceSlider" class="small-9 medium-6 large-4 columns slidingFilter"></div>
             <div class="medium-4 large-7 columns"></div>
         </div>
-        <div class="row fullWidth">
+        <div class="row">
             <div class="small-3 medium-2 large-1 columns"><span>Kč per m<sup>2</sup></span></div>
-            <div id="pricePerSquaredMeterSlider" class="small-9 medium-6 large-4 columns slider"></div>
+            <div id="pricePerSquaredMeterSlider" class="small-9 medium-6 large-4 columns slidingFilter"></div>
             <div class="medium-4 large-7 columns"></div>
         </div>
-        <div class="row fullWidth">
+        <div class="row">
             <div class="small-3 medium-2 large-1 columns"><span>Coloring by</span></div>
-            <div class="button-group columns small-9 medium-10 large-11">
+            <div class="columns small-9 medium-10 large-11">
                 <a class="button" onclick="setColoringScheme('size');">Size</a>
                 <a class="button" onclick="setColoringScheme('price');">Price</a>
                 <a class="button" onclick="setColoringScheme('ppm2');">Price per m<sup>2</sup></a>
@@ -155,7 +155,8 @@ the FB.login() function when clicked.
             range: {
                 'min': [ 30 ],
                 'max': [ 200 ]
-            }
+            },
+            step: 10
         });
     }
 
@@ -169,7 +170,8 @@ the FB.login() function when clicked.
             range: {
                 'min': [ 5000 ],
                 'max': [ 40000 ]
-            }
+            },
+            step: 1000
         });
     }
 
@@ -179,11 +181,12 @@ the FB.login() function when clicked.
             connect: true,
             behaviour: 'tap',
             tooltips: [ wNumb({ decimals: 0 }), wNumb({ decimals: 0 }) ],
-            start: [ 0, 800 ],
+            start: [ 0, 500 ],
             range: {
                 'min': [ 0 ],
-                'max': [ 800 ]
-            }
+                'max': [ 500 ]
+            },
+            step: 25
         });
     }
 </script>

@@ -2,6 +2,7 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    line-height: 1 !important;
 }
 #map {
     height: 100%;
@@ -11,8 +12,9 @@ html, body {
     position: relative;
     top: -95%;
 }
-.slider {
-    margin-top: 5%;
+#settings > div {
+    margin-top: 40px;
+    margin-bottom: 40px;
     /*max-width: 90%;*/
 }
 .fullWidth {
@@ -57,4 +59,10 @@ html, body {
 
 h6 {
     font-size: xx-small !important;
+}
+
+.row {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    max-width: none !important;
 }

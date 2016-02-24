@@ -135,10 +135,9 @@ function getPercentage(item) {
 }
 
 function getColor(percent) {
-    var r = Math.floor((255 * percent) / 100);
-    var g = Math.floor((255 * (100 - percent)) / 100);
-    var b = 0;
-    return "rgb(" + r + "," + g + "," + b + ")";
+    var value = percent / 100;
+    var hue = ((1 - value) * 120).toString(10);
+    return ["hsl(", hue, ",80%,50%)"].join("");
 }
 
 var coloringScheme = "time";
@@ -148,6 +147,7 @@ function setColoringScheme(scheme) {
         housingMarkers[i].setMap(null);
     }
     loadHousing();
+    clearRealties();
 }
 
 function clearRealties() {
@@ -173,9 +173,9 @@ function clearAndRefresh() {
 function refresh() {
     loadHousingMetaData(function() {
         loadHousing();
-        updateSizeSlider();
-        updatePriceSlider();
-        updatePricePerSquaredMeterSlider();
+        //updateSizeSlider();
+        //updatePriceSlider();
+        //updatePricePerSquaredMeterSlider();
         loadFoodMarkets();
     });
 }

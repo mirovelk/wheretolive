@@ -10,12 +10,14 @@ function updateSizeSlider() {
     if (housingMeta.minArea == housingMeta.maxArea) {
         return;
     }
+    var max = Math.min(housingMeta.maxArea, 300);
     sizeSlider.noUiSlider.updateOptions({
         range: {
             'min': [ housingMeta.minArea ],
             '0%': [ housingMeta.minArea, 5 ],
-            'max': [ housingMeta.maxArea ]
-        }
+            'max': [ max ]
+        },
+        step: 10
     });
 }
 
@@ -29,7 +31,8 @@ function updatePriceSlider() {
             'min': [ housingMeta.minPrice ],
             '0%': [ housingMeta.minPrice, 5000 ],
             'max': [ max ]
-        }
+        },
+        step: 1000
     });
 }
 
@@ -43,7 +46,8 @@ function updatePricePerSquaredMeterSlider() {
             'min': [ housingMeta.minPricePerSquaredMeter ],
             '0%': [ housingMeta.minPricePerSquaredMeter, 10 ],
             'max': [ max ]
-        }
+        },
+        step: 10
     });
 }
 

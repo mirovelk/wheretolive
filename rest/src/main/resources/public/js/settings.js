@@ -82,3 +82,15 @@ function toggleSettings() {
     }
     $('#settings').toggle();
 }
+
+var coloringScheme = "time";
+function setColoringScheme(scheme) {
+    $("#" + coloringScheme + "SchemeButton").removeClass("success");
+    coloringScheme = scheme;
+    $("#" + coloringScheme + "SchemeButton").addClass("success");
+    for (var i = 0; i < housingMarkers.length; i++) {
+        housingMarkers[i].setMap(null);
+    }
+    loadHousing();
+    clearRealties();
+}

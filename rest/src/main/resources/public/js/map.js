@@ -140,16 +140,6 @@ function getColor(percent) {
     return ["hsl(", hue, ",80%,50%)"].join("");
 }
 
-var coloringScheme = "time";
-function setColoringScheme(scheme) {
-    coloringScheme = scheme;
-    for (var i = 0; i < housingMarkers.length; i++) {
-        housingMarkers[i].setMap(null);
-    }
-    loadHousing();
-    clearRealties();
-}
-
 function clearRealties() {
     housingMarkers = [];
     housings = [];

@@ -27,7 +27,7 @@ public class Person {
 
     private Set<String> hiddenRealities = new HashSet<>();
     
-    private Settings settings;
+    private Settings settings = new Settings();
 
     public String getFacebookId() {
         return facebookId;

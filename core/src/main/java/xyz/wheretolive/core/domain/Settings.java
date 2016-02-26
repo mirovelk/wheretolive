@@ -2,19 +2,19 @@ package xyz.wheretolive.core.domain;
 
 public class Settings {
 
-    private String coloring;
+    private String coloring = "time";
 
-    private double priceMin;
+    private double priceMin = 10000;
 
-    private double priceMax;
+    private double priceMax = 30000;
 
-    private double sizeMin;
+    private double sizeMin = 50;
 
-    private double sizeMax;
+    private double sizeMax = 150;
 
-    private double ppm2Min;
+    private double ppm2Min = 0;
     
-    private double ppm2Max;
+    private double ppm2Max = 500;
 
     public double getPpm2Max() {
         return ppm2Max;

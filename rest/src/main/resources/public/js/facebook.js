@@ -38,6 +38,7 @@ function loginOnServer(response) {
         facebookId: facebookId
     };
     $.getJSON("person/login", data, function (data, status) {
+        loadSettings(data);
         clearAndRefresh();
     });
 }

@@ -31,7 +31,7 @@ function createHousingMarker(item, color) {
     var contentString = "<div>" + link +
         "<h3>" + item.price + "</h3>" +
         "<h3>" + item.area + "m<sup>2</sup></h3>" +
-        "<h6><a href='#' onclick='dontShow(" + (housings.length - 1) + ");'><img src='../img/delete.gif'>Don't show again</a></h6>" +
+        "<h6><a href='#' onclick='dontShow(" + (housings.length - 1) + ");' data-localize='dontShow'><img src='../img/delete.gif'>Don't show again</a></h6>" +
         "<h6>" + formatDate(item.updateTime) + "</h6>" +
         "</div>";
     marker.addListener('click', function() {
@@ -48,9 +48,9 @@ function createHousingMarker(item, color) {
 function dontShow(index) {
     var item = housings[index];
     $.getJSON("mapObject/hide", {name: item.name, realityId: item.realityId}, function (data, status) {
-        housingMarkers[index].setMap(null);
-        item.hide = true;
     });
+    housingMarkers[index].setMap(null);
+    item.hide = true;
 }
 
 function setVisited(index) {
@@ -140,11 +140,6 @@ function getColor(percent) {
     return ["hsl(", hue, ",80%,50%)"].join("");
 }
 
-function clearRealties() {
-    housingMarkers = [];
-    housings = [];
-}
-
 function contains(markers, item) {
     for (var i = 0; i < markers.length; i++) {
         if (Math.abs(markers[i].position.lat() - item.location.latitude) < 0.000001
@@ -160,12 +155,14 @@ function clearAndRefresh() {
     refresh();
 }
 
+function clearRealties() {
+    housingMarkers = [];
+    housings = [];
+}
+
 function refresh() {
     loadHousingMetaData(function() {
         loadHousing();
-        //updateSizeSlider();
-        //updatePriceSlider();
-        //updatePricePerSquaredMeterSlider();
         loadFoodMarkets();
     });
 }

@@ -11,4 +11,6 @@ public interface PersonRepository {
     void updateVisitedRealities(Person person);
     
     void updateHiddenRealities(Person person);
+
+    void updateSettings(Person person);
 }

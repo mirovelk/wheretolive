@@ -12,7 +12,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import xyz.wheretolive.core.domain.Housing;
 import xyz.wheretolive.core.domain.MapObject;
 import xyz.wheretolive.core.domain.MapView;
 import xyz.wheretolive.core.domain.Person;
@@ -71,35 +70,11 @@ public class MapObjectResourceService {
         return toReturn;
     }
 
-    public HousingMetaData getHousingMetaDataIn(MapView view) {
-        Collection<Reality> housings = getFilteredHousingsIn(view);
+    public HousingMetaData getHousingMetaDataIn() {
         HousingMetaData metaData = new HousingMetaData();
         Person person = (Person) httpSession.getAttribute("person");
         if (person != null) {
             metaData.getVisitedHousingIds().addAll(person.getVisitedRealities().keySet());
-        }
-        for (Housing h : housings) {
-            double area = h.getArea();
-            if (metaData.getMinArea() > area) {
-                metaData.setMinArea(area);
-            }
-            if (metaData.getMaxArea() < area) {
-                metaData.setMaxArea(area);
-            }
-            double price = h.getPrice();
-            if (metaData.getMinPrice() > price) {
-                metaData.setMinPrice(price);
-            }
-            if (metaData.getMaxPrice() < price) {
-                metaData.setMaxPrice(price);
-            }
-            double pricePerSquaredMeter = h.getPricePerSquaredMeter();
-            if (metaData.getMinPricePerSquaredMeter() > pricePerSquaredMeter) {
-                metaData.setMinPricePerSquaredMeter(pricePerSquaredMeter);
-            }
-            if (metaData.getMaxPricePerSquaredMeter() < pricePerSquaredMeter) {
-                metaData.setMaxPricePerSquaredMeter(pricePerSquaredMeter);
-            }
         }
         return metaData;
     }

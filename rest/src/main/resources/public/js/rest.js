@@ -1,4 +1,4 @@
-$.postJSON = function(url, requestData, callback) {
+$.postMapJSON = function(url, callback) {
     var bounds = map.getBounds();
     var data = {
         "northEast": {
@@ -10,6 +10,10 @@ $.postJSON = function(url, requestData, callback) {
             "longitude": bounds.getSouthWest().lng()
         }
     };
+    $.postJSON(url, data, callback);
+};
+
+$.postJSON = function(url, data, callback) {
     return $.ajax({
         'type': 'POST',
         'url': url,
@@ -36,7 +40,7 @@ $.getJSON = function(url, requestData, callback) {
 
 var foodMarketMarkers = [];
 function loadFoodMarkets() {
-    $.postJSON("mapObject/foodMarkets", {}, function (data, status) {
+    $.postMapJSON("mapObject/foodMarkets", function (data, status) {
         data.map(function(item) {
             if (contains(foodMarketMarkers, item)) {
                 return;
@@ -68,8 +72,7 @@ var housings = [];
 var infoWindow;
 
 function loadHousing() {
-    $.postJSON("mapObject/housing", {}, function (data, status) {
-
+    $.postMapJSON("mapObject/housing", function (data, status) {
         data.map(function(item) {
             if (contains(housingMarkers, item)) {
                 return;
@@ -89,5 +92,19 @@ function loadHousing() {
         if (infoWindow) {
             infoWindow.close();
         }
+    });
+}
+
+var housingMeta;
+function loadHousingMetaData(callback) {
+    $.postMapJSON("mapObject/housingMeta", function(data, status) {
+        housingMeta = data;
+        callback();
+    });
+}
+
+function updateSettings() {
+    $.postJSON("person/settings", clientSettings, function (data, status) {
+        
     });
 }

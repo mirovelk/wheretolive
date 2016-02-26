@@ -26,6 +26,8 @@ public class Person {
     private FilterSettings filterSettings;
 
     private Set<String> hiddenRealities = new HashSet<>();
+    
+    private Settings settings;
 
     public String getFacebookId() {
         return facebookId;
@@ -69,5 +71,13 @@ public class Person {
 
     public void setHiddenRealities(Set<String> hiddenRealities) {
         this.hiddenRealities = hiddenRealities;
+    }
+
+    public Settings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(Settings settings) {
+        this.settings = settings;
     }
 }

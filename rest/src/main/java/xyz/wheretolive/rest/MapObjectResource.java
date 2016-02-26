@@ -57,7 +57,7 @@ public class MapObjectResource {
 
     @RequestMapping(value = "/housingMeta", method = RequestMethod.POST)
     public @ResponseBody HousingMetaData getHousingMetaIn(@RequestBody MapView view) {
-        return service.getHousingMetaDataIn(view);
+        return service.getHousingMetaDataIn();
     }
     
     @RequestMapping(value = "/visitHousing", method = RequestMethod.GET)

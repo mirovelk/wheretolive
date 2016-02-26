@@ -48,4 +48,14 @@ public class MongoPersonRepository implements PersonRepository {
         UpdateOperations<Person> set = datastore.createUpdateOperations(Person.class).set("hiddenRealities", person.getHiddenRealities());
         datastore.update(updateQuery, set);
     }
+
+    @Override
+    public void updateSettings(Person person) {
+        Datastore datastore = datastoreProvider.getDatastore();
+        Query<Person> updateQuery = datastore.createQuery(Person.class).field("_id").equal(person.getId());
+        UpdateOperations<Person> unset = datastore.createUpdateOperations(Person.class).unset("settings");
+        datastore.update(updateQuery, unset);
+        UpdateOperations<Person> set = datastore.createUpdateOperations(Person.class).set("settings", person.getSettings());
+        datastore.update(updateQuery, set);
+    }
 }

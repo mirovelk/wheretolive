@@ -58,7 +58,7 @@ public class MMCrawler extends RealityCrawler {
                 reality.setElevator(parseElevator(pageSourceCode));
                 result.add(reality);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("Error while parsing flat of " + getName(), e);
             }
         }
         return result;

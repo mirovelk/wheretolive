@@ -16,7 +16,7 @@ import xyz.wheretolive.mongo.MetadataRepository;
 
 public abstract class PersistingCrawler implements Crawler {
 
-    private static Logger logger = LogManager.getLogger(PersistingCrawler.class);
+    protected static Logger logger = LogManager.getLogger(PersistingCrawler.class);
 
     @Autowired
     private MapObjectRepository repository;

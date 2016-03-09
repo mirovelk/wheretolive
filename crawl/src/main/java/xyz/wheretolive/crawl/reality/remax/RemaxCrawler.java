@@ -59,7 +59,7 @@ public class RemaxCrawler extends RealityCrawler {
                 reality.setBalcony(parseTerace(pageSourceCode));
                 result.add(reality);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("Error while parsing flat of " + getName(), e);
             }
         }
         return result;

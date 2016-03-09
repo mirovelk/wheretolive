@@ -60,7 +60,7 @@ public class RealityMatCrawler extends RealityCrawler {
                 reality.setBalcony(parseBalcony(pageSourceCode));
                 result.add(reality);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("Error while parsing flat of " + getName(), e);
             }
         }
         return result;

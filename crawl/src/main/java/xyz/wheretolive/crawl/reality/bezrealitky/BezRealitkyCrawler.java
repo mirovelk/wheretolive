@@ -55,9 +55,14 @@ public class BezRealitkyCrawler extends RealityCrawler {
                 continue;
             }
             for (BezRealitkyRecord record : square.getRecords()) {
-                Reality reality = new Reality(record.getId(), record.getPrice(), record.getSurface(), getName(), new Coordinates(record.getLat(), record.getLng()));
-                loadRealityDetails(reality);
-                result.add(reality);
+                try {
+                    Reality reality = new Reality(record.getId(), record.getPrice(), record.getSurface(), getName(),
+                            new Coordinates(record.getLat(), record.getLng()));
+                    loadRealityDetails(reality);
+                    result.add(reality);
+                } catch (Exception e) {
+                    logger.error("Error while parsing flat of " + getName(), e);
+                }
             }
         }
         return result;
@@ -72,7 +77,7 @@ public class BezRealitkyCrawler extends RealityCrawler {
     }
 
     private int parseFloor(String pageUrl, String pageSourceCode) {
-        Pattern pattern = Pattern.compile("podlaží:</div>\\s*<div class=\"value\">(-?\\d+)</div>");
+        Pattern pattern = Pattern.compile("podlaží:</div>\\s*<div class=\"value\">(\\-?\\d+)</div>");
         Matcher matcher = pattern.matcher(pageSourceCode);
         if (matcher.find()) {
             return Integer.parseInt(matcher.group(1));

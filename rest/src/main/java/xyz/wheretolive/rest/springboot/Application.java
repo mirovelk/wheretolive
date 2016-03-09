@@ -25,4 +25,5 @@ public class Application implements ApplicationListener<EmbeddedServletContainer
         int port = event.getEmbeddedServletContainer().getPort();
         logger.info("Server listening on port " + port);
     }
+    
 }

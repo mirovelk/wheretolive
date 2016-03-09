@@ -54,6 +54,8 @@ public class MMCrawler extends RealityCrawler {
                 double area = parseArea(pageUrl, pageSourceCode);
                 Coordinates location = parseLocation(pageUrl, pageSourceCode);
                 Reality reality = new Reality(realityId, price, area, getName(), location);
+                reality.setFloor(parseFloor(pageUrl, pageSourceCode));
+                reality.setElevator(parseElevator(pageSourceCode));
                 result.add(reality);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -79,6 +81,27 @@ public class MMCrawler extends RealityCrawler {
             return Double.parseDouble(matcher.group(1));
         } else {
             throw new IllegalStateException("Area not found in page with url " + pageUrl);
+        }
+    }
+
+    private int parseFloor(String pageUrl, String pageSourceCode) {
+        Pattern pattern = Pattern.compile("Číslo podlaží</td>\\s*<td >(\\d+)\\.");
+        Matcher matcher = pattern.matcher(pageSourceCode);
+        if (matcher.find()) {
+            return Integer.parseInt(matcher.group(1));
+        } else {
+            throw new IllegalStateException("Floor not found in page with url " + pageUrl);
+        }
+    }
+
+    private Boolean parseElevator(String pageSourceCode) {
+        Pattern pattern = Pattern.compile("Výtah</td>\\s*<td >(\\w+)</td>");
+        Matcher matcher = pattern.matcher(pageSourceCode);
+        if (matcher.find()) {
+            String group = matcher.group(1);
+            return group.equals("Ano") ? true : group.equals("Ne") ? false : null;
+        } else {
+            return null;
         }
     }
 

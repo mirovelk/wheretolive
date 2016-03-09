@@ -108,3 +108,9 @@ function updateSettings() {
         
     });
 }
+
+function loadCrawlerLogs(callback) {
+    $.getJSON("metadata/crawlerLog", {}, function (data, status) {
+        callback(data);
+    });
+}

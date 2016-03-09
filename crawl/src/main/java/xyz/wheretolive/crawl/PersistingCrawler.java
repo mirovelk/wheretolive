@@ -1,15 +1,18 @@
 package xyz.wheretolive.crawl;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import xyz.wheretolive.core.domain.CrawlerLog;
 import xyz.wheretolive.core.domain.MapObject;
 import xyz.wheretolive.core.domain.NameableMapObject;
 import xyz.wheretolive.mongo.MapObjectRepository;
+import xyz.wheretolive.mongo.MetadataRepository;
 
 public abstract class PersistingCrawler implements Crawler {
 
@@ -17,6 +20,9 @@ public abstract class PersistingCrawler implements Crawler {
 
     @Autowired
     private MapObjectRepository repository;
+
+    @Autowired
+    private MetadataRepository metadataRepository;
 
     private void store(Collection<MapObject> mapObjects) {
         for (MapObject mapObject : mapObjects) {
@@ -26,19 +32,35 @@ public abstract class PersistingCrawler implements Crawler {
     
     @Override
     public void execute() {
+        String message;
+        Date start = new Date();
         try {
             logger.info("Starting execution of " + getName() + " Crawler.");
             Collection<MapObject> result = crawl();
             logger.info("Execution of " + getName() + " Crawler finished.");
-            updateWithOldTimestamps(result);
+            message = updateWithOldTimestamps(result);
+            logger.info(message);
             removeOld();
             store(result);
         } catch (Exception e) {
             logger.error("Error while executing crawler", e);
+            message = e.getMessage();
         }
+        Date end = new Date();
+        int executionTimeInSeconds = (int) ((end.getTime() - start.getTime()) / 1000);
+        storeResultInMetadata(executionTimeInSeconds, message, start);
     }
 
-    private void updateWithOldTimestamps(Collection<MapObject> result) {
+    private void storeResultInMetadata(int executionTimeInSeconds, String message, Date start) {
+        CrawlerLog crawlerLog = new CrawlerLog();
+        crawlerLog.setCrawlerName(getName());
+        crawlerLog.setExecutionTimeInSeconds(executionTimeInSeconds);
+        crawlerLog.setMessage(message);
+        crawlerLog.setTimestamp(start);
+        metadataRepository.persist(crawlerLog);
+    }
+
+    private String updateWithOldTimestamps(Collection<MapObject> result) {
         List<? extends NameableMapObject> nameableMapObjects = repository.load(getType(), getName());
         int existingObjectsCount = 0;
         for (MapObject mapObject : result) {
@@ -48,7 +70,7 @@ public abstract class PersistingCrawler implements Crawler {
                 existingObjectsCount++;
             }
         }
-        logger.info("Updating " + existingObjectsCount + " objects out of " + result.size() + ". " + (result.size() - existingObjectsCount) + " objects are new.");
+        return "Updating " + existingObjectsCount + " objects out of " + result.size() + ". " + (result.size() - existingObjectsCount) + " objects are new.";
     }
 
     private void removeOld() {

@@ -23,8 +23,6 @@ public class Person {
     
     private Map<String, List<Date>> visitedRealities = new HashMap<>();
     
-    private FilterSettings filterSettings;
-
     private Set<String> hiddenRealities = new HashSet<>();
     
     private Settings settings = new Settings();
@@ -43,14 +41,6 @@ public class Person {
 
     public void setVisitedRealities(Map<String, List<Date>> visitedRealities) {
         this.visitedRealities = visitedRealities;
-    }
-
-    public FilterSettings getFilterSettings() {
-        return filterSettings;
-    }
-
-    public void setFilterSettings(FilterSettings filterSettings) {
-        this.filterSettings = filterSettings;
     }
 
     public FacebookLongTermToken getLongTermToken() {

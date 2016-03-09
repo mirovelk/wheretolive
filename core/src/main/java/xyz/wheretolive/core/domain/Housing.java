@@ -8,6 +8,14 @@ public class Housing extends NameableMapObject {
     
     private double pricePerSquaredMeter;
     
+    private Integer floor;
+    
+    private Boolean balcony;
+    
+    private Boolean terrace;
+    
+    private Boolean elevator;
+    
     public Housing() {
     }
     
@@ -72,5 +80,37 @@ public class Housing extends NameableMapObject {
         }
         Housing other = (Housing) obj;
         return super.equals(obj) && (price == other.price && area == other.area);
+    }
+
+    public Integer getFloor() {
+        return floor;
+    }
+
+    public void setFloor(Integer floor) {
+        this.floor = floor;
+    }
+
+    public Boolean getBalcony() {
+        return balcony;
+    }
+
+    public void setBalcony(Boolean balcony) {
+        this.balcony = balcony;
+    }
+
+    public Boolean getTerrace() {
+        return terrace;
+    }
+
+    public void setTerrace(Boolean terrace) {
+        this.terrace = terrace;
+    }
+
+    public Boolean getElevator() {
+        return elevator;
+    }
+
+    public void setElevator(Boolean elevator) {
+        this.elevator = elevator;
     }
 }

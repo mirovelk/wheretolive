@@ -16,6 +16,27 @@ public class Settings {
     
     private double ppm2Max = 500;
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof Settings)) {
+            return false;
+        }
+        Settings other = (Settings) obj;
+        return coloring.equals(other.coloring)
+                && priceMin == other.priceMin
+                && priceMax == other.priceMax
+                && sizeMin == other.sizeMin
+                && sizeMax == other.sizeMax
+                && ppm2Min == other.ppm2Min
+                && ppm2Max == other.ppm2Max;
+    }
+
     public double getPpm2Max() {
         return ppm2Max;
     }

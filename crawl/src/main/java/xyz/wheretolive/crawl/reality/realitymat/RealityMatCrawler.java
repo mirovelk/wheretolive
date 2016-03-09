@@ -55,6 +55,9 @@ public class RealityMatCrawler extends RealityCrawler {
                 double area = parseArea(pageUrl, pageSourceCode);
                 Coordinates location = parseLocation(pageUrl, pageSourceCode);
                 Reality reality = new Reality(realityId, price, area, getName(), location);
+                reality.setFloor(parseFloor(pageUrl, pageSourceCode));
+                reality.setElevator(parseElevator(pageSourceCode));
+                reality.setBalcony(parseBalcony(pageSourceCode));
                 result.add(reality);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -123,6 +126,38 @@ public class RealityMatCrawler extends RealityCrawler {
             }
         }
         return urls;
+    }
+
+    private int parseFloor(String pageUrl, String pageSourceCode) {
+        Pattern pattern = Pattern.compile("Podlaží\\s*</th>\\s*<td>\\s*(\\d+)\\.");
+        Matcher matcher = pattern.matcher(pageSourceCode);
+        if (matcher.find()) {
+            return Integer.parseInt(matcher.group(1).trim());
+        } else {
+            throw new IllegalStateException("Floor not found in page with url " + pageUrl);
+        }
+    }
+
+    private Boolean parseElevator(String pageSourceCode) {
+        Pattern pattern = Pattern.compile("Výtah\\s*</th>\\s*<td>\\s*(\\w+)\\s*</td>");
+        Matcher matcher = pattern.matcher(pageSourceCode);
+        if (matcher.find()) {
+            String group = matcher.group(1).trim();
+            return group.equals("Ano") ? true : group.equals("Ne") ? false : null;
+        } else {
+            return null;
+        }
+    }
+
+    private Boolean parseBalcony(String pageSourceCode) {
+        Pattern pattern = Pattern.compile("Balkón\\s*</th>\\s*<td>\\s*(\\w+)\\s*</td>");
+        Matcher matcher = pattern.matcher(pageSourceCode);
+        if (matcher.find()) {
+            String group = matcher.group(1).trim();
+            return group.equals("Ano") ? true : group.equals("Ne") ? false : null;
+        } else {
+            return null;
+        }
     }
 
     private int getFlatsPageCount() {

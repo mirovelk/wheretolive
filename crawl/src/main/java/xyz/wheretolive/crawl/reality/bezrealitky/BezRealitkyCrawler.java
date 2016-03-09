@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -53,12 +55,52 @@ public class BezRealitkyCrawler extends RealityCrawler {
                 continue;
             }
             for (BezRealitkyRecord record : square.getRecords()) {
-                Reality reality = new Reality(record.getId(), record.getPrice(), record.getSurface(),
-                        getName(), new Coordinates(record.getLat(), record.getLng()));
+                Reality reality = new Reality(record.getId(), record.getPrice(), record.getSurface(), getName(), new Coordinates(record.getLat(), record.getLng()));
+                loadRealityDetails(reality);
                 result.add(reality);
             }
         }
         return result;
+    }
+
+    private void loadRealityDetails(Reality reality) {
+        String pageUrl = "http://www.bezrealitky.cz/nemovitosti-byty-domy/" + reality.getRealityId();
+        String pageSourceCode = HttpUtils.get(pageUrl);
+        reality.setFloor(parseFloor(pageUrl, pageSourceCode));
+        reality.setBalcony(parseBalcony(pageUrl, pageSourceCode));
+        reality.setTerrace(parseTerrace(pageUrl, pageSourceCode));
+    }
+
+    private int parseFloor(String pageUrl, String pageSourceCode) {
+        Pattern pattern = Pattern.compile("podlaží:</div>\\s*<div class=\"value\">(\\d+)</div>");
+        Matcher matcher = pattern.matcher(pageSourceCode);
+        if (matcher.find()) {
+            return Integer.parseInt(matcher.group(1));
+        } else {
+            throw new IllegalStateException("Floor not found in page with url " + pageUrl);
+        }
+    }
+
+    private Boolean parseBalcony(String pageUrl, String pageSourceCode) {
+        Pattern pattern = Pattern.compile("balkón:</div>\\s*<div class=\"value\">(\\w+)</div>");
+        Matcher matcher = pattern.matcher(pageSourceCode);
+        if (matcher.find()) {
+            String group = matcher.group(1);
+            return group.equals("Ano") ? true : group.equals("Ne") ? false : null;
+        } else {
+            throw new IllegalStateException("Balcony not found in page with url " + pageUrl);
+        }
+    }
+
+    private Boolean parseTerrace(String pageUrl, String pageSourceCode) {
+        Pattern pattern = Pattern.compile("terasa:</div>\\s*<div class=\"value\">(\\w+)</div>");
+        Matcher matcher = pattern.matcher(pageSourceCode);
+        if (matcher.find()) {
+            String group = matcher.group(1);
+            return group.equals("Ano") ? true : group.equals("Ne") ? false : null;
+        } else {
+            throw new IllegalStateException("Terrace not found in page with url " + pageUrl);
+        }
     }
 
     @Override
@@ -72,4 +114,10 @@ public class BezRealitkyCrawler extends RealityCrawler {
         return BEZ_REALITKY;
     }
 
+    public static void main(String[] args) {
+        BezRealitkyCrawler crawler = new BezRealitkyCrawler();
+        Collection<MapObject> mapObjects = crawler.crawl();
+        assert mapObjects.size() > 0;
+    }
+    
 }

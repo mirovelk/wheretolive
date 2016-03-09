@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Crawler Logs</title>
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/rest.js"></script>
+    <script src="js/foundation.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/foundation.min.css">
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+
+<div id="header" class="row">
+    <div class="small-2 large-2 columns"><span>Timestamp</span></div>
+    <div class="small-1 large-1 columns"><span>Name</span></div>
+    <div class="small-1 large-1 columns"><span>Time [s]</span></div>
+    <div class="small-8 large-8 columns"><span>Message</span></div>
+</div>
+
+<script>
+    $(function() {
+        loadCrawlerLogs(function(data) {
+            for (var i = 0; i < data.length; i++) {
+                $("#header").after(
+                    "<div class='row'>"
+                    + "<div class='small-2 large-2 columns'><span>" + formatDate(data[i].timestamp) + "</span></div>"
+                    + "<div class='small-1 large-1 columns'><span>" + data[i].crawlerName + "</span></div>"
+                    + "<div class='small-1 large-1 columns'><span>" + data[i].executionTimeInSeconds + " </span></div>"
+                    + "<div class='small-8 large-8 columns'><span>" + data[i].message + "</span></div>"
+                    + "</div>"
+                );
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

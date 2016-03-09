@@ -62,6 +62,9 @@ public class PersonResourceService {
         if (person == null) {
             return;
         }
+        if (person.getSettings().equals(settings)) {
+            return;
+        }
         person.setSettings(settings);
         personRepository.updateSettings(person);
         httpSession.setAttribute("person", person);

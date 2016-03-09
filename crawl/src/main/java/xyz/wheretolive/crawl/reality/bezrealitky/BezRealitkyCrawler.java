@@ -72,7 +72,7 @@ public class BezRealitkyCrawler extends RealityCrawler {
     }
 
     private int parseFloor(String pageUrl, String pageSourceCode) {
-        Pattern pattern = Pattern.compile("podlaží:</div>\\s*<div class=\"value\">(\\d+)</div>");
+        Pattern pattern = Pattern.compile("podlaží:</div>\\s*<div class=\"value\">(-?\\d+)</div>");
         Matcher matcher = pattern.matcher(pageSourceCode);
         if (matcher.find()) {
             return Integer.parseInt(matcher.group(1));

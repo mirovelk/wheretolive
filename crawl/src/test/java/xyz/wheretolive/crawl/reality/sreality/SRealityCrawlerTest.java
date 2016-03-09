@@ -11,11 +11,10 @@ import xyz.wheretolive.core.domain.MapObject;
 import xyz.wheretolive.crawl.IntegrationTest;
 
 public class SRealityCrawlerTest extends IntegrationTest {
-    
+
     @Autowired
-    SRealityCrawler crawler;
-    
-    
+    private SRealityCrawler crawler;
+
     @Test
     public void test() {
         Collection<MapObject> crawl = crawler.crawl();

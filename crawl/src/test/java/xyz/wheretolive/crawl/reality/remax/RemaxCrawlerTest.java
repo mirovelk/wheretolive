@@ -1,4 +1,4 @@
-package xyz.wheretolive.crawl.reality.bezrealitky;
+package xyz.wheretolive.crawl.reality.remax;
 
 import static org.junit.Assert.*;
 
@@ -10,12 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import xyz.wheretolive.core.domain.MapObject;
 import xyz.wheretolive.crawl.IntegrationTest;
 
-public class BezRealitkyCrawlerTest extends IntegrationTest {
-    
+public class RemaxCrawlerTest extends IntegrationTest {
+
     @Autowired
-    private BezRealitkyCrawler crawler;
-    
-    
+    private RemaxCrawler crawler;
+
     @Test
     public void test() {
         Collection<MapObject> crawl = crawler.crawl();

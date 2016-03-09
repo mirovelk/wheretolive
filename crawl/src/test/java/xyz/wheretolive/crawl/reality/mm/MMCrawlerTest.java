@@ -1,4 +1,4 @@
-package xyz.wheretolive.crawl.reality.bezrealitky;
+package xyz.wheretolive.crawl.reality.mm;
 
 import static org.junit.Assert.*;
 
@@ -10,12 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import xyz.wheretolive.core.domain.MapObject;
 import xyz.wheretolive.crawl.IntegrationTest;
 
-public class BezRealitkyCrawlerTest extends IntegrationTest {
-    
+public class MMCrawlerTest extends IntegrationTest {
+
     @Autowired
-    private BezRealitkyCrawler crawler;
-    
-    
+    private MMCrawler crawler;
+
     @Test
     public void test() {
         Collection<MapObject> crawl = crawler.crawl();

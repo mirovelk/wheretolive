@@ -87,6 +87,8 @@ function getRealEstateBaseUrl(name) {
         return "http://www.realitymat.cz/estate/";
     } else if (name == "M&M") {
         return "https://www.mmreality.cz/nemovitosti/";
+    } else if (name == "REMAX") {
+        return "http://www.remax-czech.cz/reality/detail/";
     } else {
         return "#";
     }

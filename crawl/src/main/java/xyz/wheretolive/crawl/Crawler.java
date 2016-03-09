@@ -14,6 +14,8 @@ public interface Crawler {
 
     static final String MM_CRON = "0 30 4,16 * * *";
 
+    static final String REMAX_CRON = "0 30 5,17 * * *";
+
     Collection<MapObject> crawl();
 
     void execute();

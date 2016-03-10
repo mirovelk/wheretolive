@@ -142,10 +142,10 @@ public class RemaxCrawler extends RealityCrawler {
     }
 
     private double parsePrice(String pageUrl, String pageSourceCode) {
-        Pattern pattern = Pattern.compile("(\\d[\\d\\s]+)CZK");
+        Pattern pattern = Pattern.compile("(\\d[\\D\\d]+)CZK");
         Matcher matcher = pattern.matcher(pageSourceCode);
         if (matcher.find()) {
-            return (Double.parseDouble(matcher.group(1).replaceAll("\\s", "")));
+            return (Double.parseDouble(matcher.group(1).replaceAll("\\D", "")));
         } else {
             throw new IllegalStateException("Price not found in page with url " + pageUrl);
         }

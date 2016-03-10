@@ -75,6 +75,8 @@ function getRealEstateName(name) {
         return "RealityMat";
     } else if (name == "M&M") {
         return "M&M Reality";
+    } else if (name == "REMAX") {
+        return "RE/MAX";
     }
 }
 

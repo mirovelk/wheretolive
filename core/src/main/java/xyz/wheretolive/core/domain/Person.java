@@ -24,6 +24,8 @@ public class Person {
     private Map<String, List<Date>> visitedRealities = new HashMap<>();
     
     private Set<String> hiddenRealities = new HashSet<>();
+
+    private Set<String> favoriteRealities = new HashSet<>();
     
     private Settings settings = new Settings();
 
@@ -69,5 +71,13 @@ public class Person {
 
     public void setSettings(Settings settings) {
         this.settings = settings;
+    }
+
+    public Set<String> getFavoriteRealities() {
+        return favoriteRealities;
+    }
+
+    public void setFavoriteRealities(Set<String> favoriteRealities) {
+        this.favoriteRealities = favoriteRealities;
     }
 }

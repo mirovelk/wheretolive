@@ -71,22 +71,9 @@ var housingMarkers = [];
 var housings = [];
 var infoWindow;
 
-function loadHousing() {
+function loadHousing(callback) {
     $.postMapJSON("mapObject/housing", function (data, status) {
-        data.map(function(item) {
-            if (contains(housingMarkers, item)) {
-                return;
-            }
-            var realityId = item.name + "_" + item.realityId;
-            if ($.inArray(realityId, housingMeta.visitedHousingIds) != -1) {
-                var color = "rgb(0,0,255)";
-            } else {
-                var percentage = getPercentage(item);
-                var color = getColor(percentage);
-            }
-            createHousingMarker(item, color);
-        });
-        filter();
+        callback(data);
     });
     google.maps.event.addListener(map, 'click', function() {
         if (infoWindow) {

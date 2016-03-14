@@ -71,4 +71,10 @@ public class MapObjectResource {
     public void hide(@RequestParam(value = "realityId") String realityId, @RequestParam(value = "name") String name) {
         service.hide(realityId, name);
     }
+
+    @RequestMapping(value = "/favorite", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
+    public void favorite(@RequestParam(value = "realityId") String realityId, @RequestParam(value = "name") String name) {
+        service.favorite(realityId, name);
+    }
 }

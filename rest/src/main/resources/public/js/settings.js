@@ -65,7 +65,7 @@ function setColoringScheme(scheme) {
     for (var i = 0; i < housingMarkers.length; i++) {
         housingMarkers[i].setMap(null);
     }
-    loadHousing();
+    loadRealities();
     clearRealties();
 }
 

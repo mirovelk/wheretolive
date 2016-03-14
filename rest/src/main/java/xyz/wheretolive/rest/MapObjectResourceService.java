@@ -75,6 +75,7 @@ public class MapObjectResourceService {
         Person person = (Person) httpSession.getAttribute("person");
         if (person != null) {
             metaData.getVisitedHousingIds().addAll(person.getVisitedRealities().keySet());
+            metaData.getFavoriteHousingIds().addAll(person.getFavoriteRealities());
         }
         return metaData;
     }
@@ -115,6 +116,27 @@ public class MapObjectResourceService {
         Set<String> hiddenRealities = person.getHiddenRealities();
         hiddenRealities.add(realityIdObject.toString());
         personRepository.updateHiddenRealities(person);
+        httpSession.setAttribute("person", person);
+    }
+
+    public void favorite(String realityId, String name) {
+        Reality reality = repository.loadReality(realityId, name);
+        if (reality == null) {
+            return;
+        }
+        Person person = (Person) httpSession.getAttribute("person");
+        if (person == null) {
+            return;
+        }
+        RealityId realityIdObject = new RealityId(name, realityId);
+        Set<String> favoriteRealities = person.getFavoriteRealities();
+        String realityIdString = realityIdObject.toString();
+        if (favoriteRealities.contains(realityIdString)) {
+            favoriteRealities.remove(realityIdString);
+        } else {
+            favoriteRealities.add(realityIdString);
+        }
+        personRepository.updateFavoriteRealities(person);
         httpSession.setAttribute("person", person);
     }
 }

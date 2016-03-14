@@ -50,6 +50,16 @@ public class MongoPersonRepository implements PersonRepository {
     }
 
     @Override
+    public void updateFavoriteRealities(Person person) {
+        Datastore datastore = datastoreProvider.getDatastore();
+        Query<Person> updateQuery = datastore.createQuery(Person.class).field("_id").equal(person.getId());
+        UpdateOperations<Person> unset = datastore.createUpdateOperations(Person.class).unset("favoriteRealities");
+        datastore.update(updateQuery, unset);
+        UpdateOperations<Person> set = datastore.createUpdateOperations(Person.class).set("favoriteRealities", person.getFavoriteRealities());
+        datastore.update(updateQuery, set);
+    }
+
+    @Override
     public void updateSettings(Person person) {
         Datastore datastore = datastoreProvider.getDatastore();
         Query<Person> updateQuery = datastore.createQuery(Person.class).field("_id").equal(person.getId());

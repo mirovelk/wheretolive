@@ -19,6 +19,8 @@ public class HousingMetaData {
     
     private List<String> visitedHousingIds = new ArrayList<>();
 
+    private List<String> favoriteHousingIds = new ArrayList<>();
+
     public double getMaxArea() {
         return maxArea;
     }
@@ -73,5 +75,13 @@ public class HousingMetaData {
 
     public void setVisitedHousingIds(List<String> visitedHousingIds) {
         this.visitedHousingIds = visitedHousingIds;
+    }
+
+    public List<String> getFavoriteHousingIds() {
+        return favoriteHousingIds;
+    }
+
+    public void setFavoriteHousingIds(List<String> favoriteHousingIds) {
+        this.favoriteHousingIds = favoriteHousingIds;
     }
 }

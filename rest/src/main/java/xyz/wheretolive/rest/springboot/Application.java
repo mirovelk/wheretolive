@@ -4,26 +4,27 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerInitializedEvent;
-import org.springframework.context.ApplicationListener;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @ComponentScan("xyz.wheretolive")
 @EnableScheduling
-public class Application implements ApplicationListener<EmbeddedServletContainerInitializedEvent> {
+public class Application extends SpringBootServletInitializer {
 
     private static Logger logger = LogManager.getLogger(Application.class);
+    
+    private static final Class<Application> applicationClass = Application.class;
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
 
     @Override
-    public void onApplicationEvent(EmbeddedServletContainerInitializedEvent event) {
-        int port = event.getEmbeddedServletContainer().getPort();
-        logger.info("Server listening on port " + port);
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(applicationClass);
     }
-    
+
 }

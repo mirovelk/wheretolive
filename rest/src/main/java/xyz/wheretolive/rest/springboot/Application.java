@@ -16,15 +16,13 @@ public class Application extends SpringBootServletInitializer {
 
     private static Logger logger = LogManager.getLogger(Application.class);
     
-    private static final Class<Application> applicationClass = Application.class;
-
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        return builder.sources(applicationClass);
+        return builder.sources(Application.class);
     }
 
 }

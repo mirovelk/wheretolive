@@ -6,7 +6,7 @@
 
     <groupId>xyz.wheretolive</groupId>
     <artifactId>root</artifactId>
-    <packaging>war</packaging>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>core</module>
@@ -14,6 +14,12 @@
         <module>crawl</module>
         <module>rest</module>
     </modules>
+    
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.2.7.RELEASE</version>
+    </parent>
 
     <properties>
         <application.version>1.0-SNAPSHOT</application.version>
@@ -169,7 +175,7 @@
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-web</artifactId>
+                <artifactId>spring-boot-starter-tomcat</artifactId>
                 <version>1.2.7.RELEASE</version>
             </dependency>
 

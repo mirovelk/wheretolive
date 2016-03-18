@@ -153,6 +153,7 @@
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-servlet</artifactId>
                 <version>9.3.5.v20151012</version>
+                <scope>provided</scope>
             </dependency>
 
             <dependency>

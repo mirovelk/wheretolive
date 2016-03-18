@@ -178,6 +178,7 @@
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-runner</artifactId>
                 <version>9.3.5.v20151012</version>
+                <scope>provided</scope>
             </dependency>
 
             <dependency>
@@ -238,6 +239,13 @@
                 <groupId>org.springframework.social</groupId>
                 <artifactId>spring-social-core</artifactId>
                 <version>1.1.2.RELEASE</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-el</groupId>
+                <artifactId>commons-el</artifactId>
+                <version>1.0</version>
+                <scope>provided</scope>
             </dependency>
 
         </dependencies>

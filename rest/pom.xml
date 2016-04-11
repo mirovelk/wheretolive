@@ -13,6 +13,12 @@
     
     <packaging>war</packaging>
 
+    <properties>
+        <application.version>1.0-SNAPSHOT</application.version>
+        <start-class>xyz.wheretolive.rest.springboot.Application</start-class>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>xyz.wheretolive</groupId>

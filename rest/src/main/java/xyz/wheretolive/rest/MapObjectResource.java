@@ -50,31 +50,4 @@ public class MapObjectResource {
         return service.getIn(view, FoodMarket.class);
     }
 
-    @RequestMapping(value = "/housing", method = RequestMethod.POST)
-    public @ResponseBody Collection<Reality> getHousingIn(@RequestBody MapView view) {
-        return service.getFilteredHousingsIn(view);
-    }
-
-    @RequestMapping(value = "/housingMeta", method = RequestMethod.POST)
-    public @ResponseBody HousingMetaData getHousingMetaIn(@RequestBody MapView view) {
-        return service.getHousingMetaDataIn();
-    }
-    
-    @RequestMapping(value = "/visitHousing", method = RequestMethod.GET)
-    @ResponseStatus(value = HttpStatus.OK)
-    public void visitHousing(@RequestParam(value = "realityId") String realityId, @RequestParam(value = "name") String name) {
-        service.visitHousing(realityId, name);
-    }
-
-    @RequestMapping(value = "/hide", method = RequestMethod.GET)
-    @ResponseStatus(value = HttpStatus.OK)
-    public void hide(@RequestParam(value = "realityId") String realityId, @RequestParam(value = "name") String name) {
-        service.hide(realityId, name);
-    }
-
-    @RequestMapping(value = "/favorite", method = RequestMethod.GET)
-    @ResponseStatus(value = HttpStatus.OK)
-    public void favorite(@RequestParam(value = "realityId") String realityId, @RequestParam(value = "name") String name) {
-        service.favorite(realityId, name);
-    }
 }

@@ -72,7 +72,7 @@ var housings = [];
 var infoWindow;
 
 function loadHousing(callback) {
-    $.postMapJSON("mapObject/housing", function (data, status) {
+    $.postMapJSON("reality/get", function (data, status) {
         callback(data);
     });
     google.maps.event.addListener(map, 'click', function() {
@@ -84,10 +84,15 @@ function loadHousing(callback) {
 
 var housingMeta;
 function loadHousingMetaData(callback) {
-    $.postMapJSON("mapObject/housingMeta", function(data, status) {
-        housingMeta = data;
-        callback();
-    });
+    var zoomLevel = map.getZoom();
+    if (zoomLevel < 15) {
+        clearAndRefresh();
+    } else {
+         $.postMapJSON("reality/meta", function (data, status) {
+            housingMeta = data;
+            callback();
+        });
+    }
 }
 
 function updateSettings() {

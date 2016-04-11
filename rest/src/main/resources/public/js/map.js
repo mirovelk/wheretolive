@@ -8,7 +8,7 @@ function center() {
 }
 
 function visitReality(name, realityId) {
-    $.getJSON("mapObject/visitHousing", {name: name, realityId: realityId}, function (data, status) {
+    $.getJSON("reality/visit", {name: name, realityId: realityId}, function (data, status) {
         
     });
 }
@@ -43,7 +43,7 @@ function createHousingMarker(item, icon) {
 function favorite(index) {
     var item = housings[index];
     var marker = housingMarkers[index];
-    $.getJSON("mapObject/favorite", {name: item.name, realityId: item.realityId}, function (data, status) {
+    $.getJSON("reality/favorite", {name: item.name, realityId: item.realityId}, function (data, status) {
     });
     if (JSON.stringify(marker.icon) === JSON.stringify(item.icon)) {
         var image = '../img/favorite.png';
@@ -57,7 +57,7 @@ function favorite(index) {
 
 function dontShow(index) {
     var item = housings[index];
-    $.getJSON("mapObject/hide", {name: item.name, realityId: item.realityId}, function (data, status) {
+    $.getJSON("reality/hide", {name: item.name, realityId: item.realityId}, function (data, status) {
     });
     housingMarkers[index].setMap(null);
     item.hide = true;

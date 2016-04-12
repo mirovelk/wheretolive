@@ -44,7 +44,7 @@ public class PennyCrawler extends FoodMarketCrawler {
     }
 
     @Override
-    @Scheduled(cron = "0 30 10 2 * *")
+    @Scheduled(cron = PENNY_CRON)
     public void execute() {
         super.execute();
     }

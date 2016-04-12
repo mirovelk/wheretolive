@@ -15,6 +15,16 @@ public interface Crawler {
     static final String MM_CRON = "0 30 4,16 * * *";
 
     static final String REMAX_CRON = "0 30 5,17 * * *";
+    
+    static final String ALBERT_CRON = "0 30 10 1 * *";
+    
+    static final String BILLA_CRON = "0 30 10 1 * *";
+    
+    static final String KAUFLAND_CRAWLER = "0 30 10 1 * *";
+    
+    static final String PENNY_CRON = "0 30 10 1 * *";
+    
+    static final String TESCO_CRON = "0 30 10 1 * *";
 
     Collection<MapObject> crawl();
 

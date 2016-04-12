@@ -45,7 +45,7 @@ public class BillaCrawler extends FoodMarketCrawler {
     }
 
     @Override
-    @Scheduled(cron = "0 30 10 1 * *")
+    @Scheduled(cron = BILLA_CRON)
     public void execute() {
         super.execute();
     }

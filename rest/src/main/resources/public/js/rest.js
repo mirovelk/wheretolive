@@ -71,6 +71,18 @@ var housingMarkers = new Object();
 var housings = new Object();
 var infoWindow;
 var housingMeta;
+
+function downloadRealities(callback) {
+    $.postMapJSON("reality/get", function (data, status) {
+        callback(data);
+    });
+    google.maps.event.addListener(map, 'click', function() {
+        if (infoWindow) {
+            infoWindow.close();
+        }
+    });
+}
+    
 function loadHousingMetaData(callback) {
     var zoomLevel = map.getZoom();
     if (zoomLevel < 15) {

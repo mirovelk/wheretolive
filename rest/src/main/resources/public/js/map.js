@@ -199,36 +199,33 @@ function refreshRealities() {
 }
 
 function loadRealities() {
-    $.postMapJSON("reality/get", function (data, status) {
-        data.map(function(item) {
-            var uniqueId = getUniqueRealityId(item);
-            if (uniqueId in housingMarkers) {
-                return;
-            }
-            if ($.inArray(uniqueId, housingMeta.visitedHousingIds) != -1) {
-                var color = "rgb(0,0,255)";
-            } else {
-                var percentage = getPercentage(item);
-                var color = getColor(percentage);
-            }
-            var icon = {
-                path: google.maps.SymbolPath.CIRCLE,
-                scale: 3,
-                fillColor: color,
-                strokeColor: color,
-                fillOpacity: 1
-            };
-            item.icon = icon;
-            if ($.inArray(uniqueId, housingMeta.favoriteHousingIds) != -1) {
-                icon = '../img/favorite.png';
-            }
-            createHousingMarker(item, icon);
+    loadHousingMetaData(function() {
+        downloadRealities(function (data) {
+            data.map(function (item) {
+                var uniqueId = getUniqueRealityId(item);
+                if (uniqueId in housingMarkers) {
+                    return;
+                }
+                if ($.inArray(uniqueId, housingMeta.visitedHousingIds) != -1) {
+                    var color = "rgb(0,0,255)";
+                } else {
+                    var percentage = getPercentage(item);
+                    var color = getColor(percentage);
+                }
+                var icon = {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 3,
+                    fillColor: color,
+                    strokeColor: color,
+                    fillOpacity: 1
+                };
+                item.icon = icon;
+                if ($.inArray(uniqueId, housingMeta.favoriteHousingIds) != -1) {
+                    icon = '../img/favorite.png';
+                }
+                createHousingMarker(item, icon);
+            });
+            filter();
         });
-        filter();
-    });
-    google.maps.event.addListener(map, 'click', function() {
-        if (infoWindow) {
-            infoWindow.close();
-        }
     });
 }

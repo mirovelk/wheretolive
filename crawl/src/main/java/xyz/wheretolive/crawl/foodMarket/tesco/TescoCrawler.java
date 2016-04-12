@@ -37,7 +37,7 @@ public class TescoCrawler extends FoodMarketCrawler {
     }
 
     @Override
-    @Scheduled(cron = "0 30 10 1 * *")
+    @Scheduled(cron = TESCO_CRON)
     public void execute() {
         super.execute();
     }

@@ -70,7 +70,7 @@ public abstract class PersistingCrawler implements Crawler {
                 existingObjectsCount++;
             }
         }
-        return "Updating " + existingObjectsCount + " objects out of " + result.size() + ". " + (result.size() - existingObjectsCount) + " objects are new.";
+        return "Total objects: " + result.size() + ". \tExisting objects: " + existingObjectsCount + ". \tNew objects: " + (result.size() - existingObjectsCount) + ".";
     }
 
     private void removeOld() {

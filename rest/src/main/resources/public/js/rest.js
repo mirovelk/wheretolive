@@ -85,7 +85,7 @@ function downloadRealities(callback) {
     
 function loadHousingMetaData(callback) {
     var zoomLevel = map.getZoom();
-    if (zoomLevel < 15) {
+    if (zoomLevel < 14) {
         clearAll();
     } else {
          $.postMapJSON("reality/meta", function (data, status) {

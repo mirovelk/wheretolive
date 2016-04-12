@@ -183,6 +183,9 @@ function clearRealities() {
 }
 
 function clearFoodMarkets() {
+    for(var i = 0; i < foodMarketMarkers.length; i++) {
+        foodMarketMarkers[i].setMap(null);
+    }
     foodMarketMarkers = [];
 }
 

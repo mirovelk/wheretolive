@@ -13,7 +13,7 @@ import xyz.wheretolive.mongo.MapObjectRepository;
 @Component
 public class MapObjectResourceService {
     
-    public static final double MAX_MAPVIEW_SIZE = 0.08;
+    public static final double MAX_MAPVIEW_SIZE = 0.1;
     
     @Autowired
     private MapObjectRepository repository;

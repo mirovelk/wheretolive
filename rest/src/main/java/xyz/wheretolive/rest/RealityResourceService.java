@@ -1,5 +1,7 @@
 package xyz.wheretolive.rest;
 
+import static xyz.wheretolive.rest.MapObjectResourceService.*;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -21,8 +23,6 @@ import xyz.wheretolive.mongo.PersonRepository;
 
 @Component
 public class RealityResourceService {
-    
-    public static final double MAX_MAPVIEW_SIZE = 0.08;
     
     @Autowired
     private MapObjectRepository repository;

@@ -24,16 +24,18 @@ function filter() {
     var maxPrice = priceSlider.noUiSlider.get()[1];
     var minPricePerSquaredMeter = pricePerSquaredMeterSlider.noUiSlider.get()[0];
     var maxPricePerSquaredMeter = pricePerSquaredMeterSlider.noUiSlider.get()[1];
-    for (var i = 0; i < housings.length; i++) {
-        var area = housings[i].area;
-        var price = housings[i].price;
-        var pricePerSquaredMeter = housings[i].pricePerSquaredMeter;
-        if (area < minSize || area > maxSize
-            || price < minPrice || price > maxPrice
-            || pricePerSquaredMeter < minPricePerSquaredMeter || pricePerSquaredMeter > maxPricePerSquaredMeter) {
-            housingMarkers[i].setMap(null);
-        } else if (housingMarkers[i].getMap() == null && !housings[i].hasOwnProperty('hide') && housings[i].hide != true){
-            housingMarkers[i].setMap(map);
+    for (var key in housings) {
+        if (housings.hasOwnProperty(key)) {
+            var area = housings[key].area;
+            var price = housings[key].price;
+            var pricePerSquaredMeter = housings[key].pricePerSquaredMeter;
+            if (area < minSize || area > maxSize
+                || price < minPrice || price > maxPrice
+                || pricePerSquaredMeter < minPricePerSquaredMeter || pricePerSquaredMeter > maxPricePerSquaredMeter) {
+                housingMarkers[key].setMap(null);
+            } else if (housingMarkers[key].getMap() == null && !housings[key].hasOwnProperty('hide') && housings[key].hide != true) {
+                housingMarkers[key].setMap(map);
+            }
         }
     }
     clientSettings.sizeMin = minSize;
@@ -62,11 +64,7 @@ function setColoringScheme(scheme) {
     $("#" + coloringScheme + "SchemeButton").removeClass("success");
     coloringScheme = scheme;
     $("#" + coloringScheme + "SchemeButton").addClass("success");
-    for (var i = 0; i < housingMarkers.length; i++) {
-        housingMarkers[i].setMap(null);
-    }
-    loadRealities();
-    clearRealities();
+    refreshRealities();
 }
 
 function loadSettings(person) {

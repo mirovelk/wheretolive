@@ -67,21 +67,9 @@ function loadFoodMarkets() {
     });
 }
 
-var housingMarkers = [];
-var housings = [];
+var housingMarkers = new Object();
+var housings = new Object();
 var infoWindow;
-
-function loadHousing(callback) {
-    $.postMapJSON("reality/get", function (data, status) {
-        callback(data);
-    });
-    google.maps.event.addListener(map, 'click', function() {
-        if (infoWindow) {
-            infoWindow.close();
-        }
-    });
-}
-
 var housingMeta;
 function loadHousingMetaData(callback) {
     var zoomLevel = map.getZoom();

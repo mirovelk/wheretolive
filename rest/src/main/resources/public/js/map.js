@@ -19,14 +19,15 @@ function createHousingMarker(item, icon) {
         map: map,
         icon: icon
     });
-    housingMarkers.push(marker);
-    housings.push(item);
-    var link = "<a target='_blank' onclick='setVisited(" + (housings.length - 1) + ");' href='" + getRealEstateBaseUrl(item.name) + item.realityId + "'><h3>" + getRealEstateName(item.name) + "</h3></a>";
+    var uniqueId = getUniqueRealityId(item);
+    housingMarkers[uniqueId] = marker;
+    housings[uniqueId] = item;
+    var link = "<a target='_blank' onclick='setVisited(\"" + uniqueId + "\");' href='" + getRealEstateBaseUrl(item.name) + item.realityId + "'><h3>" + getRealEstateName(item.name) + "</h3></a>";
     var contentString = "<div>" + link +
         "<h3>" + item.price + "</h3>" +
         "<h3>" + item.area + "m<sup>2</sup></h3>" +
-        "<h6><a href='#' onclick='favorite(" + (housings.length - 1) + ");'><img src='../img/favorite.png'>Favorite</a></h6>" +
-        "<h6><a href='#' onclick='dontShow(" + (housings.length - 1) + ");'><img src='../img/delete.gif'>Don't show again</a></h6>" +
+        "<h6><a href='#' onclick='favorite(\"" + uniqueId + "\");'><img src='../img/favorite.png'>Favorite</a></h6>" +
+        "<h6><a href='#' onclick='dontShow(\"" + uniqueId + "\");'><img src='../img/delete.gif'>Don't show again</a></h6>" +
         "<h6>" + formatDate(item.updateTime) + "</h6>" +
         "</div>";
     marker.addListener('click', function() {
@@ -40,9 +41,13 @@ function createHousingMarker(item, icon) {
     });
 }
 
-function favorite(index) {
-    var item = housings[index];
-    var marker = housingMarkers[index];
+function getUniqueRealityId(item) {
+    return item.name + "_" + item.realityId;
+}
+
+function favorite(uniqueName) {
+    var item = housings[uniqueName];
+    var marker = housingMarkers[uniqueName];
     $.getJSON("reality/favorite", {name: item.name, realityId: item.realityId}, function (data, status) {
     });
     if (JSON.stringify(marker.icon) === JSON.stringify(item.icon)) {
@@ -51,20 +56,21 @@ function favorite(index) {
     } else {
         marker.setIcon(item.icon);
     }
+    //FIXME: suspicious
     marker.setMap(null);
     marker.setMap(map);
 }
 
-function dontShow(index) {
-    var item = housings[index];
+function dontShow(uniqueName) {
+    var item = housings[uniqueName];
     $.getJSON("reality/hide", {name: item.name, realityId: item.realityId}, function (data, status) {
     });
-    housingMarkers[index].setMap(null);
+    housingMarkers[uniqueName].setMap(null);
     item.hide = true;
 }
 
-function setVisited(index) {
-    var marker = housingMarkers[index];
+function setVisited(uniqueName) {
+    var marker = housingMarkers[uniqueName];
     marker.setIcon({
         path: google.maps.SymbolPath.CIRCLE,
         scale: 3,
@@ -72,7 +78,7 @@ function setVisited(index) {
         strokeColor: "rgb(0,0,255)",
         fillOpacity: 1
     });
-    var item = housings[index];
+    var item = housings[uniqueName];
     visitReality(item.name, item.realityId);
 }
 
@@ -156,17 +162,24 @@ function clearAll() {
     clearFoodMarkets();
 }
 
+function loadAll() {
+    loadRealities();
+    loadFoodMarkets();
+}
+
 function refreshAll() {
     refreshRealities();
     refreshFoodMarkets();
 }
 
 function clearRealities() {
-    for (var i = 0; i < housingMarkers.length; i++) {
-        housingMarkers[i].setMap(null);
+    for (var key in housingMarkers) {
+        if (housingMarkers.hasOwnProperty(key)) {
+            housingMarkers[key].setMap(null);
+        }
     }
-    housingMarkers = [];
-    housings = [];
+    housingMarkers = new Object();
+    housings = new Object();
 }
 
 function clearFoodMarkets() {
@@ -186,14 +199,13 @@ function refreshRealities() {
 }
 
 function loadRealities() {
-    loadHousing(function(data) {
+    $.postMapJSON("reality/get", function (data, status) {
         data.map(function(item) {
-            if (contains(housingMarkers, item)) {
+            var uniqueId = getUniqueRealityId(item);
+            if (uniqueId in housingMarkers) {
                 return;
             }
-            var realityId = item.name + "_" + item.realityId;
-            
-            if ($.inArray(realityId, housingMeta.visitedHousingIds) != -1) {
+            if ($.inArray(uniqueId, housingMeta.visitedHousingIds) != -1) {
                 var color = "rgb(0,0,255)";
             } else {
                 var percentage = getPercentage(item);
@@ -207,12 +219,16 @@ function loadRealities() {
                 fillOpacity: 1
             };
             item.icon = icon;
-            if ($.inArray(realityId, housingMeta.favoriteHousingIds) != -1) {
-                var image = '../img/favorite.png';
-                icon = image;
+            if ($.inArray(uniqueId, housingMeta.favoriteHousingIds) != -1) {
+                icon = '../img/favorite.png';
             }
             createHousingMarker(item, icon);
         });
         filter();
+    });
+    google.maps.event.addListener(map, 'click', function() {
+        if (infoWindow) {
+            infoWindow.close();
+        }
     });
 }

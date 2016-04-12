@@ -37,7 +37,7 @@ public class MapObjectResource {
 
     @RequestMapping(value = "/all", method = RequestMethod.POST)
     public @ResponseBody Collection<MapObject> getIn(MapView view) {
-        return service.getIn(view);
+        return service.getIn(view, MapObject.class);
     }
 
     @RequestMapping(value = "/trafficStops", method = RequestMethod.POST)

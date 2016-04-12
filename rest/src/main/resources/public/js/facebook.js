@@ -39,12 +39,12 @@ function loginOnServer(response) {
     };
     $.getJSON("person/login", data, function (data, status) {
         loadSettings(data);
-        clearAndRefresh();
+        refreshRealities();
     });
 }
 
 function logoutOnServer() {
     $.getJSON("person/logout", {}, function (data, status) {
-        clearAndRefresh();
+        refreshRealities();
     });
 }

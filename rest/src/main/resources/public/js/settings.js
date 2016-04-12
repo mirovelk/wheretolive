@@ -66,7 +66,7 @@ function setColoringScheme(scheme) {
         housingMarkers[i].setMap(null);
     }
     loadRealities();
-    clearRealties();
+    clearRealities();
 }
 
 function loadSettings(person) {

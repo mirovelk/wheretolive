@@ -115,7 +115,7 @@ the FB.login() function when clicked.
 
         map.addListener('bounds_changed', function() {
             if (!dragging) {
-                refresh();
+                refreshAll();
             }
         });
 
@@ -125,7 +125,7 @@ the FB.login() function when clicked.
 
         map.addListener('dragend', function() {
             dragging = false;
-            refresh();
+            refreshAll();
         });
 
         initSliders();

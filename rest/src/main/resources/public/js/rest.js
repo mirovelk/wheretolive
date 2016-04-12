@@ -86,7 +86,7 @@ var housingMeta;
 function loadHousingMetaData(callback) {
     var zoomLevel = map.getZoom();
     if (zoomLevel < 15) {
-        clearAndRefresh();
+        clearAll();
     } else {
          $.postMapJSON("reality/meta", function (data, status) {
             housingMeta = data;

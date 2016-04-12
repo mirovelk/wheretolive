@@ -151,20 +151,37 @@ function contains(markers, item) {
     return false;
 }
 
-function clearAndRefresh() {
-    clearRealties();
-    refresh();
+function clearAll() {
+    clearRealities();
+    clearFoodMarkets();
 }
 
-function clearRealties() {
+function refreshAll() {
+    refreshRealities();
+    refreshFoodMarkets();
+}
+
+function clearRealities() {
+    for (var i = 0; i < housingMarkers.length; i++) {
+        housingMarkers[i].setMap(null);
+    }
     housingMarkers = [];
     housings = [];
 }
 
-function refresh() {
+function clearFoodMarkets() {
+    foodMarketMarkers = [];
+}
+
+function refreshFoodMarkets() {
+    clearFoodMarkets();
+    loadFoodMarkets();
+}
+
+function refreshRealities() {
     loadHousingMetaData(function() {
+        clearRealities();
         loadRealities();
-        loadFoodMarkets();
     });
 }
 

@@ -67,8 +67,8 @@ function loadFoodMarkets() {
     });
 }
 
-var housingMarkers = new Object();
-var housings = new Object();
+var housingMarkers = {};
+var housings = {};
 var infoWindow;
 var housingMeta;
 
@@ -85,7 +85,7 @@ function downloadRealities(callback) {
     
 function loadHousingMetaData(callback) {
     var zoomLevel = map.getZoom();
-    if (zoomLevel < 14) {
+    if (zoomLevel < 16) {
         clearAll();
     } else {
          $.postMapJSON("reality/meta", function (data, status) {

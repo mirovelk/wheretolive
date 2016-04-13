@@ -178,8 +178,8 @@ function clearRealities() {
             housingMarkers[key].setMap(null);
         }
     }
-    housingMarkers = new Object();
-    housings = new Object();
+    housingMarkers = {};
+    housings = {};
 }
 
 function clearFoodMarkets() {

@@ -40,29 +40,31 @@ $.getJSON = function(url, requestData, callback) {
 
 var foodMarketMarkers = [];
 function loadFoodMarkets() {
-    $.postMapJSON("mapObject/foodMarkets", function (data, status) {
-        data.map(function(item) {
-            if (contains(foodMarketMarkers, item)) {
-                return;
-            }
-            var image;
-            if (item.name == "Billa") {
-                image = 'img/billa.png';
-            } else if (item.name == "Kaufland") {
-                image = 'img/kaufland.png';
-            } else if (item.name == "Tesco") {
-                image = 'img/tesco.png';
-            } else if (item.name == "Albert") {
-                image = 'img/albert.png';
-            } else if (item.name == "Penny") {
-                image = 'img/penny.png';
-            }
-            var marker = new google.maps.Marker({
-                position: {lat: item.location.latitude, lng: item.location.longitude},
-                map: map,
-                icon: image
+    ensureZoomOutClearsMap(function(){
+        $.postMapJSON("mapObject/foodMarkets", function (data, status) {
+            data.map(function(item) {
+                if (contains(foodMarketMarkers, item)) {
+                    return;
+                }
+                var image;
+                if (item.name == "Billa") {
+                    image = 'img/billa.png';
+                } else if (item.name == "Kaufland") {
+                    image = 'img/kaufland.png';
+                } else if (item.name == "Tesco") {
+                    image = 'img/tesco.png';
+                } else if (item.name == "Albert") {
+                    image = 'img/albert.png';
+                } else if (item.name == "Penny") {
+                    image = 'img/penny.png';
+                }
+                var marker = new google.maps.Marker({
+                    position: {lat: item.location.latitude, lng: item.location.longitude},
+                    map: map,
+                    icon: image
+                });
+                foodMarketMarkers.push(marker);
             });
-            foodMarketMarkers.push(marker);
         });
     });
 }
@@ -84,14 +86,20 @@ function downloadRealities(callback) {
 }
     
 function loadHousingMetaData(callback) {
-    var zoomLevel = map.getZoom();
-    if (zoomLevel < 16) {
-        clearAll();
-    } else {
+    ensureZoomOutClearsMap(function() {
          $.postMapJSON("reality/meta", function (data, status) {
             housingMeta = data;
             callback();
         });
+    });
+}
+
+function ensureZoomOutClearsMap(callback) {
+    var zoomLevel = map.getZoom();
+    if (zoomLevel < 16) {
+        clearAll();
+    } else {
+        callback();
     }
 }
 

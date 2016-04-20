@@ -118,7 +118,6 @@ the FB.login() function when clicked.
 
 <script>
     var map;
-    var dragging = false;
     
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
@@ -127,9 +126,7 @@ the FB.login() function when clicked.
         center();
 
         map.addListener('zoom_changed', function() {
-            if (!dragging) {
-                loadAll();
-                logMapZoomChange();
+            loadAll();
             }
         });
 
@@ -138,7 +135,6 @@ the FB.login() function when clicked.
         });
 
         map.addListener('dragend', function() {
-            dragging = false;
             loadAll();
             logMapDrag();
         });

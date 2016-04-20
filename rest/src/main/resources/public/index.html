@@ -130,10 +130,6 @@ the FB.login() function when clicked.
             }
         });
 
-        map.addListener('dragstart', function() {
-            dragging = true;
-        });
-
         map.addListener('dragend', function() {
             loadAll();
             logMapDrag();

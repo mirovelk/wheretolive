@@ -51,9 +51,13 @@ function favorite(uniqueName) {
     $.getJSON("reality/favorite", {name: item.name, realityId: item.realityId}, function (data, status) {
     });
     if (JSON.stringify(marker.icon) === JSON.stringify(item.icon)) {
+        //is favorite
+        logFavoriteReality(uniqueName);
         var image = '../img/favorite.png';
         marker.setIcon(image);
     } else {
+        //is not favorite
+        logNotFavoriteReality(uniqueName);
         marker.setIcon(item.icon);
     }
     //FIXME: suspicious
@@ -67,6 +71,7 @@ function dontShow(uniqueName) {
     });
     housingMarkers[uniqueName].setMap(null);
     item.hide = true;
+    logHideReality(uniqueName);
 }
 
 function setVisited(uniqueName) {
@@ -80,6 +85,7 @@ function setVisited(uniqueName) {
     });
     var item = housings[uniqueName];
     visitReality(item.name, item.realityId);
+    logVisitedReality(uniqueName);
 }
 
 function getRealEstateName(name) {

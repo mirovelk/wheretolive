@@ -126,7 +126,7 @@ the FB.login() function when clicked.
         });
         center();
 
-        map.addListener('bounds_changed', function() {
+        map.addListener('zoom_changed', function() {
             if (!dragging) {
                 loadAll();
                 logMapZoomChange();

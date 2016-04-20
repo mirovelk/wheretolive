@@ -46,16 +46,27 @@ function filter() {
     clientSettings.ppm2Max = maxPricePerSquaredMeter;
 }
 
+function openSettings() {
+    map.css({"opacity" : 0.5});
+    $('#settings').toggle();
+    logSettingsOpen();
+}
+
+function closeSettings() {
+    map.css({"opacity" : 1})
+    $('#settings').toggle();;
+    updateSettings();
+    logSettingsClosed();
+}
+
 function toggleSettings() {
     var map = $('#map');
     var mapOpacity = map.css("opacity");
     if (mapOpacity == "1") {
-        map.css({"opacity" : 0.5});
+        openSettings();
     } else {
-        map.css({"opacity" : 1});
-        updateSettings();
+        closeSettings();
     }
-    $('#settings').toggle();
 }
 
 var coloringScheme = "time";
@@ -64,6 +75,7 @@ function setColoringScheme(scheme) {
     $("#" + coloringScheme + "SchemeButton").removeClass("success");
     coloringScheme = scheme;
     $("#" + coloringScheme + "SchemeButton").addClass("success");
+    logColorSchemeChanged(scheme);
     refreshRealities();
 }
 
@@ -79,14 +91,20 @@ function initSliders() {
     initSizeSlider();
     initPriceSlider();
     initPricePerSquaredMeterSlider();
-    sizeSlider.noUiSlider.on('update', function(){
+    sizeSlider.noUiSlider.on('set', function(){
         filter();
+        var minSize = sizeSlider.noUiSlider.get()[0];
+        logFilterChanged('minSize', minSize);
     });
-    priceSlider.noUiSlider.on('update', function(){
+    priceSlider.noUiSlider.on('set', function(){
         filter();
+        var maxPrice = priceSlider.noUiSlider.get()[1];
+        logFilterChanged('maxPrice', maxPrice);
     });
-    pricePerSquaredMeterSlider.noUiSlider.on('update', function(){
+    pricePerSquaredMeterSlider.noUiSlider.on('set', function(){
         filter();
+        var maxPricePerSquaredMeter = pricePerSquaredMeterSlider.noUiSlider.get()[1];
+        logFilterChanged('maxPricePerSquaredMeter', maxPricePerSquaredMeter);
     });
 }
 

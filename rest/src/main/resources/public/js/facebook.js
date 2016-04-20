@@ -30,9 +30,10 @@ function checkLoginState() {
 }
 
 
+var facebookId;
 function loginOnServer(response) {
     var facebookAuthToken = response.authResponse.accessToken;
-    var facebookId = response.authResponse.userID;
+    facebookId = response.authResponse.userID;
     var data = {
         facebookAuthToken: facebookAuthToken,
         facebookId: facebookId
@@ -40,11 +41,14 @@ function loginOnServer(response) {
     $.getJSON("person/login", data, function (data, status) {
         loadSettings(data);
         refreshRealities();
+        logFacebookLogin(facebookId);
     });
 }
 
 function logoutOnServer() {
     $.getJSON("person/logout", {}, function (data, status) {
         refreshRealities();
+        logFacebookLogout(facebookId);
+        facebookId = null;
     });
 }

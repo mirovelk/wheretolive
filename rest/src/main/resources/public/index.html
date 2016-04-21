@@ -127,6 +127,7 @@ the FB.login() function when clicked.
 
         map.addListener('zoom_changed', function() {
             loadAll();
+            logMapZoomChange();
         });
 
         map.addListener('dragend', function() {

@@ -23,27 +23,27 @@ function logSettingsClosed() {
 }
 
 function logColorSchemeChanged(scheme) {
-    sendToGa('settings', 'color', null, scheme);
+    sendToGa('settings', 'color', scheme, null);
 }
 
 function logFilterChanged(filterName, value) {
-    sendToGa('settings', 'filter', filterName, value);
+    sendToGa('settings', 'filter', filterName, parseInt(value));
 }
 
 function logVisitedReality(name) {
-    sendToGa('reality', 'visit', null, name);
+    sendToGa('reality', 'visit', name, null);
 }
 
 function logFavoriteReality(name) {
-    sendToGa('reality', 'favorite', 'on', name);
+    sendToGa('reality', 'favorite', name, 1);
 }
 
 function logNotFavoriteReality(name) {
-    sendToGa('reality', 'favorite', 'off', name);
+    sendToGa('reality', 'favorite', name, 0);
 }
 
 function logHideReality(name) {
-    sendToGa('reality', 'hide', null, name);
+    sendToGa('reality', 'hide', name, null);
 }
 
 function sendToGa(category, action, label, value) {

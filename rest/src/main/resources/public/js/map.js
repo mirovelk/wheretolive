@@ -4,7 +4,12 @@ function center() {
         var longitude = position.coords.longitude;
         var latLng = {lat: latitude, lng: longitude};
         map.setCenter(latLng);
-    });
+    }, function(error) {
+        var latitude = 50.0860384;
+        var longitude = 14.4222704;
+        var latLng = {lat: latitude, lng: longitude};
+        map.setCenter(latLng);
+    }, {timeout: 10000});
 }
 
 function visitReality(name, realityId) {

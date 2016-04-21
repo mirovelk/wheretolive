@@ -49,14 +49,14 @@ function filter() {
 function openSettings() {
     var map = $('#map');
     map.css({"opacity" : 0.5});
-    $('#settings').toggle();
+    $('#settings').fadeToggle('300');
     logSettingsOpen();
 }
 
 function closeSettings() {
     var map = $('#map');
     map.css({"opacity" : 1})
-    $('#settings').toggle();;
+    $('#settings').fadeToggle('300');
     updateSettings();
     logSettingsClosed();
 }

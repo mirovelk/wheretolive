@@ -126,20 +126,20 @@ function getRealEstateBaseUrl(name) {
 function getPercentage(item) {
     switch (coloringScheme) {
         case "ppm2":
-            var maxPricePerSquareMeter = 350;
-            var minPricePerSquareMeter = 100;
+            var maxPricePerSquareMeter = pricePerSquaredMeterSlider.noUiSlider.get()[1];
+            var minPricePerSquareMeter = pricePerSquaredMeterSlider.noUiSlider.get()[0];
             var difference = maxPricePerSquareMeter - minPricePerSquareMeter;
             var percent = (item.pricePerSquaredMeter - minPricePerSquareMeter) / difference;
             break;
         case "price":
-            var maxPrice = 30000;
-            var minPrice = 10000;
+            var maxPrice = priceSlider.noUiSlider.get()[1];
+            var minPrice = priceSlider.noUiSlider.get()[0];
             var difference = maxPrice - minPrice;
             var percent = (item.price - minPrice) / difference;
             break;
         case "size":
-            var maxSize = 150;
-            var minSize = 40;
+            var maxSize = sizeSlider.noUiSlider.get()[1];
+            var minSize = sizeSlider.noUiSlider.get()[0];
             var difference = maxSize - minSize;
             var percent = (item.area - minSize) / difference;
             break;

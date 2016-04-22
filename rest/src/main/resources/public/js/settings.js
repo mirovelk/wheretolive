@@ -46,29 +46,25 @@ function filter() {
     clientSettings.ppm2Max = maxPricePerSquaredMeter;
 }
 
-function openSettings() {
-    var map = $('#map');
-    map.css({"opacity" : 0.5});
-    $('#settings').fadeToggle('300');
-    logSettingsOpen();
-}
-
-function closeSettings() {
-    var map = $('#map');
-    map.css({"opacity" : 1})
-    $('#settings').fadeToggle('300');
-    updateSettings();
-    logSettingsClosed();
-}
-
 function toggleSettings() {
     var map = $('#map');
     var mapOpacity = map.css("opacity");
     if (mapOpacity == "1") {
-        openSettings();
+        map.animate({"opacity" : 0.5});
     } else {
-        closeSettings();
+        map.animate({"opacity" : 1});
+        updateSettings();
     }
+    $('#settings').toggleClass(function() {
+      if($(this).is('active')) {
+        logSettingsClosed();
+        updateSettings();
+        return ''
+      } else {
+        logSettingsOpen();
+        return 'active'
+      }
+    });
 }
 
 var coloringScheme = "time";
@@ -119,7 +115,7 @@ function initSizeSlider() {
     noUiSlider.create(sizeSlider, {
         connect: true,
         behaviour: 'tap',
-        tooltips: [ wNumb({ decimals: 0 }), wNumb({ decimals: 0 }) ],
+        tooltips: [ wNumb({ decimals: 0, postfix: '&nbsp;m&sup2' }), wNumb({ decimals: 0, postfix: '&nbsp;m&sup2' }) ],
         start: [ parseInt(clientSettings.sizeMin), parseInt(clientSettings.sizeMax) ],
         range: {
             'min': [ parseInt(applicationSettings.sizeRangeMin) ],
@@ -134,7 +130,7 @@ function initPriceSlider() {
     noUiSlider.create(priceSlider, {
         connect: true,
         behaviour: 'tap',
-        tooltips: [ wNumb({ decimals: 0 }), wNumb({ decimals: 0 }) ],
+        tooltips: [ wNumb({ decimals: 0, postfix: '&nbsp;Kč' }), wNumb({ decimals: 0, postfix: '&nbsp;Kč' }) ],
         start: [ parseInt(clientSettings.priceMin), parseInt(clientSettings.priceMax) ],
         range: {
             'min': [ parseInt(applicationSettings.priceRangeMin) ],
@@ -149,7 +145,7 @@ function initPricePerSquaredMeterSlider() {
     noUiSlider.create(pricePerSquaredMeterSlider, {
         connect: true,
         behaviour: 'tap',
-        tooltips: [ wNumb({ decimals: 0 }), wNumb({ decimals: 0 }) ],
+        tooltips: [ wNumb({ decimals: 0, postfix: '&nbsp;Kč/m&sup2' }), wNumb({ decimals: 0, postfix: '&nbsp;Kč/m&sup2' }) ],
         start: [ parseInt(clientSettings.ppm2Min), parseInt(clientSettings.ppm2Max) ],
         range: {
             'min': [ parseInt(applicationSettings.ppm2RangeMin) ],

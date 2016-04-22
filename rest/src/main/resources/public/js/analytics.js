@@ -1,9 +1,9 @@
 function logFacebookLogin(facebookId) {
-    sendToGa('facebook', 'login', null, facebookId)
+    sendToGa('facebook', 'login', facebookId, null)
 }
 
 function logFacebookLogout(facebookId) {
-    sendToGa('facebook', 'logout', null, facebookId)
+    sendToGa('facebook', 'logout', facebookId, null)
 }
 
 function logMapDrag() {

@@ -26,7 +26,7 @@
     <script src="js/jquery-2.1.4.min.js"></script>
     <script src="js/common.js"></script>
     <script src="js/map.js"></script>
-    <script src="js/nouislider.min.js"></script>
+    <script src="js/ion.rangeSlider.min.js"></script>
     <script src="js/settings.js" charset="UTF-8"></script>
     <script src="js/rest.js"></script>
     <script src="js/facebook.js"></script>
@@ -34,8 +34,10 @@
     <script src="js/analytics.js"></script>
     <script src="js/foundation.min.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
     <link rel="stylesheet" type="text/css" href="css/map.css">
-    <link rel="stylesheet" type="text/css" href="css/nouislider.min.css">
+    <link rel="stylesheet" type="text/css" href="css/ion.rangeSlider.css">
+    <link rel="stylesheet" type="text/css" href="css/ion.rangeSlider.skinFlat.css">
     <link rel="stylesheet" type="text/css" href="css/foundation.min.css">
 
     <script>
@@ -108,18 +110,20 @@ the FB.login() function when clicked.
     <div onclick="toggleSettings();" class="menuButton"></div>
 
     <div id="settings" class="small-12 medium-6 large-4">
-        <div class="row">
-            <div id="sizeSlider" class="columns slidingFilter"></div>
+        <div class="wrapper">
+            <div class="row">
+                <input type="text" id="sizeSlider" class="columns slidingFilter" value="" name="range" />
+            </div>
+            <div class="row">
+                <input type="text" id="priceSlider" class="columns slidingFilter" value="" name="range" />
+            </div>
+            <div class="row">
+                <input type="text" id="pricePerSquaredMeterSlider" class="columns slidingFilter" value="" name="range" />
+            </div>
         </div>
         <div class="row">
-            <div id="priceSlider" class="columns slidingFilter"></div>
-        </div>
-        <div class="row">
-            <div id="pricePerSquaredMeterSlider" class="columns slidingFilter"></div>
-        </div>
-        <div class="row">
-            <div class="small-3 medium-2 large-1 columns"><span>Coloring by</span></div>
-            <div class="columns small-9 medium-10 large-11">
+            <div class="columns small-12 medium-12 large-12"><p>Coloring by</p></div>
+            <div class="columns small-12 medium-12 large-12">
                 <a class="button" id="sizeSchemeButton" onclick="setColoringScheme('size');">Size</a>
                 <a class="button" id="priceSchemeButton" onclick="setColoringScheme('price');">Price</a>
                 <a class="button" id="ppm2SchemeButton" onclick="setColoringScheme('ppm2');">Price per m<sup>2</sup></a>

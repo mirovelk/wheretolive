@@ -14,7 +14,7 @@ function center() {
 
 function visitReality(name, realityId) {
     $.getJSON("reality/visit", {name: name, realityId: realityId}, function (data, status) {
-        
+
     });
 }
 
@@ -126,20 +126,20 @@ function getRealEstateBaseUrl(name) {
 function getPercentage(item) {
     switch (coloringScheme) {
         case "ppm2":
-            var maxPricePerSquareMeter = pricePerSquaredMeterSlider.noUiSlider.get()[1];
-            var minPricePerSquareMeter = pricePerSquaredMeterSlider.noUiSlider.get()[0];
+            var maxPricePerSquareMeter = pricePerSquaredMeterSlider.ionRangeSlider.get()[1];
+            var minPricePerSquareMeter = pricePerSquaredMeterSlider.ionRangeSlider.get()[0];
             var difference = maxPricePerSquareMeter - minPricePerSquareMeter;
             var percent = (item.pricePerSquaredMeter - minPricePerSquareMeter) / difference;
             break;
         case "price":
-            var maxPrice = priceSlider.noUiSlider.get()[1];
-            var minPrice = priceSlider.noUiSlider.get()[0];
+            var maxPrice = priceSlider.ionRangeSlider.get()[1];
+            var minPrice = priceSlider.ionRangeSlider.get()[0];
             var difference = maxPrice - minPrice;
             var percent = (item.price - minPrice) / difference;
             break;
         case "size":
-            var maxSize = sizeSlider.noUiSlider.get()[1];
-            var minSize = sizeSlider.noUiSlider.get()[0];
+            var maxSize = sizeSlider.ionRangeSlider.get()[1];
+            var minSize = sizeSlider.ionRangeSlider.get()[0];
             var difference = maxSize - minSize;
             var percent = (item.area - minSize) / difference;
             break;

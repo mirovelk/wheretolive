@@ -18,12 +18,12 @@ var applicationSettings = {
 };
 
 function filter() {
-    var minSize = sizeSlider.ionRangeSlider.get()[0];
-    var maxSize = sizeSlider.ionRangeSlider.get()[1];
-    var minPrice = priceSlider.ionRangeSlider.get()[0];
-    var maxPrice = priceSlider.ionRangeSlider.get()[1];
-    var minPricePerSquaredMeter = pricePerSquaredMeterSlider.ionRangeSlider.get()[0];
-    var maxPricePerSquaredMeter = pricePerSquaredMeterSlider.ionRangeSlider.get()[1];
+    var minSize = sizeSlider.data("from");
+    var maxSize = sizeSlider.data("to");
+    var minPrice = priceSlider.data("from");
+    var maxPrice = priceSlider.data("to");
+    var minPricePerSquaredMeter = pricePerSquaredMeterSlider.data("from");
+    var maxPricePerSquaredMeter = pricePerSquaredMeterSlider.data("to");
     for (var key in housings) {
         if (housings.hasOwnProperty(key)) {
             var area = housings[key].area;
@@ -79,9 +79,9 @@ function setColoringScheme(scheme) {
 
 function loadSettings(person) {
     clientSettings = person.settings;
-    sizeSlider.ionRangeSlider.destroy();
-    priceSlider.ionRangeSlider.destroy();
-    pricePerSquaredMeterSlider.ionRangeSlider.destroy();
+    sizeSlider.destroy();
+    priceSlider.destroy();
+    pricePerSquaredMeterSlider.destroy();
     initSliders();
 }
 

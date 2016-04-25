@@ -89,19 +89,19 @@ function initSliders() {
     initSizeSlider();
     initPriceSlider();
     initPricePerSquaredMeterSlider();
-    sizeSlider.ionRangeSlider().on('set', function(){
+    sizeSlider.on('change', function(){
         filter();
-        var minSize = sizeSlider.ionRangeSlider.get()[0];
+        var minSize = sizeSlider.data("from");
         logFilterChanged('minSize', minSize);
     });
-    priceSlider.ionRangeSlider().on('set', function(){
+    priceSlider.on('change', function(){
         filter();
-        var maxPrice = priceSlider.ionRangeSlider.get()[1];
+        var maxPrice = priceSlider.data("to");
         logFilterChanged('maxPrice', maxPrice);
     });
-    pricePerSquaredMeterSlider.ionRangeSlider().on('set', function(){
+    pricePerSquaredMeterSlider.on('change', function(){
         filter();
-        var maxPricePerSquaredMeter = pricePerSquaredMeterSlider.ionRangeSlider.get()[1];
+        var maxPricePerSquaredMeter = pricePerSquaredMeterSlider.data("to");
         logFilterChanged('maxPricePerSquaredMeter', maxPricePerSquaredMeter);
     });
 }

@@ -128,8 +128,8 @@ function getPercentage(item) {
         case "ppm2":
             var minPricePerSquaredMeter = pricePerSquaredMeterSlider.data("from");
             var maxPricePerSquaredMeter = pricePerSquaredMeterSlider.data("to");
-            var difference = maxPricePerSquareMeter - minPricePerSquareMeter;
-            var percent = (item.pricePerSquaredMeter - minPricePerSquareMeter) / difference;
+            var difference = maxPricePerSquaredMeter - minPricePerSquaredMeter;
+            var percent = (item.pricePerSquaredMeter - minPricePerSquaredMeter) / difference;
             break;
         case "price":
             var minPrice = priceSlider.data("from");

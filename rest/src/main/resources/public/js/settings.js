@@ -79,9 +79,9 @@ function setColoringScheme(scheme) {
 
 function loadSettings(person) {
     clientSettings = person.settings;
-    sizeSlider.destroy();
-    priceSlider.destroy();
-    pricePerSquaredMeterSlider.destroy();
+    sizeSlider.data("ionRangeSlider").destroy();
+    priceSlider.data("ionRangeSlider").destroy();
+    pricePerSquaredMeterSlider.data("ionRangeSlider").destroy();
     initSliders();
 }
 

@@ -15,6 +15,8 @@ public interface Crawler {
     static final String MM_CRON = "0 30 4,16 * * *";
 
     static final String REMAX_CRON = "0 30 5,17 * * *";
+
+    static final String REAL1_CRON = "0 30 6,18 * * *";
     
     static final String ALBERT_CRON = "0 30 10 1 * *";
     

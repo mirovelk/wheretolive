@@ -104,6 +104,8 @@ function getRealEstateName(name) {
         return "M&M Reality";
     } else if (name == "REMAX") {
         return "RE/MAX";
+    } else if (name == "Real1") {
+        return "Real1";
     }
 }
 
@@ -118,6 +120,8 @@ function getRealEstateBaseUrl(name) {
         return "https://www.mmreality.cz/nemovitosti/";
     } else if (name == "REMAX") {
         return "http://www.remax-czech.cz/reality/detail/";
+    } else if (name == "Real1") {
+        return "http://www.real1.cz/detail/";
     } else {
         return "#";
     }

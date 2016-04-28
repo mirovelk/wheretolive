@@ -33,6 +33,8 @@
     <script src="js/wNumb.js"></script>
     <script src="js/analytics.js"></script>
     <script src="js/foundation.min.js"></script>
+    <script src="js/r360-core.js"></script>
+    <script src="js/route360.js"></script>
 
     <link rel="stylesheet" type="text/css" href="css/normalize.css">
     <link rel="stylesheet" type="text/css" href="css/map.css">
@@ -135,6 +137,7 @@ the FB.login() function when clicked.
 
 <script>
     var map;
+    var colorPolygonLayer;
 
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
@@ -154,6 +157,13 @@ the FB.login() function when clicked.
 
         initSliders();
 
+        $.getScript("js/r360-google.js", function(){
+            r360.config.serviceKey = '6GZFXNUOUDSS58KYLGAN';
+            r360.config.serviceUrl = 'https://service.route360.net/czech_republic/';
+
+            // each map get's it's own polygon layer
+            colorPolygonLayer = new GoogleMapsPolygonLayer(map);
+        });
     }
 
 </script>

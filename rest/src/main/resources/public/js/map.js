@@ -43,6 +43,7 @@ function createHousingMarker(item, icon) {
             content: contentString
         });
         infoWindow.open(map, marker);
+        showPolygons(item.location.latitude, item.location.longitude, colorPolygonLayer);
     });
 }
 

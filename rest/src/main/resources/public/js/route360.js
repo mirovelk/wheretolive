@@ -1,4 +1,8 @@
+var lastLat = null;
+var lastLng = null;
 function showPolygons(lat, lng, layer) {
+    lastLat = lat;
+    lastLng = lng;
     var travelOptions = r360.travelOptions();
     travelOptions.addSource({lat: lat, lng: lng});
     travelOptions.setTravelTimes([300, 600, 900, 1200, 1500, 1800]);

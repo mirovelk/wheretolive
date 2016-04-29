@@ -156,7 +156,12 @@ var showTravelingTimes = false;
 function setTravelingTimes() {
     if($("#travelingTimesCheckbox").is(':checked')) {
         showTravelingTimes = true;
+        colorPolygonLayer.setMap(map);
+        if (lastLat != null) {
+            showPolygons(lastLat, lastLng, colorPolygonLayer);
+        }
     } else {
         showTravelingTimes = false;
+        colorPolygonLayer.setMap(null);
     }
 }

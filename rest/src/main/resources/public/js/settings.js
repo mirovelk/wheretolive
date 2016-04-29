@@ -151,3 +151,12 @@ function initPricePerSquaredMeterSlider() {
         postfix: " &nbsp;Kč/m&sup2"
     });
 }
+
+var travelingDistance = false;
+function setTravelingDistance() {
+    if($("#travelingDistanceCheckbox").is(':checked')) {
+        travelingDistance = true;
+    } else {
+        travelingDistance = false;
+    }
+}

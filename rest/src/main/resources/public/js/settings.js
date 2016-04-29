@@ -152,11 +152,11 @@ function initPricePerSquaredMeterSlider() {
     });
 }
 
-var travelingDistance = false;
-function setTravelingDistance() {
-    if($("#travelingDistanceCheckbox").is(':checked')) {
-        travelingDistance = true;
+var showTravelingTimes = false;
+function setTravelingTimes() {
+    if($("#travelingTimesCheckbox").is(':checked')) {
+        showTravelingTimes = true;
     } else {
-        travelingDistance = false;
+        showTravelingTimes = false;
     }
 }

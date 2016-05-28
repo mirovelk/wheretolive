@@ -94,36 +94,52 @@ function setVisited(uniqueName) {
 }
 
 function getRealEstateName(name) {
-    if (name == "BezRealitky") {
-        return "Bez realitky";
-    } else if (name == "SReality") {
-        return "SReality";
-    } else if (name == "RealityMat") {
-        return "RealityMat";
-    } else if (name == "M&M") {
-        return "M&M Reality";
-    } else if (name == "REMAX") {
-        return "RE/MAX";
-    } else if (name == "Real1") {
-        return "Real1";
+    switch(name) {
+        case "BezRealitky":
+            return "Bez realitky";
+            break;
+        case "SReality":
+            return "SReality";
+            break;
+        case "RealityMat":
+            return "RealityMat";
+            break;
+        case "M&M":
+            return "M&M Reality";
+            break;
+        case "RE/MAX":
+            return "RE/MAX";
+            break;
+        case "Real1":
+            return "Real1";
+            break;
+        default:
+            return "";
     }
 }
 
 function getRealEstateBaseUrl(name) {
-    if (name == "BezRealitky") {
-        return "http://www.bezrealitky.cz/nemovitosti-byty-domy/";
-    } else if (name == "SReality") {
-        return "http://www.sreality.cz/detail/pronajem/byt/2+kk/praha/";
-    } else if (name == "RealityMat") {
-        return "http://www.realitymat.cz/estate/";
-    } else if (name == "M&M") {
-        return "https://www.mmreality.cz/nemovitosti/";
-    } else if (name == "REMAX") {
-        return "http://www.remax-czech.cz/reality/detail/";
-    } else if (name == "Real1") {
-        return "http://www.real1.cz/detail/";
-    } else {
-        return "#";
+    switch(name) {
+        case "BezRealitky":
+            return "http://www.bezrealitky.cz/nemovitosti-byty-domy/";
+            break;
+        case "SReality":
+            return "http://www.sreality.cz/detail/pronajem/byt/2+kk/praha/";
+            break;
+        case "RealityMat":
+            return "http://www.realitymat.cz/estate/";
+            break;
+        case "M&M":
+            return "https://www.mmreality.cz/nemovitosti/";
+            break;
+        case "REMAX":
+            return "http://www.remax-czech.cz/reality/detail/";
+            break;
+        case "Real1":
+            return "http://www.real1.cz/detail/";
+            break;
+        default:
+            return "#";
     }
 }
 

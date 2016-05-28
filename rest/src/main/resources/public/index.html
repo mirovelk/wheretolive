@@ -23,17 +23,6 @@
     <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
     <link rel="icon" type="image/png" href="favicon-128.png" sizes="128x128" />
 
-    <script src="js/jquery-2.1.4.min.js"></script>
-    <script src="js/common.js"></script>
-    <script src="js/map.js"></script>
-    <script src="js/ion.rangeSlider.min.js"></script>
-    <script src="js/settings.js" charset="UTF-8"></script>
-    <script src="js/rest.js"></script>
-    <script src="js/facebook.js"></script>
-    <script src="js/wNumb.js"></script>
-    <script src="js/analytics.js"></script>
-    <script src="js/foundation.min.js"></script>
-
     <link rel="stylesheet" type="text/css" href="css/normalize.css">
     <link rel="stylesheet" type="text/css" href="css/map.css">
     <link rel="stylesheet" type="text/css" href="css/ion.rangeSlider.css">
@@ -53,123 +42,134 @@
 
 <body>
 
-<script>
-    window.fbAsyncInit = function() {
-        FB.init({
-            appId : '1648440438752990',
-            cookie : true, // enable cookies to allow the server to access
-            // the session
-            xfbml : true, // parse social plugins on this page
-            version : 'v2.5' // use version 2.2
-        });
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId : '1648440438752990',
+                cookie : true, // enable cookies to allow the server to access
+                // the session
+                xfbml : true, // parse social plugins on this page
+                version : 'v2.5' // use version 2.2
+            });
 
-        // Now that we've initialized the JavaScript SDK, we call
-        // FB.getLoginStatus().  This function gets the state of the
-        // person visiting this page and can return one of three states to
-        // the callback you provide.  They can be:
-        //
-        // 1. Logged into your app ('connected')
-        // 2. Logged into Facebook, but not your app ('not_authorized')
-        // 3. Not logged into Facebook and can't tell if they are logged into
-        //    your app or not.
-        //
-        // These three cases are handled in the callback function.
+            // Now that we've initialized the JavaScript SDK, we call
+            // FB.getLoginStatus().  This function gets the state of the
+            // person visiting this page and can return one of three states to
+            // the callback you provide.  They can be:
+            //
+            // 1. Logged into your app ('connected')
+            // 2. Logged into Facebook, but not your app ('not_authorized')
+            // 3. Not logged into Facebook and can't tell if they are logged into
+            //    your app or not.
+            //
+            // These three cases are handled in the callback function.
 
-        FB.getLoginStatus(function(response) {
-            statusChangeCallback(response);
-        });
+            FB.getLoginStatus(function(response) {
+                statusChangeCallback(response);
+            });
 
-    };
+        };
 
-    // Load the SDK asynchronously
-    (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id))
-            return;
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "https://connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
+        // Load the SDK asynchronously
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id))
+                return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
 
-</script>
+    </script>
 
-<!--
-Below we include the Login Button social plugin. This button uses
-the JavaScript SDK to present a graphical Login button that triggers
-the FB.login() function when clicked.
--->
+    <!--
+    Below we include the Login Button social plugin. This button uses
+    the JavaScript SDK to present a graphical Login button that triggers
+    the FB.login() function when clicked.
+    -->
 
-<div id="facebookLoginButton">
-    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();" auto_logout_link="true"></fb:login-button>
-</div>
+    <div id="facebookLoginButton">
+        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();" auto_logout_link="true"></fb:login-button>
+    </div>
 
-<div id="content">
-    <div id="map"></div>
+    <div id="content">
+        <div id="map"></div>
 
-    <div onclick="toggleSettings();" class="menuButton"></div>
+        <div onclick="toggleSettings();" class="menuButton"></div>
 
-    <div id="settings" class="small-12 medium-6 large-4">
-        <div class="wrapper">
-            <div class="row">
-                <input type="text" id="sizeSlider" class="columns slidingFilter" value="" name="range" />
+        <div id="settings" class="small-12 medium-6 large-4">
+            <div class="wrapper">
+                <div class="row">
+                    <input type="text" id="sizeSlider" class="columns slidingFilter" value="" name="range" />
+                </div>
+                <div class="row">
+                    <input type="text" id="priceSlider" class="columns slidingFilter" value="" name="range" />
+                </div>
+                <div class="row">
+                    <input type="text" id="pricePerSquaredMeterSlider" class="columns slidingFilter" value="" name="range" />
+                </div>
             </div>
             <div class="row">
-                <input type="text" id="priceSlider" class="columns slidingFilter" value="" name="range" />
+                <div class="columns small-12 medium-12 large-12"><p>Coloring by</p></div>
+                <div class="columns small-12 medium-12 large-12">
+                    <a class="button" id="sizeSchemeButton" onclick="setColoringScheme('size');">Size</a>
+                    <a class="button" id="priceSchemeButton" onclick="setColoringScheme('price');">Price</a>
+                    <a class="button" id="ppm2SchemeButton" onclick="setColoringScheme('ppm2');">Price per m<sup>2</sup></a>
+                    <a class="button success" id="timeSchemeButton" onclick="setColoringScheme('time');">Last Updated</a>
+                </div>
             </div>
             <div class="row">
-                <input type="text" id="pricePerSquaredMeterSlider" class="columns slidingFilter" value="" name="range" />
-            </div>
-        </div>
-        <div class="row">
-            <div class="columns small-12 medium-12 large-12"><p>Coloring by</p></div>
-            <div class="columns small-12 medium-12 large-12">
-                <a class="button" id="sizeSchemeButton" onclick="setColoringScheme('size');">Size</a>
-                <a class="button" id="priceSchemeButton" onclick="setColoringScheme('price');">Price</a>
-                <a class="button" id="ppm2SchemeButton" onclick="setColoringScheme('ppm2');">Price per m<sup>2</sup></a>
-                <a class="button success" id="timeSchemeButton" onclick="setColoringScheme('time');">Last Updated</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="columns small-12 medium-12 large-12"><p>Traveling Distances</p></div>
-            <div class="switch columns small-12 medium-12 large-12">
-                <input class="button" id="travelingDistanceCheckbox" type="checkbox" onclick="setTravelingDistance();"><label for="travelingDistanceCheckbox">Turn on</label>
+                <div class="columns small-12 medium-12 large-12"><p>Traveling Distances</p></div>
+                <div class="switch columns small-12 medium-12 large-12">
+                    <input class="button" id="travelingDistanceCheckbox" type="checkbox" onclick="setTravelingDistance();"><label for="travelingDistanceCheckbox">Turn on</label>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script>
-    var map;
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/ion.rangeSlider.min.js"></script>
+    <script src="js/settings.js" charset="UTF-8"></script>
+    <script src="js/rest.js"></script>
+    <script src="js/facebook.js"></script>
+    <script src="js/wNumb.js"></script>
+    <script src="js/analytics.js"></script>
+    <script src="js/foundation.min.js"></script>
 
-    function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 16,
-            zoomControl: false,
-            scaleControl: true
-        });
-        center();
+    <script>
+        var map;
 
-        map.addListener('zoom_changed', function() {
-            loadAll();
-            logMapZoomChange();
-        });
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 16,
+                zoomControl: false,
+                scaleControl: true,
+                styles: [{"featureType":"landscape","stylers":[{"hue":"#FFBB00"},{"saturation":43.400000000000006},{"lightness":37.599999999999994},{"gamma":1}]},{"featureType":"road.highway","stylers":[{"hue":"#FFC200"},{"saturation":-61.8},{"lightness":45.599999999999994},{"gamma":1}]},{"featureType":"road.arterial","stylers":[{"hue":"#FF0300"},{"saturation":-100},{"lightness":51.19999999999999},{"gamma":1}]},{"featureType":"road.local","stylers":[{"hue":"#FF0300"},{"saturation":-100},{"lightness":52},{"gamma":1}]},{"featureType":"water","stylers":[{"hue":"#0078FF"},{"saturation":-13.200000000000003},{"lightness":2.4000000000000057},{"gamma":1}]},{"featureType":"poi","stylers":[{"hue":"#00FF6A"},{"saturation":-1.0989010989011234},{"lightness":11.200000000000017},{"gamma":1}]}]
+            });
+            center();
 
-        map.addListener('dragend', function() {
-            loadAll();
-            logMapDrag();
-        });
+            map.addListener('zoom_changed', function() {
+                loadAll();
+                logMapZoomChange();
+            });
 
-        initSliders();
+            map.addListener('dragend', function() {
+                loadAll();
+                logMapDrag();
+            });
 
-    }
+            initSliders();
 
-</script>
+        }
 
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?v=3.23&key=AIzaSyC1Z6lrl0vLeeihVFwWZekBGb4_7VPUUEY&callback=initMap">
-</script>
+    </script>
 
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?v=3.23&key=AIzaSyC1Z6lrl0vLeeihVFwWZekBGb4_7VPUUEY&callback=initMap">
+    </script>
 
 </body>
 

@@ -82,7 +82,7 @@ function dontShow(uniqueName) {
 function setVisited(uniqueName) {
     var marker = housingMarkers[uniqueName];
     marker.setIcon({
-        path: google.maps.SymbolPath.CIRCLE,
+        path: 'M16.002,17.746c3.309,0,6-2.692,6-6s-2.691-6-6-6   c-3.309,0-6,2.691-6,6S12.693,17.746,16.002,17.746z M16.002,6.746c2.758,0,5,2.242,5,5s-2.242,5-5,5c-2.758,0-5-2.242-5-5   S13.244,6.746,16.002,6.746z',
         scale: 3,
         fillColor: "rgb(0,0,255)",
         strokeColor: "rgb(0,0,255)",
@@ -247,7 +247,7 @@ function loadRealities() {
                     var color = getColor(percentage);
                 }
                 var icon = {
-                    path: google.maps.SymbolPath.CIRCLE,
+                    path: 'M16.002,17.746c3.309,0,6-2.692,6-6s-2.691-6-6-6   c-3.309,0-6,2.691-6,6S12.693,17.746,16.002,17.746z M16.002,6.746c2.758,0,5,2.242,5,5s-2.242,5-5,5c-2.758,0-5-2.242-5-5   S13.244,6.746,16.002,6.746z',
                     scale: 3,
                     fillColor: color,
                     strokeColor: color,

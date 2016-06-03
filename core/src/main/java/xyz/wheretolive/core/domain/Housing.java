@@ -1,6 +1,16 @@
 package xyz.wheretolive.core.domain;
 
 public class Housing extends NameableMapObject {
+
+    public enum Type {
+        HOUSE,
+        FLAT
+    }
+    
+    public enum Transaction {
+        RENT,
+        SELL
+    }
     
     private double price;
     
@@ -15,6 +25,10 @@ public class Housing extends NameableMapObject {
     private Boolean terrace;
     
     private Boolean elevator;
+    
+    private Type type;
+    
+    private Transaction transaction;
     
     public Housing() {
     }
@@ -112,5 +126,21 @@ public class Housing extends NameableMapObject {
 
     public void setElevator(Boolean elevator) {
         this.elevator = elevator;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public Transaction getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
     }
 }

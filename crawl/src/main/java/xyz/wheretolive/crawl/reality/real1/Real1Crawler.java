@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import xyz.wheretolive.core.domain.Coordinates;
+import xyz.wheretolive.core.domain.Housing;
 import xyz.wheretolive.core.domain.MapObject;
 import xyz.wheretolive.core.domain.Reality;
 import xyz.wheretolive.crawl.HttpUtils;
@@ -23,24 +24,14 @@ import xyz.wheretolive.mongo.GoogleGeocodeRepository;
 import xyz.wheretolive.mongo.MongoDatastoreProvider;
 import xyz.wheretolive.mongo.MongoGoogleGeocodeRepository;
 
-@Component
-public class Real1Crawler extends RealityCrawler {
-
-    private static final String REAL1_FLATS_URL = "http://www.real1.cz/pronajem-bytu/&pgIndex=";
+public abstract class Real1Crawler extends RealityCrawler {
     
     public static final String REAL1 = "Real1";
-
+    
     @Autowired
     private GoogleGeocoder googleGeocoder;
 
-    @Override
-    public Collection<MapObject> crawl() {
-        Set<String> urls = getFlatUrls();
-        List<Reality> result = getRealities(urls);
-        return new HashSet<>(result);
-    }
-
-    private List<Reality> getRealities(Set<String> urls) {
+    protected List<Reality> getRealities(Set<String> urls, Housing.Type type, Housing.Transaction transaction) {
         List<Reality> result = new ArrayList<>();
         for (String url: urls) {
             try {
@@ -52,6 +43,8 @@ public class Real1Crawler extends RealityCrawler {
                 Reality reality = new Reality(realityId, price, area, getName(), location);
                 reality.setFloor(parseFloor(url, pageSourceCode));
                 reality.setElevator(parseElevator(pageSourceCode));
+                reality.setType(type);
+                reality.setTransaction(transaction);
                 result.add(reality);
             } catch (Exception e) {
                 logger.error("Error while parsing flat of " + getName(), e);
@@ -61,7 +54,7 @@ public class Real1Crawler extends RealityCrawler {
     }
 
     private Coordinates parseLocation(String pageUrl, String pageSourceCode) {
-        Pattern addressPattern = Pattern.compile("sq ft, ([^\"]+)\\s*<");
+        Pattern addressPattern = Pattern.compile("sq ft, ([^\"<]+)\\s*<");
         Matcher addressMatcher = addressPattern.matcher(pageSourceCode);
         if (addressMatcher.find()) {
             return googleGeocoder.translate(addressMatcher.group(1));
@@ -80,7 +73,9 @@ public class Real1Crawler extends RealityCrawler {
         }
     }
 
-    private int parseFloor(String pageUrl, String pageSourceCode) {
+    protected abstract Integer parseFloor(String pageUrl, String pageSourceCode);
+
+    protected Integer parseFlatFloor(String pageUrl, String pageSourceCode) {
         Pattern pattern = Pattern.compile("<span>\\s*(\\d+)\\. patro");
         Matcher matcher = pattern.matcher(pageSourceCode);
         if (matcher.find()) {
@@ -90,6 +85,10 @@ public class Real1Crawler extends RealityCrawler {
         } else {
             throw new IllegalStateException("Floor not found in page with url " + pageUrl);
         }
+    }
+
+    protected Integer parseHouseFloor() {
+        return null;
     }
 
     private Boolean parseElevator(String pageSourceCode) {
@@ -107,8 +106,10 @@ public class Real1Crawler extends RealityCrawler {
         int lastIndex = pageUrl.lastIndexOf('/');
         return pageUrl.substring(lastIndex + 1);
     }
+    
+    protected abstract double parsePrice(String pageUrl, String pageSourceCode);
 
-    private double parsePrice(String pageUrl, String pageSourceCode) {
+    protected double parseRentPrice(String pageUrl, String pageSourceCode) {
         Pattern pattern = Pattern.compile("ctl0_Main_panProperties_lblrentalpricemonth\">([\\d\\s]+)<");
         Matcher matcher = pattern.matcher(pageSourceCode);
         if (matcher.find()) {
@@ -118,12 +119,22 @@ public class Real1Crawler extends RealityCrawler {
         }
     }
 
-    private Set<String> getFlatUrls() {
+    protected double parseSellPrice(String pageUrl, String pageSourceCode) {
+        Pattern pattern = Pattern.compile("ctl0_Main_panProperties_lblSalePrice\">([\\d\\s]+)<");
+        Matcher matcher = pattern.matcher(pageSourceCode);
+        if (matcher.find()) {
+            return (Double.parseDouble(matcher.group(1).replaceAll("\\s", "")));
+        } else {
+            throw new IllegalStateException("Price not found in page with url " + pageUrl);
+        }
+    }
+
+    protected Set<String> getFlatUrls(String url) {
         Set<String> urls = new HashSet<>();
         int page = 0;
         String pageSourceCode;
         do {
-            String pageUrl = REAL1_FLATS_URL + Integer.toString(page);
+            String pageUrl = url + Integer.toString(page);
             pageSourceCode = HttpUtils.get(pageUrl);
             Pattern pattern = Pattern.compile("http://www.real1.cz/detail/[\\d]+");
             Matcher matcher = pattern.matcher(pageSourceCode);
@@ -135,11 +146,6 @@ public class Real1Crawler extends RealityCrawler {
         return urls;
     }
 
-    @Override
-    @Scheduled(cron = REAL1_CRON)
-    public void execute() {
-        super.execute();
-    }
     
     @Override
     public String getName() {
@@ -147,14 +153,32 @@ public class Real1Crawler extends RealityCrawler {
     }
 
     public static void main(String[] args) {
-        Real1Crawler mmCrawler = new Real1Crawler();
         GoogleGeocoder googleGeocoder = new GoogleGeocoder();
         DatastoreProvider datastoreProvider = new MongoDatastoreProvider();
         GoogleGeocodeRepository repository = new MongoGoogleGeocodeRepository(datastoreProvider);
         googleGeocoder.setRepository(repository);
-        mmCrawler.googleGeocoder = googleGeocoder;
 
-        Collection<MapObject> mapObjects = mmCrawler.crawl();
+        Real1Crawler mmCrawler;
+        Collection<MapObject> mapObjects;
+
+        mmCrawler = new Real1FlatRentCrawler();
+        mmCrawler.googleGeocoder = googleGeocoder;
+        mapObjects = mmCrawler.crawl();
+        assert mapObjects.size() > 0;
+
+        mmCrawler = new Real1FlatSellCrawler();
+        mmCrawler.googleGeocoder = googleGeocoder;
+        mapObjects = mmCrawler.crawl();
+        assert mapObjects.size() > 0;
+
+        mmCrawler = new Real1HouseRentCrawler();
+        mmCrawler.googleGeocoder = googleGeocoder;
+        mapObjects = mmCrawler.crawl();
+        assert mapObjects.size() > 0;
+
+        mmCrawler = new Real1HouseSellCrawler();
+        mmCrawler.googleGeocoder = googleGeocoder;
+        mapObjects = mmCrawler.crawl();
         assert mapObjects.size() > 0;
     }
 }

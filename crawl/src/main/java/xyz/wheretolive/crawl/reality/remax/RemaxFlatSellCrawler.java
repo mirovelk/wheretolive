@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.springframework.scheduling.annotation.Scheduled;
 
+import xyz.wheretolive.core.domain.Housing;
 import xyz.wheretolive.core.domain.MapObject;
 import xyz.wheretolive.core.domain.Reality;
 
@@ -17,7 +18,7 @@ public class RemaxFlatSellCrawler extends RemaxCrawler {
     @Override
     public Collection<MapObject> crawl() {
         Set<String> urls = getItemUrls(REMAX_FLAT_SELL_URL);
-        List<Reality> result = getRealities(urls);
+        List<Reality> result = getRealities(urls, Housing.Type.FLAT, Housing.Transaction.SELL);
         return new HashSet<>(result);
     }
 

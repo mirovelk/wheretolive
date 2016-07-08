@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +14,6 @@ import xyz.wheretolive.core.domain.FoodMarket;
 import xyz.wheretolive.core.domain.MapObject;
 import xyz.wheretolive.crawl.HttpUtils;
 import xyz.wheretolive.crawl.foodMarket.FoodMarketCrawler;
-import xyz.wheretolive.crawl.geocoding.GoogleGeocoder;
 
 @Component
 public class BillaCrawler extends FoodMarketCrawler {
@@ -23,9 +21,6 @@ public class BillaCrawler extends FoodMarketCrawler {
     private static final String BILLA = "Billa";
 
     public static final String BILLA_SHOPS_URL = "https://service.cz.rewe.co.at/filialservice/filialjson.asmx/getfilialenjson?shopcd=%22CZ%22";
-
-    @Autowired
-    GoogleGeocoder geocoder;
 
     @Override
     public Collection<MapObject> crawl() {

@@ -5,11 +5,13 @@ import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import xyz.wheretolive.core.domain.Housing;
 import xyz.wheretolive.core.domain.MapObject;
 import xyz.wheretolive.core.domain.Reality;
 
+@Component
 public class SRealityFlatSellCrawler extends SRealityCrawler {
 
     private static final String SREALITY_FLATS_SELL_URL = "http://www.sreality.cz/api/cs/v1/estates?category_main_cb=1&category_type_cb=1&page=";

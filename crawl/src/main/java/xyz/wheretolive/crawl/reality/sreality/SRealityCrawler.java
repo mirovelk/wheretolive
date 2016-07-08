@@ -7,7 +7,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
 import xyz.wheretolive.core.domain.Coordinates;
@@ -17,7 +16,6 @@ import xyz.wheretolive.core.domain.Reality;
 import xyz.wheretolive.crawl.HttpUtils;
 import xyz.wheretolive.crawl.reality.RealityCrawler;
 
-@Component
 public abstract class SRealityCrawler extends RealityCrawler {
     
     private static final String SREALITY = "SReality";

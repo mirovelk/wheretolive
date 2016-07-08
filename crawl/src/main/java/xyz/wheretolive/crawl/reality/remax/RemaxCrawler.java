@@ -10,7 +10,6 @@ import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.core.domain.MapObject;
@@ -23,27 +22,27 @@ import xyz.wheretolive.mongo.GoogleGeocodeRepository;
 import xyz.wheretolive.mongo.MongoDatastoreProvider;
 import xyz.wheretolive.mongo.MongoGoogleGeocodeRepository;
 
-@Component
-public class RemaxCrawler extends RealityCrawler {
+public abstract class RemaxCrawler extends RealityCrawler {
 
     private static final String NAME = "REMAX";
 
     private static final String REMAX_FLATS_INITIAL_URL = "http://www.remax-czech.cz/reality/byty/pronajem/";
+    
     private static final String REMAX_URL = "http://www.remax-czech.cz";
-    private static final String REMAX_FLATS_URL = REMAX_FLATS_INITIAL_URL + "?stranka=";
+
+    public static final String PAGE_PARAMETER = "?stranka=";
 
     @Autowired
     private GoogleGeocoder googleGeocoder;
 
     @Override
     public Collection<MapObject> crawl() {
-        int pagesCount = getFlatsPageCount();
-        Set<String> urls = getFlatUrls(pagesCount);
+        Set<String> urls = getItemUrls(REMAX_FLATS_INITIAL_URL);
         List<Reality> result = getRealities(urls);
         return new HashSet<>(result);
     }
 
-    private List<Reality> getRealities(Set<String> urls) {
+    protected List<Reality> getRealities(Set<String> urls) {
         List<Reality> result = new ArrayList<>();
         for (String url: urls) {
             try {
@@ -86,9 +85,21 @@ public class RemaxCrawler extends RealityCrawler {
             return null;
         }
     }
+
+    protected abstract int parseFloor(String pageUrl, String pageSourceCode);
     
-    private int parseFloor(String pageUrl, String pageSourceCode) {
-        Pattern pattern = Pattern.compile("Číslo podlaží v domě\\s*</td>\\s*<td>\\s*(\\d+)\\s*</td>");
+    protected int parseFlatFloor(String pageUrl, String pageSourceCode) {
+        Pattern pattern = Pattern.compile("Číslo podlaží v domě\\s*</td>\\s*<td>\\s*(-?\\d+)\\s*</td>");
+        Matcher matcher = pattern.matcher(pageSourceCode);
+        if (matcher.find()) {
+            return Integer.parseInt(matcher.group(1).trim());
+        } else {
+            throw new IllegalStateException("Floor not found in page with url " + pageUrl);
+        }
+    }
+
+    protected int parseHouseFloor(String pageUrl, String pageSourceCode) {
+        Pattern pattern = Pattern.compile("Počet nadzemních podlaží objektu\\s*</td>\\s*<td>\\s*(-?\\d+)\\s*</td>");
         Matcher matcher = pattern.matcher(pageSourceCode);
         if (matcher.find()) {
             return Integer.parseInt(matcher.group(1).trim());
@@ -121,11 +132,23 @@ public class RemaxCrawler extends RealityCrawler {
         }
     }
 
-    private double parseArea(String pageUrl, String pageSourceCode) {
+    protected abstract double parseArea(String pageUrl, String pageSourceCode);
+
+    protected double parseFlatArea(String pageUrl, String pageSourceCode) {
         Pattern pattern = Pattern.compile("Celková plocha\\s*</td>\\s*<td>\\s*(\\d+) m²");
         Matcher matcher = pattern.matcher(pageSourceCode);
         if (matcher.find()) {
             return Double.parseDouble(matcher.group(1));
+        } else {
+            throw new IllegalStateException("Area not found in page with url " + pageUrl);
+        }
+    }
+
+    protected double parseHouseArea(String pageUrl, String pageSourceCode) {
+        Pattern pattern = Pattern.compile("Užitná plocha\\s*</td>\\s*<td>\\s*([\\d\\s]+) m²");
+        Matcher matcher = pattern.matcher(pageSourceCode);
+        if (matcher.find()) {
+            return Double.parseDouble(matcher.group(1).replaceAll("\\s", ""));
         } else {
             throw new IllegalStateException("Area not found in page with url " + pageUrl);
         }
@@ -151,10 +174,11 @@ public class RemaxCrawler extends RealityCrawler {
         }
     }
 
-    private Set<String> getFlatUrls(int pagesCount) {
+    protected Set<String> getItemUrls(String url) {
+        int pagesCount = getFlatsPageCount(REMAX_FLATS_INITIAL_URL);
         Set<String> urls = new HashSet<>();
         for (int page = 1; page <= pagesCount; page++) {
-            String pageUrl = REMAX_FLATS_URL + page;
+            String pageUrl = url + PAGE_PARAMETER + page;
             String pageSourceCode = HttpUtils.get(pageUrl);
             Pattern pattern = Pattern.compile("image-link\" href=\"([^\"]*)");
             Matcher matcher = pattern.matcher(pageSourceCode);
@@ -165,8 +189,8 @@ public class RemaxCrawler extends RealityCrawler {
         return urls;
     }
     
-    private int getFlatsPageCount() {
-        String initialPage = HttpUtils.get(REMAX_FLATS_INITIAL_URL);
+    private int getFlatsPageCount(String url) {
+        String initialPage = HttpUtils.get(url);
         Pattern pattern = Pattern.compile("no-border\">\\s*<a href=\"\\?stranka=(\\d+)\">(\\d+)</a>");
         Matcher matcher = pattern.matcher(initialPage);
         if (matcher.find()) {
@@ -190,13 +214,32 @@ public class RemaxCrawler extends RealityCrawler {
 
 
     public static void main(String[] args) {
-        RemaxCrawler realityMatCrawler = new RemaxCrawler();
         GoogleGeocoder googleGeocoder = new GoogleGeocoder();
         DatastoreProvider datastoreProvider = new MongoDatastoreProvider();
         GoogleGeocodeRepository repository = new MongoGoogleGeocodeRepository(datastoreProvider);
         googleGeocoder.setRepository(repository);
-        realityMatCrawler.googleGeocoder = googleGeocoder;
+        
+        RemaxCrawler crawler;
+        Collection<MapObject> mapObjects;
+        
+//        crawler = new RemaxFlatRentCrawler();
+//        crawler.googleGeocoder = googleGeocoder;
+//        mapObjects = crawler.crawl();
+//        assert mapObjects.size() > 0;
+//
+//        crawler = new RemaxFlatSellCrawler();
+//        crawler.googleGeocoder = googleGeocoder;
+//        mapObjects = crawler.crawl();
+//        assert mapObjects.size() > 0;
 
-        realityMatCrawler.crawl();
+        crawler = new RemaxHouseRentCrawler();
+        crawler.googleGeocoder = googleGeocoder;
+        mapObjects = crawler.crawl();
+        assert mapObjects.size() > 0;
+
+        crawler = new RemaxHouseSellCrawler();
+        crawler.googleGeocoder = googleGeocoder;
+        mapObjects = crawler.crawl();
+        assert mapObjects.size() > 0;
     }
 }

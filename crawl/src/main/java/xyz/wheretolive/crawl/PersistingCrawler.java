@@ -23,6 +23,10 @@ public abstract class PersistingCrawler implements Crawler {
 
     @Autowired
     private MetadataRepository metadataRepository;
+    
+    protected int errorsCount;
+
+    protected int totalCount;
 
     private void store(Collection<MapObject> mapObjects) {
         for (MapObject mapObject : mapObjects) {
@@ -70,7 +74,8 @@ public abstract class PersistingCrawler implements Crawler {
                 existingObjectsCount++;
             }
         }
-        return "Total objects: " + result.size() + ". \tExisting objects: " + existingObjectsCount + ". \tNew objects: " + (result.size() - existingObjectsCount) + ".";
+        return "Total objects: " + getTotalCount() + ". \tErrors: " + getErrorsCount() + ". \tProcessed items: " + result.size() +
+                ". \tExisting objects: " + existingObjectsCount + ". \tNew objects: " + (result.size() - existingObjectsCount);
     }
 
     private void removeOld() {
@@ -78,4 +83,12 @@ public abstract class PersistingCrawler implements Crawler {
     }
     
     abstract protected Class<? extends NameableMapObject> getType();
+
+    private int getErrorsCount() {
+        return errorsCount;
+    }
+
+    private int getTotalCount() {
+        return totalCount;
+    }
 }

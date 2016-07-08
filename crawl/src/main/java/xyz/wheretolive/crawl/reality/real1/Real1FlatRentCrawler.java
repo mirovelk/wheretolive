@@ -19,7 +19,7 @@ public class Real1FlatRentCrawler extends Real1Crawler {
 
     @Override
     public Collection<MapObject> crawl() {
-        Set<String> urls = getFlatUrls(REAL1_FLATS_RENT_URL);
+        Set<String> urls = getItemUrls(REAL1_FLATS_RENT_URL);
         List<Reality> realities = getRealities(urls, Housing.Type.FLAT, Housing.Transaction.RENT);
         return new HashSet<>(realities);
     }

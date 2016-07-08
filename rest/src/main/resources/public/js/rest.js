@@ -96,7 +96,7 @@ function loadHousingMetaData(callback) {
 
 function ensureZoomOutClearsMap(callback) {
     var zoomLevel = map.getZoom();
-    if (zoomLevel < 16) {
+    if (zoomLevel < 10) {
         clearAll();
     } else {
         callback();

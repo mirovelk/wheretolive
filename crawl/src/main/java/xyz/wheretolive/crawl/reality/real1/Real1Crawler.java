@@ -9,8 +9,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.core.domain.Housing;
@@ -47,7 +45,8 @@ public abstract class Real1Crawler extends RealityCrawler {
                 reality.setTransaction(transaction);
                 result.add(reality);
             } catch (Exception e) {
-                logger.error("Error while parsing flat of " + getName(), e);
+                logger.error("Error while parsing reality of " + getName() + " on URL: " + url, e);
+                errorsCount++;
             }
         }
         return result;
@@ -129,7 +128,7 @@ public abstract class Real1Crawler extends RealityCrawler {
         }
     }
 
-    protected Set<String> getFlatUrls(String url) {
+    protected Set<String> getItemUrls(String url) {
         Set<String> urls = new HashSet<>();
         int page = 0;
         String pageSourceCode;
@@ -143,6 +142,7 @@ public abstract class Real1Crawler extends RealityCrawler {
             }
             page++;
         } while (pageSourceCode.contains("primaryDetail"));
+        totalCount = urls.size();
         return urls;
     }
 

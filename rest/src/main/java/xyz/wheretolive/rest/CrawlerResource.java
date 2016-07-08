@@ -36,7 +36,6 @@ public class CrawlerResource {
         for (Crawler crawler : crawlers) {
             crawlerMap.put(crawler.getName().toLowerCase(), crawler);
         }
-        
     }
 
     @ResponseStatus(HttpStatus.ACCEPTED)

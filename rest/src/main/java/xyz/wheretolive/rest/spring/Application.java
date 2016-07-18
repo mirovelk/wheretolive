@@ -7,7 +7,7 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 public class Application extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     private static Logger logger = LogManager.getLogger(Application.class);
-    
+
 //    public static void main(String[] args) {
 //        logger.info("main method started");
 //        SpringApplication.run(Application.class, args);
@@ -20,11 +20,12 @@ public class Application extends AbstractAnnotationConfigDispatcherServletInitia
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[] {WebConfig.class};
+        return null;
     }
 
     @Override
     protected String[] getServletMappings() {
         return new String[] {"/*"};
     }
+
 }

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.core.domain.MapObject;
 import xyz.wheretolive.core.domain.Reality;
+import xyz.wheretolive.core.domain.RealityName;
 import xyz.wheretolive.crawl.HttpUtils;
 import xyz.wheretolive.crawl.geocoding.GoogleGeocoder;
 import xyz.wheretolive.crawl.reality.RealityCrawler;
@@ -23,14 +24,14 @@ import xyz.wheretolive.mongo.GoogleGeocodeRepository;
 import xyz.wheretolive.mongo.MongoDatastoreProvider;
 import xyz.wheretolive.mongo.MongoGoogleGeocodeRepository;
 
+import static xyz.wheretolive.core.domain.RealityName.*;
+
 @Component
 public class MMCrawler extends RealityCrawler {
 
     private static final String MM_REALITIES_URL = "https://www.mmreality.cz";
     private static final String MM_FLATS_URL = "https://www.mmreality.cz/nemovitosti/pronajem/byty/";
     private static final int REALITIES_PER_PAGE = 12;
-
-    public static final String M_M = "M&M";
 
     @Autowired
     private GoogleGeocoder googleGeocoder;
@@ -160,7 +161,7 @@ public class MMCrawler extends RealityCrawler {
     
     @Override
     public String getName() {
-        return M_M;
+        return M_M.getName();
     }
 
     public static void main(String[] args) {

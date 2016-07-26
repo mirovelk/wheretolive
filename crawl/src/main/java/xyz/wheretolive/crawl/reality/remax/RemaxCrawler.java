@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.core.domain.MapObject;
 import xyz.wheretolive.core.domain.Reality;
+import xyz.wheretolive.core.domain.RealityName;
 import xyz.wheretolive.crawl.HttpUtils;
 import xyz.wheretolive.crawl.geocoding.GoogleGeocoder;
 import xyz.wheretolive.crawl.reality.RealityCrawler;
@@ -23,10 +24,10 @@ import xyz.wheretolive.mongo.GoogleGeocodeRepository;
 import xyz.wheretolive.mongo.MongoDatastoreProvider;
 import xyz.wheretolive.mongo.MongoGoogleGeocodeRepository;
 
+import static xyz.wheretolive.core.domain.RealityName.*;
+
 @Component
 public class RemaxCrawler extends RealityCrawler {
-
-    private static final String NAME = "REMAX";
 
     private static final String REMAX_FLATS_INITIAL_URL = "http://www.remax-czech.cz/reality/byty/pronajem/";
     private static final String REMAX_URL = "http://www.remax-czech.cz";
@@ -179,7 +180,7 @@ public class RemaxCrawler extends RealityCrawler {
 
     @Override
     public String getName() {
-        return NAME;
+        return REMAX.getName();
     }
 
     @Override

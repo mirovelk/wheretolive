@@ -57,11 +57,11 @@ public class GoogleGeocoder implements Geocoder {
         }
     }
 
-    private String normalizeAddress(String address) {
+    String normalizeAddress(String address) {
         return address.replaceAll("\\s", " ");
     }
 
-    private GoogleGeocodeResult getFromCache(String address) {
+    GoogleGeocodeResult getFromCache(String address) {
         GoogleGeocodeResult cached = repository.find(address);
         if (cached != null) {
             logger.info("Google geocode loaded from cache for address: '" + address + "'");
@@ -69,7 +69,7 @@ public class GoogleGeocoder implements Geocoder {
         return cached;
     }
     
-    private GoogleGeocodeResult query(String address) throws Exception {
+    GoogleGeocodeResult query(String address) throws Exception {
         while (queue.getFirst().toInstant().plusSeconds(1).isAfter(new Date().toInstant())) {
             Thread.sleep(100);
         }
@@ -85,7 +85,7 @@ public class GoogleGeocoder implements Geocoder {
         repository.store(result);
     }
     
-    private Coordinates extract(GoogleGeocodeResult result) {
+    Coordinates extract(GoogleGeocodeResult result) {
         Map<String, Object> map = result.getResult();
         List results = (List) map.get("results");
         String status = (String) map.get("status");

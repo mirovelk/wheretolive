@@ -14,16 +14,17 @@ import com.google.gson.Gson;
 import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.core.domain.MapObject;
 import xyz.wheretolive.core.domain.Reality;
+import xyz.wheretolive.core.domain.RealityName;
 import xyz.wheretolive.crawl.HttpUtils;
 import xyz.wheretolive.crawl.reality.RealityCrawler;
+
+import static xyz.wheretolive.core.domain.RealityName.*;
 
 @Component
 public class SRealityCrawler extends RealityCrawler {
     
     private static final String RENT_FLATS = "http://www.sreality.cz/api/cs/v1/estates?category_main_cb=1&category_type_cb=2&page=";
     
-    private static final String SREALITY = "SReality";
-
     @Override
     public Collection<MapObject> crawl() {
         Gson gson = new Gson();
@@ -67,6 +68,6 @@ public class SRealityCrawler extends RealityCrawler {
 
     @Override
     public String getName() {
-        return SREALITY;
+        return SREALITY.getName();
     }
 }

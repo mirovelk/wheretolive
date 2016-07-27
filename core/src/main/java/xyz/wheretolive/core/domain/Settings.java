@@ -1,5 +1,7 @@
 package xyz.wheretolive.core.domain;
 
+import java.util.EnumSet;
+
 public class Settings {
 
     private String coloring = "time";
@@ -15,6 +17,8 @@ public class Settings {
     private double ppm2Min = 0;
     
     private double ppm2Max = 500;
+
+    private EnumSet<RealityName> realitiesShowed;
 
     @Override
     public boolean equals(Object obj) {

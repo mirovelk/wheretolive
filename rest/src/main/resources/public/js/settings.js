@@ -80,8 +80,17 @@ function setColoringScheme(scheme) {
 function loadSettings(person) {
     clientSettings = person.settings;
     sizeSlider.data("ionRangeSlider").destroy();
+    // workaround for a bug in ionRangeSlider. Remove with new version after it is fixed
+    sizeSlider.data("from", "");
+    sizeSlider.data("to", "");
     priceSlider.data("ionRangeSlider").destroy();
+    // workaround for a bug in ionRangeSlider. Remove with new version after it is fixed
+    priceSlider.data("from", "");
+    priceSlider.data("to", "");
     pricePerSquaredMeterSlider.data("ionRangeSlider").destroy();
+    // workaround for a bug in ionRangeSlider. Remove with new version after it is fixed
+    pricePerSquaredMeterSlider.data("from", "");
+    pricePerSquaredMeterSlider.data("to", "");
     initSliders();
 }
 

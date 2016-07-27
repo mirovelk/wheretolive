@@ -42,7 +42,7 @@ public class HttpUtils {
                 response.close();
                 httpClient.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException("Error while closing response or httpClient", e);
             }
         }
 

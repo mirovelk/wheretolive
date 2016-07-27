@@ -36,7 +36,7 @@ public class HttpUtils {
                 toReturn = EntityUtils.toString(entity, "UTF8");
             }
         } catch (Exception e) {
-            logger.error("error", e);
+            throw new RuntimeException("Error while getting URL: " + url, e);
         } finally {
             try {
                 response.close();

@@ -31,7 +31,8 @@ function filter() {
             var pricePerSquaredMeter = housings[key].pricePerSquaredMeter;
             if (area < minSize || area > maxSize
                 || price < minPrice || price > maxPrice
-                || pricePerSquaredMeter < minPricePerSquaredMeter || pricePerSquaredMeter > maxPricePerSquaredMeter) {
+                || pricePerSquaredMeter < minPricePerSquaredMeter || pricePerSquaredMeter > maxPricePerSquaredMeter
+                || $.inArray(housings[key].name, selectedRealities) < 0) {
                 housingMarkers[key].setMap(null);
             } else if (housingMarkers[key].getMap() == null && !housings[key].hasOwnProperty('hide') && housings[key].hide != true) {
                 housingMarkers[key].setMap(map);
@@ -160,3 +161,18 @@ function initPricePerSquaredMeterSlider() {
         postfix: " &nbsp;Kč/m&sup2"
     });
 }
+
+var selectedRealities = []
+function updateRealitiesSelection() {
+    selectedRealities = [];
+    $("#realitiesSelection :selected").each(function(){
+        selectedRealities.push($(this).val());
+    });
+    filter();
+}
+
+$(function(){
+    $("#realitiesSelection option").each(function() {
+        selectedRealities.push($(this).val());
+    });
+})

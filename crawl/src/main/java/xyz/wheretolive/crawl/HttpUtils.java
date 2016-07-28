@@ -36,13 +36,13 @@ public class HttpUtils {
                 toReturn = EntityUtils.toString(entity, "UTF8");
             }
         } catch (Exception e) {
-            logger.error("error", e);
+            throw new RuntimeException("error while getting url: " + url, e);
         } finally {
             try {
                 response.close();
                 httpClient.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                throw new RuntimeException("error while closing response or httpClient for url: " + url, e);
             }
         }
 

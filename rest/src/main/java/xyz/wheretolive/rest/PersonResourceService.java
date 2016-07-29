@@ -69,4 +69,5 @@ public class PersonResourceService {
         personRepository.updateSettings(person);
         httpSession.setAttribute("person", person);
     }
+
 }

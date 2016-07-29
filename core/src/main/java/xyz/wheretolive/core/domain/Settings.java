@@ -106,5 +106,4 @@ public class Settings {
         this.realitiesShowed = realitiesShowed;
     }
 
-
 }

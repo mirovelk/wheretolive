@@ -5,8 +5,9 @@ var clientSettings = {
     priceMin: 10000,
     priceMax: 30000,
     ppm2Min: 0,
-    ppm2Max: 500
-};
+    ppm2Max: 500,
+    realitiesShowed: getAllRealities()
+}
 
 var applicationSettings = {
     sizeRangeMin: 30,
@@ -45,6 +46,7 @@ function filter() {
     clientSettings.priceMax = maxPrice;
     clientSettings.ppm2Min = minPricePerSquaredMeter;
     clientSettings.ppm2Max = maxPricePerSquaredMeter;
+    clientSettings.realitiesShowed = selectedRealities;
 }
 
 function toggleSettings() {
@@ -71,9 +73,7 @@ function toggleSettings() {
 var coloringScheme = "time";
 function setColoringScheme(scheme) {
     clientSettings.coloring = scheme;
-    $("#" + coloringScheme + "SchemeButton").removeClass("success");
-    coloringScheme = scheme;
-    $("#" + coloringScheme + "SchemeButton").addClass("success");
+    loadColoring(scheme);
     logColorSchemeChanged(scheme);
     refreshRealities();
 }
@@ -93,6 +93,24 @@ function loadSettings(person) {
     pricePerSquaredMeterSlider.data("from", "");
     pricePerSquaredMeterSlider.data("to", "");
     initSliders();
+    loadColoring(clientSettings.coloring);
+    loadRealitiesSelection(clientSettings.realitiesShowed);
+}
+
+function loadColoring(scheme) {
+    $("#" + coloringScheme + "SchemeButton").removeClass("success");
+    coloringScheme = scheme;
+    $("#" + coloringScheme + "SchemeButton").addClass("success");
+}
+
+function loadRealitiesSelection(realitiesShowed) {
+    $("#realitiesSelection option").each(function() {
+        if ($.inArray($(this).val(), realitiesShowed) < 0) {
+            $(this).prop("selected", true);
+        } else {
+            $(this).prop("selected", false);
+        }
+    });
 }
 
 function initSliders() {
@@ -172,7 +190,13 @@ function updateRealitiesSelection() {
 }
 
 $(function(){
-    $("#realitiesSelection option").each(function() {
-        selectedRealities.push($(this).val());
-    });
+    selectedRealities = getAllRealities();
 })
+
+function getAllRealities() {
+    var allRealities = [];
+    $("#realitiesSelection option").each(function() {
+        allRealities.push($(this).val());
+    });
+    return allRealities;
+}

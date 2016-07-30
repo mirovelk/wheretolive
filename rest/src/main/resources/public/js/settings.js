@@ -106,9 +106,9 @@ function loadColoring(scheme) {
 function loadRealitiesSelection(realitiesShowed) {
     $("#realitiesSelection option").each(function() {
         if ($.inArray($(this).val(), realitiesShowed) < 0) {
-            $(this).prop("selected", true);
-        } else {
             $(this).prop("selected", false);
+        } else {
+            $(this).prop("selected", true);
         }
     });
 }

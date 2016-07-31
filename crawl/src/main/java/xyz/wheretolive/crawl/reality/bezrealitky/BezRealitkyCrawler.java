@@ -1,15 +1,8 @@
 package xyz.wheretolive.crawl.reality.bezrealitky;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import com.google.gson.Gson;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import com.google.gson.Gson;
 import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.core.domain.Housing;
 import xyz.wheretolive.core.domain.MapObject;
@@ -17,11 +10,17 @@ import xyz.wheretolive.core.domain.Reality;
 import xyz.wheretolive.crawl.HttpUtils;
 import xyz.wheretolive.crawl.reality.RealityCrawler;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static xyz.wheretolive.core.domain.RealityName.BEZ_REALITKY;
+
 @Component
 public abstract class BezRealitkyCrawler extends RealityCrawler {
 
-    private static final String BEZ_REALITKY = "BezRealitky";
-    
     protected List<Reality> crawl(String url, Housing.Type type, Housing.Transaction transaction) {
         Gson gson = new Gson();
         String json = HttpUtils.get(url);
@@ -94,7 +93,7 @@ public abstract class BezRealitkyCrawler extends RealityCrawler {
 
     @Override
     public String getName() {
-        return BEZ_REALITKY;
+        return BEZ_REALITKY.getName();
     }
 
     public static void main(String[] args) {

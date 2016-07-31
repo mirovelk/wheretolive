@@ -1,16 +1,7 @@
 package xyz.wheretolive.crawl.reality.remax;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-
 import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.core.domain.Housing;
 import xyz.wheretolive.core.domain.MapObject;
@@ -23,9 +14,13 @@ import xyz.wheretolive.mongo.GoogleGeocodeRepository;
 import xyz.wheretolive.mongo.MongoDatastoreProvider;
 import xyz.wheretolive.mongo.MongoGoogleGeocodeRepository;
 
-public abstract class RemaxCrawler extends RealityCrawler {
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-    private static final String NAME = "REMAX";
+import static xyz.wheretolive.core.domain.RealityName.REMAX;
+
+public abstract class RemaxCrawler extends RealityCrawler {
 
     private static final String REMAX_URL = "http://www.remax-czech.cz";
 
@@ -204,7 +199,7 @@ public abstract class RemaxCrawler extends RealityCrawler {
 
     @Override
     public String getName() {
-        return NAME;
+        return REMAX.getName();
     }
 
     @Override

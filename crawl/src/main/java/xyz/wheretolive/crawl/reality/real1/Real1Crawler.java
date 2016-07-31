@@ -14,6 +14,7 @@ import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.core.domain.Housing;
 import xyz.wheretolive.core.domain.MapObject;
 import xyz.wheretolive.core.domain.Reality;
+import xyz.wheretolive.core.domain.RealityName;
 import xyz.wheretolive.crawl.HttpUtils;
 import xyz.wheretolive.crawl.geocoding.GoogleGeocoder;
 import xyz.wheretolive.crawl.reality.RealityCrawler;
@@ -22,9 +23,9 @@ import xyz.wheretolive.mongo.GoogleGeocodeRepository;
 import xyz.wheretolive.mongo.MongoDatastoreProvider;
 import xyz.wheretolive.mongo.MongoGoogleGeocodeRepository;
 
+import static xyz.wheretolive.core.domain.RealityName.REAL1;
+
 public abstract class Real1Crawler extends RealityCrawler {
-    
-    public static final String REAL1 = "Real1";
     
     @Autowired
     private GoogleGeocoder googleGeocoder;
@@ -149,7 +150,7 @@ public abstract class Real1Crawler extends RealityCrawler {
     
     @Override
     public String getName() {
-        return REAL1;
+        return REAL1.getName();
     }
 
     public static void main(String[] args) {

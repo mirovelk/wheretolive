@@ -1,5 +1,7 @@
 package xyz.wheretolive.core.domain;
 
+import java.util.EnumSet;
+
 public class Settings {
 
     private String coloring = "time";
@@ -13,8 +15,10 @@ public class Settings {
     private double sizeMax = 150;
 
     private double ppm2Min = 0;
-    
+
     private double ppm2Max = 500;
+
+    private EnumSet<RealityName> realitiesShowed = EnumSet.allOf(RealityName.class);
 
     @Override
     public boolean equals(Object obj) {
@@ -34,7 +38,8 @@ public class Settings {
                 && sizeMin == other.sizeMin
                 && sizeMax == other.sizeMax
                 && ppm2Min == other.ppm2Min
-                && ppm2Max == other.ppm2Max;
+                && ppm2Max == other.ppm2Max
+                && realitiesShowed == other.realitiesShowed;
     }
 
     public double getPpm2Max() {
@@ -91,6 +96,14 @@ public class Settings {
 
     public void setPpm2Min(double ppm2Min) {
         this.ppm2Min = ppm2Min;
+    }
+
+    public EnumSet<RealityName> getRealitiesShowed() {
+        return realitiesShowed;
+    }
+
+    public void setRealitiesShowed(EnumSet<RealityName> realitiesShowed) {
+        this.realitiesShowed = realitiesShowed;
     }
 
 }

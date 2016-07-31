@@ -5,8 +5,9 @@ var clientSettings = {
     priceMin: 10000,
     priceMax: 30000,
     ppm2Min: 0,
-    ppm2Max: 500
-};
+    ppm2Max: 500,
+    realitiesShowed: getAllRealities()
+}
 
 var applicationSettings = {
     sizeRangeMin: 30,
@@ -31,7 +32,8 @@ function filter() {
             var pricePerSquaredMeter = housings[key].pricePerSquaredMeter;
             if (area < minSize || area > maxSize
                 || price < minPrice || price > maxPrice
-                || pricePerSquaredMeter < minPricePerSquaredMeter || pricePerSquaredMeter > maxPricePerSquaredMeter) {
+                || pricePerSquaredMeter < minPricePerSquaredMeter || pricePerSquaredMeter > maxPricePerSquaredMeter
+                || $.inArray(housings[key].name, selectedRealities) < 0) {
                 housingMarkers[key].setMap(null);
             } else if (housingMarkers[key].getMap() == null && !housings[key].hasOwnProperty('hide') && housings[key].hide != true) {
                 housingMarkers[key].setMap(map);
@@ -44,6 +46,7 @@ function filter() {
     clientSettings.priceMax = maxPrice;
     clientSettings.ppm2Min = minPricePerSquaredMeter;
     clientSettings.ppm2Max = maxPricePerSquaredMeter;
+    clientSettings.realitiesShowed = selectedRealities;
 }
 
 function toggleSettings() {
@@ -70,9 +73,7 @@ function toggleSettings() {
 var coloringScheme = "time";
 function setColoringScheme(scheme) {
     clientSettings.coloring = scheme;
-    $("#" + coloringScheme + "SchemeButton").removeClass("success");
-    coloringScheme = scheme;
-    $("#" + coloringScheme + "SchemeButton").addClass("success");
+    loadColoring(scheme);
     logColorSchemeChanged(scheme);
     refreshRealities();
 }
@@ -80,9 +81,36 @@ function setColoringScheme(scheme) {
 function loadSettings(person) {
     clientSettings = person.settings;
     sizeSlider.data("ionRangeSlider").destroy();
+    // workaround for a bug in ionRangeSlider. Remove with new version after it is fixed
+    sizeSlider.data("from", "");
+    sizeSlider.data("to", "");
     priceSlider.data("ionRangeSlider").destroy();
+    // workaround for a bug in ionRangeSlider. Remove with new version after it is fixed
+    priceSlider.data("from", "");
+    priceSlider.data("to", "");
     pricePerSquaredMeterSlider.data("ionRangeSlider").destroy();
+    // workaround for a bug in ionRangeSlider. Remove with new version after it is fixed
+    pricePerSquaredMeterSlider.data("from", "");
+    pricePerSquaredMeterSlider.data("to", "");
     initSliders();
+    loadColoring(clientSettings.coloring);
+    loadRealitiesSelection(clientSettings.realitiesShowed);
+}
+
+function loadColoring(scheme) {
+    $("#" + coloringScheme + "SchemeButton").removeClass("success");
+    coloringScheme = scheme;
+    $("#" + coloringScheme + "SchemeButton").addClass("success");
+}
+
+function loadRealitiesSelection(realitiesShowed) {
+    $("#realitiesSelection option").each(function() {
+        if ($.inArray($(this).val(), realitiesShowed) < 0) {
+            $(this).prop("selected", false);
+        } else {
+            $(this).prop("selected", true);
+        }
+    });
 }
 
 function initSliders() {
@@ -150,4 +178,25 @@ function initPricePerSquaredMeterSlider() {
         step: 25,
         postfix: " &nbsp;Kč/m&sup2"
     });
+}
+
+var selectedRealities = []
+function updateRealitiesSelection() {
+    selectedRealities = [];
+    $("#realitiesSelection :selected").each(function(){
+        selectedRealities.push($(this).val());
+    });
+    filter();
+}
+
+$(function(){
+    selectedRealities = getAllRealities();
+})
+
+function getAllRealities() {
+    var allRealities = [];
+    $("#realitiesSelection option").each(function() {
+        allRealities.push($(this).val());
+    });
+    return allRealities;
 }

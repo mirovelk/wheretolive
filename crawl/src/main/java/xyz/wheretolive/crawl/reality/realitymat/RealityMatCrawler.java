@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.core.domain.MapObject;
 import xyz.wheretolive.core.domain.Reality;
+import xyz.wheretolive.core.domain.RealityName;
 import xyz.wheretolive.crawl.HttpUtils;
 import xyz.wheretolive.crawl.geocoding.GoogleGeocoder;
 import xyz.wheretolive.crawl.reality.RealityCrawler;
@@ -23,6 +24,8 @@ import xyz.wheretolive.mongo.GoogleGeocodeRepository;
 import xyz.wheretolive.mongo.MongoDatastoreProvider;
 import xyz.wheretolive.mongo.MongoGoogleGeocodeRepository;
 
+import static xyz.wheretolive.core.domain.RealityName.*;
+
 @Component
 public class RealityMatCrawler extends RealityCrawler {
 
@@ -30,8 +33,6 @@ public class RealityMatCrawler extends RealityCrawler {
     private static final String REALITY_MAT_FLATS_URL = REALITY_MAT_URL + "/search/?vp-page={PAGE}&filter%5BestateFunction%5D=2&filter%5BestateType%5D=1";
     private static final String REALITY_MAT_FLATS_INITIAL_URL = REALITY_MAT_URL + "/search/?filter%5BestateFunction%5D=2&filter%5BestateType%5D=1";
     private static final String PAGES_COUNT_PREFIX = "next-last\" href=\"/search/?vp-page=";
-
-    public static final String REALITY_MAT = "RealityMat";
 
     @Autowired
     private GoogleGeocoder googleGeocoder;
@@ -176,7 +177,7 @@ public class RealityMatCrawler extends RealityCrawler {
 
     @Override
     public String getName() {
-        return REALITY_MAT;
+        return REALITY_MAT.getName();
     }
     
     public static void main(String[] args) {

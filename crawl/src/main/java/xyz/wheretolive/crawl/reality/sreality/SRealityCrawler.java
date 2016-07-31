@@ -1,14 +1,7 @@
 package xyz.wheretolive.crawl.reality.sreality;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.springframework.scheduling.annotation.Scheduled;
-
 import com.google.gson.Gson;
+import org.springframework.scheduling.annotation.Scheduled;
 import xyz.wheretolive.core.domain.Coordinates;
 import xyz.wheretolive.core.domain.Housing;
 import xyz.wheretolive.core.domain.MapObject;
@@ -16,9 +9,15 @@ import xyz.wheretolive.core.domain.Reality;
 import xyz.wheretolive.crawl.HttpUtils;
 import xyz.wheretolive.crawl.reality.RealityCrawler;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static xyz.wheretolive.core.domain.RealityName.SREALITY;
+
 public abstract class SRealityCrawler extends RealityCrawler {
-    
-    private static final String SREALITY = "SReality";
 
     protected List<Reality> getRealities(List<SRealityEstate> estates, Housing.Type type, Housing.Transaction transaction) {
         List<Reality> result = new ArrayList<>();
@@ -79,7 +78,7 @@ public abstract class SRealityCrawler extends RealityCrawler {
 
     @Override
     public String getName() {
-        return SREALITY;
+        return SREALITY.getName();
     }
     
     public static void main(String[] args) {

@@ -1,9 +1,5 @@
 package xyz.wheretolive.crawl;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpMessage;
 import org.apache.http.NameValuePair;
@@ -19,6 +15,10 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 public class HttpUtils {
 
@@ -42,7 +42,7 @@ public class HttpUtils {
                 response.close();
                 httpClient.close();
             } catch (IOException e) {
-                throw new RuntimeException("Error while closing response or httpClient", e);
+                throw new RuntimeException("Error while closing response or httpClient for URL: " + url, e);
             }
         }
 

@@ -1,10 +1,7 @@
 package xyz.wheretolive.rest;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import xyz.wheretolive.core.domain.FacebookLongTermToken;
 import xyz.wheretolive.core.domain.Person;
 import xyz.wheretolive.core.domain.Settings;
@@ -22,7 +19,7 @@ public class PersonResourceService {
     private FacebookService facebookService;
 
     @Autowired
-    private HttpSession httpSession;
+    private PersonSessionService personSessionService;
     
     @Autowired
     private FacebookLongTermTokenService longTermTokenService;
@@ -41,12 +38,12 @@ public class PersonResourceService {
             person = createNewPerson(facebookId, facebookAuthToken);
             personRepository.store(person);
         }
-        httpSession.setAttribute("person", person);
+        personSessionService.storePerson(person);
         return person;
     }
     
     public void logout() {
-        httpSession.setAttribute("person", null);
+        personSessionService.storePerson(null);
     }
 
     private Person createNewPerson(String facebookId, String facebookAuthToken) {
@@ -58,7 +55,7 @@ public class PersonResourceService {
     }
 
     public void setSettings(Settings settings) {
-        Person person = (Person) httpSession.getAttribute("person");
+        Person person = personSessionService.loadPerson();
         if (person == null) {
             return;
         }
@@ -67,7 +64,7 @@ public class PersonResourceService {
         }
         person.setSettings(settings);
         personRepository.updateSettings(person);
-        httpSession.setAttribute("person", person);
+        personSessionService.storePerson(person);
     }
 
 }

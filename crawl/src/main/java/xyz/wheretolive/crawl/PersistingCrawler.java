@@ -61,12 +61,12 @@ public abstract class PersistingCrawler implements Crawler {
     }
 
     private String updateWithOldTimestamps(Collection<MapObject> result) {
-        List<? extends NameableMapObject> nameableMapObjects = repository.load(getType(), getName());
+        List<? extends NameableMapObject> existingMapObjects = repository.load(getType(), getName());
         int existingObjectsCount = 0;
         for (MapObject mapObject : result) {
-            if (nameableMapObjects.contains(mapObject)) {
-                int i = nameableMapObjects.indexOf(mapObject);
-                mapObject.setUpdateTime(nameableMapObjects.get(i).getUpdateTime());
+            if (existingMapObjects.contains(mapObject)) {
+                int i = existingMapObjects.indexOf(mapObject);
+                mapObject.setUpdateTime(existingMapObjects.get(i).getUpdateTime());
                 existingObjectsCount++;
             }
         }

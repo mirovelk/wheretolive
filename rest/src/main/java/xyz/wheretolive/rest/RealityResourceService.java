@@ -1,25 +1,17 @@
 package xyz.wheretolive.rest;
 
-import static xyz.wheretolive.rest.MapObjectResourceService.*;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import xyz.wheretolive.core.domain.MapView;
 import xyz.wheretolive.core.domain.Person;
 import xyz.wheretolive.core.domain.Reality;
 import xyz.wheretolive.core.domain.RealityId;
 import xyz.wheretolive.mongo.MapObjectRepository;
 import xyz.wheretolive.mongo.PersonRepository;
+
+import java.util.*;
+
+import static xyz.wheretolive.rest.MapObjectResourceService.MAX_MAPVIEW_SIZE;
 
 @Component
 public class RealityResourceService {
@@ -31,19 +23,21 @@ public class RealityResourceService {
     private PersonRepository personRepository;
     
     @Autowired
-    private HttpSession httpSession;
+    private PersonSessionService personSessionService;
     
     public Collection<Reality> getFilteredHousingsIn(MapView view) {
         if (view.getMaxDimension() >= MAX_MAPVIEW_SIZE) {
             return Collections.emptyList();
         }
-        Set<String> hiddenRealities = Collections.emptySet();
-        Person person = (Person) httpSession.getAttribute("person");
+        Collection<Reality> realities = repository.getIn(view, Reality.class);
+        Person person = personSessionService.loadPerson();
         if (person != null) {
+            Set<String> hiddenRealities = Collections.emptySet();
             hiddenRealities = person.getHiddenRealities();
+            return filterHidden(hiddenRealities, realities);
+        } else {
+            return realities;
         }
-        Collection<Reality> realties = repository.getIn(view, Reality.class);
-        return filterHidden(hiddenRealities, realties);
     }
 
     private List<Reality> filterHidden(Set<String> hiddenRealities, Collection<Reality> realties) {
@@ -59,7 +53,7 @@ public class RealityResourceService {
 
     public HousingMetaData getHousingMetaDataIn(MapView view) {
         HousingMetaData metaData = new HousingMetaData();
-        Person person = (Person) httpSession.getAttribute("person");
+        Person person = personSessionService.loadPerson();
         if (person != null) {
             metaData.getVisitedHousingIds().addAll(person.getVisitedRealities().keySet());
             metaData.getFavoriteHousingIds().addAll(person.getFavoriteRealities());
@@ -72,7 +66,7 @@ public class RealityResourceService {
         if (reality == null) {
             return;
         }
-        Person person = (Person) httpSession.getAttribute("person");
+        Person person = personSessionService.loadPerson();
         if (person == null) {
             return;
         }
@@ -87,7 +81,7 @@ public class RealityResourceService {
             visitedRealities.put(realityIdObject.toString(), visits);
         }
         personRepository.updateVisitedRealities(person);
-        httpSession.setAttribute("person", person);
+        personSessionService.storePerson(person);
     }
 
     public void hide(String realityId, String name) {
@@ -95,7 +89,7 @@ public class RealityResourceService {
         if (reality == null) {
             return;
         }
-        Person person = (Person) httpSession.getAttribute("person");
+        Person person = personSessionService.loadPerson();
         if (person == null) {
             return;
         }
@@ -103,7 +97,7 @@ public class RealityResourceService {
         Set<String> hiddenRealities = person.getHiddenRealities();
         hiddenRealities.add(realityIdObject.toString());
         personRepository.updateHiddenRealities(person);
-        httpSession.setAttribute("person", person);
+        personSessionService.storePerson(person);
     }
 
     public void favorite(String realityId, String name) {
@@ -111,7 +105,7 @@ public class RealityResourceService {
         if (reality == null) {
             return;
         }
-        Person person = (Person) httpSession.getAttribute("person");
+        Person person = personSessionService.loadPerson();
         if (person == null) {
             return;
         }
@@ -124,6 +118,6 @@ public class RealityResourceService {
             favoriteRealities.add(realityIdString);
         }
         personRepository.updateFavoriteRealities(person);
-        httpSession.setAttribute("person", person);
+        personSessionService.storePerson(person);
     }
 }
